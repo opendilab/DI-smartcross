@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+import os
+import logging
+import argparse
+from functools import partial
+from tensorboardX import SummaryWriter
+
+from ding.config import compile_config
+from ding.policy import create_policy
+from ding.envs import get_vec_env_setting, create_env_manager
+from ding.worker import BaseLearner, InteractionSerialEvaluator, create_serial_collector, create_buffer
+from ding.utils.default_helper import set_pkg_seed
+from ding.rl_utils import get_epsilon_greedy_fn
+from smartcross.utils.config_utils import get_sumo_config
+
+
+def main(args, seed=None):
+    main_config, create_config = get_sumo_config(args)
+    if args.collect_env_num > 0:
+        main_config.env.collector_env_num = args.collect_env_num
+    if args.evaluate_env_num > 0:
+        main_config.env.evaluator_env_num = args.evaluate_env_num
+    if args.exp_name is not None:
+        main_config.exp_name = args.exp_name
+    if args.dynamic_flow:
+        main_config.env.dynamic_flow = True
+    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
+    env_fn, collecotr_env_cfg, evaluator_env_cfg = get_vec_env_setting(cfg.env)
+    collector_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in collecotr_env_cfg])
+    evaluator_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in evaluator_env_cfg])
+    if seed is not None:
+        collector_env.seed(cfg.seed)
+        evaluator_env.seed(cfg.seed, dynamic_seed=False)
+        set_pkg_seed(cfg.seed, use_cuda=cfg.policy.cuda)
+    policy = create_policy(cfg.policy, enable_field=['learn', 'collect', 'eval'])
+
+    tb_logger = SummaryWriter('./{}/tensorboard/'.format(cfg.exp_name))
+    learner = BaseLearner(cfg.policy.learn.learner, policy.learn_mode, tb_logger, exp_name=cfg.exp_name)
+    collector = create_serial_collector(
+        cfg.policy.collect.collector,
+        env=collector_env,
+        policy=policy.collect_mode,
+        tb_logger=tb_logger,
+        exp_name=cfg.exp_name
+    )
+    evaluator = InteractionSerialEvaluator(
+        cfg.policy.eval.evaluator, evaluator_env, policy.eval_mode, tb_logger, exp_name=cfg.exp_name
+    )
+    if not cfg.policy.on_policy:
+        replay_buffer = create_buffer(cfg.policy.other.replay_buffer, tb_logger=tb_logger, exp_name=cfg.exp_name)
+    # ==========
+    # Main loop
+    # ==========
+    # Learner's before_run hook.
+    learner.call_hook('before_run')
+    eps_cfg = cfg.policy.other.get('eps', None)
+    if eps_cfg is not None:
+        epsilon_greedy = get_epsilon_greedy_fn(eps_cfg.start, eps_cfg.end, eps_cfg.decay, eps_cfg.type)
+    # Learner's after_run hook.
+    for _ in range(cfg.policy.learn.learner.train_iterations):
+        # Evaluate policy performance
+        if evaluator.should_eval(learner.train_iter):
+            stop, reward = evaluator.eval(learner.save_checkpoint, learner.train_iter, collector.envstep)
+            if stop:
+                break
+        # Collect data by default config n_sample/n_episode
+        if eps_cfg is not None:
+            collect_kwargs = {'eps': epsilon_greedy(collector.envstep)}
+            new_data = collector.collect(
+                cfg.policy.collect.n_sample, train_iter=learner.train_iter, policy_kwargs=collect_kwargs
+            )
+        else:
+            new_data = collector.collect(cfg.policy.collect.n_sample, train_iter=learner.train_iter)
+        if cfg.policy.on_policy:
+            learner.train(new_data, collector.envstep)
+        else:
+            replay_buffer.push(new_data, cur_collector_envstep=collector.envstep)
+            # Learn policy from collected data
+            for i in range(cfg.policy.learn.update_per_collect):
+                # Learner will train ``update_per_collect`` times in one iteration.
+                train_data = replay_buffer.sample(cfg.policy.learn.batch_size, learner.train_iter)
+                if train_data is None:
+                    # It is possible that replay buffer's data count is too few to train ``update_per_collect`` times
+                    logging.warning(
+                        "Replay buffer's data can only train for {} steps. ".format(i) +
+                        "You can modify data collect config, e.g. increasing n_sample, n_episode."
+                    )
+                    break
+                learner.train(train_data, collector.envstep)
+                if learner.policy.get_attribute('priority'):
+                    replay_buffer.update(learner.priority_info)
+
+    learner.call_hook('after_run')
+    learner.close()
+    collector.close()
+    evaluator.close()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='DI-smartcross training script')
+    parser.add_argument('-d', '--ding-cfg', required=True, help='DI-engine configuration path')
+    parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
+    parser.add_argument('-s', '--seed', default=None, type=int, help='random seed for sumo')
+    parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
+    parser.add_argument('-cn', '--collect-env-num', type=int, default=-1, help='collector sumo env num for training')
+    parser.add_argument('-en', '--evaluate-env-num', type=int, default=-1, help='evaluator sumo env num for training')
+    parser.add_argument('--exp-name', type=str, default=None, help='experiment name to save log and ckpt')
+
+    args = parser.parse_args()
+    main(args, args.seed)
