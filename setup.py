@@ -17,7 +17,7 @@ setup(
     ],
     scripts=[
         'entry/sumo_train',
-    #     'entry/sumo_eval',
+        'entry/sumo_eval',
     ],
     install_requires=[
         "torch>=1.4,<=1.8",

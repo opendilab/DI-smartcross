@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+import os
+import argparse
+from functools import partial
+import torch
+import yaml
+from easydict import EasyDict
+
+from ding.config import compile_config
+from ding.policy import create_policy
+from ding.envs import get_vec_env_setting, create_env_manager
+from ding.worker import InteractionSerialEvaluator
+from ding.utils.default_helper import set_pkg_seed, deep_merge_dicts
+from smartcross.utils.config_utils import get_sumo_config
+from smartcross.policy import RandomPolicy, FixedPolicy
+
+
+def main(args, seed=0):
+    if args.policy_type in ['random', 'fix']:
+        from entry.config.sumo_eval_default_config import main_config, create_config
+        with open(args.env_cfg, 'r') as f:
+            sumoenv_cfg = yaml.safe_load(f)
+        sumoenv_cfg = EasyDict(sumoenv_cfg)
+        main_config = deep_merge_dicts(sumoenv_cfg, main_config)
+        create_config.policy['type'] = 'smartcross_' + args.policy_type
+    else:
+        main_config, create_config = get_sumo_config(args)
+    if args.gui:
+        main_config.env.gui = True
+    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
+    if args.env_num > 0:
+        cfg.env.evaluator_env_num = args.env_num
+        if cfg.env.n_evaluator_episode < args.env_num:
+            cfg.env.n_evaluator_episode = cfg.env.evaluator_env_num
+    env_fn, _, evaluator_env_cfg = get_vec_env_setting(cfg.env)
+    evaluator_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in evaluator_env_cfg])
+    if seed is not None:
+        evaluator_env.seed(cfg.seed, dynamic_seed=False)
+        set_pkg_seed(cfg.seed, use_cuda=cfg.policy.cuda)
+
+    if args.policy_type == 'random':
+        policy = RandomPolicy(evaluator_env.env_info().act_space)
+    elif args.policy_type == 'fix':
+        policy = FixedPolicy(evaluator_env.env_info().act_space)
+    else:
+        policy = create_policy(cfg.policy, enable_field=['eval']).eval_mode
+        if args.ckpt_path is not None:
+            state_dict = torch.load(args.ckpt_path, map_location='cpu')
+            policy.load_state_dict(state_dict)
+
+    evaluator = InteractionSerialEvaluator(
+        cfg.policy.eval.evaluator,
+        evaluator_env,
+        policy,
+    )
+    _, eval_reward = evaluator.eval(None, -1, -1, cfg.env.n_evaluator_episode)
+    print('Eval is over! The performance is {}'.format(eval_reward))
+    evaluator.close()
+    return eval_reward
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='DI-smartcross training script')
+    parser.add_argument('-d', '--ding-cfg', default=None, help='DI-engine configuration path')
+    parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
+    parser.add_argument('-s', '--seed', default=0, type=int, help='random seed for sumo')
+    parser.add_argument(
+        '-p', '--policy-type', default='dqn', choices=['random', 'fix', 'dqn', 'rainbow', 'ppo'], help='RL policy type'
+    )
+    parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
+    parser.add_argument('-n', '--env-num', type=int, default=-1, help='sumo env num for evaluation')
+    parser.add_argument('--gui', action='store_true', help="open gui for visualize")
+    parser.add_argument('-c', '--ckpt-path', type=str, default=None, help='model ckpt path')
+
+    args = parser.parse_args()
+    main(args, args.seed)
