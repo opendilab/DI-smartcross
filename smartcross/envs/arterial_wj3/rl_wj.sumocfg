@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+   <input>
+      <net-file value="rl_wj.net.xml"/>
+      <route-files value="testflow.rou.xml"/>
+      <additional-files value="./detector/detector1_lane_start.add.xml,./detector/detector1_lane_end.add.xml,./detector/detector2_length_7_freq_1.add.xml,./detector/detector2_length_49_freq_60.add.xml,./detector/detector3.add.xml,./edge_measure.add.xml"/>
+   </input>
+   <time>
+      <begin value="0"/>
+      <end value="7200.0"/>
+   </time>
+   <processing>
+      <time-to-teleport value="-1"/>
+   </processing>
+</configuration>

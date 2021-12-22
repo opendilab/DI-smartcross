@@ -1,0 +1,204 @@
+<additional> 
+<e3Detector id="29257863#2__gsndj_n6__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="29257863#2_0" pos="-0.1"/> 
+    <detExit lane="gsndj_n6_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="29257863#2__29257863#5__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="29257863#2_0" pos="-0.1"/> 
+    <detExit lane="29257863#5_0" pos="0.1"/> 
+    <detEntry lane="29257863#2_1" pos="-0.1"/> 
+    <detExit lane="29257863#5_1" pos="0.1"/> 
+    <detEntry lane="29257863#2_2" pos="-0.1"/> 
+    <detExit lane="29257863#5_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="29257863#2__gsndj_s5__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="29257863#2_3" pos="-0.1"/> 
+    <detExit lane="gsndj_s5_1" pos="0.1"/> 
+    <detEntry lane="29257863#2_4" pos="-0.1"/> 
+    <detExit lane="gsndj_s5_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gsndj_n7__161701303#10__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gsndj_n7_0" pos="-0.1"/> 
+    <detExit lane="161701303#10_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gsndj_n7__gsndj_n6__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gsndj_n7_1" pos="-0.1"/> 
+    <detExit lane="gsndj_n6_1" pos="0.1"/> 
+    <detEntry lane="gsndj_n7_2" pos="-0.1"/> 
+    <detExit lane="gsndj_n6_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gsndj_n7__29257863#5__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gsndj_n7_3" pos="-0.1"/> 
+    <detExit lane="29257863#5_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="161701303#7.248__gsndj_s5__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="161701303#7.248_0" pos="-0.1"/> 
+    <detExit lane="gsndj_s5_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="161701303#7.248__161701303#10__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="161701303#7.248_1" pos="-0.1"/> 
+    <detExit lane="161701303#10_1" pos="0.1"/> 
+    <detEntry lane="161701303#7.248_2" pos="-0.1"/> 
+    <detExit lane="161701303#10_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="161701303#7.248__gsndj_n6__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="161701303#7.248_3" pos="-0.1"/> 
+    <detExit lane="gsndj_n6_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gsndj_s4__29257863#5__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gsndj_s4_0" pos="-0.1"/> 
+    <detExit lane="29257863#5_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gsndj_s4__gsndj_s5__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gsndj_s4_1" pos="-0.1"/> 
+    <detExit lane="gsndj_s5_0" pos="0.1"/> 
+    <detEntry lane="gsndj_s4_2" pos="-0.1"/> 
+    <detExit lane="gsndj_s5_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gsndj_s4__161701303#10__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gsndj_s4_3" pos="-0.1"/> 
+    <detExit lane="161701303#10_3" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gneE27__hrj_n4__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gneE27_0" pos="-0.1"/> 
+    <detExit lane="hrj_n4_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gneE27__29257863#2__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gneE27_1" pos="-0.1"/> 
+    <detExit lane="29257863#2_2" pos="0.1"/> 
+    <detEntry lane="gneE27_2" pos="-0.1"/> 
+    <detExit lane="29257863#2_3" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="gneE27__hrj_s5__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="gneE27_3" pos="-0.1"/> 
+    <detExit lane="hrj_s5_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="hrj_n5__-gneE27__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="hrj_n5_0" pos="-0.1"/> 
+    <detExit lane="-gneE27_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="hrj_n5__hrj_n4__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="hrj_n5_1" pos="-0.1"/> 
+    <detExit lane="hrj_n4_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="hrj_n5__29257863#2__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="hrj_n5_2" pos="-0.1"/> 
+    <detExit lane="29257863#2_4" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="161701303#10__hrj_s5__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="161701303#10_0" pos="-0.1"/> 
+    <detExit lane="hrj_s5_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="161701303#10__-gneE27__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="161701303#10_1" pos="-0.1"/> 
+    <detExit lane="-gneE27_1" pos="0.1"/> 
+    <detEntry lane="161701303#10_2" pos="-0.1"/> 
+    <detExit lane="-gneE27_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="161701303#10__hrj_n4__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="161701303#10_3" pos="-0.1"/> 
+    <detExit lane="hrj_n4_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="hrj_s4__29257863#2__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="hrj_s4_0" pos="-0.1"/> 
+    <detExit lane="29257863#2_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="hrj_s4__hrj_s5__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="hrj_s4_1" pos="-0.1"/> 
+    <detExit lane="hrj_s5_1" pos="0.1"/> 
+    <detEntry lane="hrj_s4_1" pos="-0.1"/> 
+    <detExit lane="hrj_s5_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="hrj_s4__-gneE27__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="hrj_s4_2" pos="-0.1"/> 
+    <detExit lane="-gneE27_3" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="-72631490#0__wjj_n8__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="-72631490#0_0" pos="-0.1"/> 
+    <detExit lane="wjj_n8_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="-72631490#0__gneE26__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="-72631490#0_1" pos="-0.1"/> 
+    <detExit lane="gneE26_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="-72631490#0__wjj_s10__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="-72631490#0_2" pos="-0.1"/> 
+    <detExit lane="wjj_s10_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="wjj_n9__72631490#0__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="wjj_n9_0" pos="-0.1"/> 
+    <detExit lane="72631490#0_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="wjj_n9__wjj_n8__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="wjj_n9_0" pos="-0.1"/> 
+    <detExit lane="wjj_n8_0" pos="0.1"/> 
+    <detEntry lane="wjj_n9_1" pos="-0.1"/> 
+    <detExit lane="wjj_n8_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="wjj_n9__gneE26__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="wjj_n9_2" pos="-0.1"/> 
+    <detExit lane="gneE26_2" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="-gneE26__wjj_s10__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="-gneE26_0" pos="-0.1"/> 
+    <detExit lane="wjj_s10_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="-gneE26__72631490#0__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="-gneE26_1" pos="-0.1"/> 
+    <detExit lane="72631490#0_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="-gneE26__wjj_n8__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="-gneE26_2" pos="-0.1"/> 
+    <detExit lane="wjj_n8_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="wjj_s9__gneE26__r" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="wjj_s9_0" pos="-0.1"/> 
+    <detExit lane="gneE26_0" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="wjj_s9__wjj_s10__s" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="wjj_s9_0" pos="-0.1"/> 
+    <detExit lane="wjj_s10_0" pos="0.1"/> 
+    <detEntry lane="wjj_s9_1" pos="-0.1"/> 
+    <detExit lane="wjj_s10_1" pos="0.1"/> 
+</e3Detector> 
+
+<e3Detector id="wjj_s9__72631490#0__l" freq="60" file="e3output.out.xml"> 
+    <detEntry lane="wjj_s9_2" pos="-0.1"/> 
+    <detExit lane="72631490#0_2" pos="0.1"/> 
+</e3Detector> 
+
+</additional> 

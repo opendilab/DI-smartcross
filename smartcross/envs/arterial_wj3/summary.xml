@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 05/12/21 13:36:39 by Eclipse SUMO sumo Version 1.7.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\rl_wj.net.xml"/>
+        <route-files value="D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\testflow.rou.xml"/>
+        <additional-files value="D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\./detector/detector1_lane_start.add.xml,D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\./detector/detector1_lane_end.add.xml,D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\./detector/detector2_length_7_freq_1.add.xml,D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\./detector/detector2_length_49_freq_60.add.xml,D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\./detector/detector3.add.xml,D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\./edge_measure.add.xml"/>
+    </input>
+
+    <output>
+        <summary-output value="D:\SenseTime\A_Project\TrafficScene\env\0x06_multi_nodes_cases\summary.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="7200.0"/>
+    </time>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+    </processing>
+
+    <report>
+        <no-warnings value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="53950"/>
+    </traci_server>
+
+    <random_number>
+        <seed value="2"/>
+    </random_number>
+
+</configuration>
+-->
+
+<summary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/summary_file.xsd">
+</summary>

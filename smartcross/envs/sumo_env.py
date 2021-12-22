@@ -1,0 +1,230 @@
+import os
+import sys
+import time
+from typing import Dict, Any
+import numpy as np
+
+import traci
+from sumolib import checkBinary
+
+from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
+from ding.utils import ENV_REGISTRY
+from ding.torch_utils import to_ndarray, to_tensor
+from smartcross.envs.crossing import Crossing
+
+
+ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
+ALL_ACTION_TYPE = set(['change'])
+ALL_REWARD_TYPE = set(['queue_len', 'wait_time', 'delay_time', 'pressure'])
+
+
+@ENV_REGISTRY.register('sumo_env')
+class SumoEnv(BaseEnv):
+
+    def __init__(self, cfg: Dict) -> None:
+        self._cfg = cfg
+        self._sumocfg_path = os.path.dirname(__file__) + '/' + cfg.sumocfg_path
+        self._gui = cfg.get('gui', False)
+        self._tls = cfg.tls
+        self._max_episode_steps = cfg.max_episode_steps
+        self._yellow_duration = cfg.yellow_duration
+        self._green_duration = cfg.green_duration
+
+        self._obs_type = cfg.obs.obs_type
+        self._action_type = cfg.action.action_type
+        self._reward_type = cfg.reward.reward_type
+        assert set(self._obs_type).issubset(ALL_OBS_TPYE)
+        assert self._action_type in ALL_ACTION_TYPE
+        assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
+        self._use_centralized_obs = cfg.obs.use_centralized_obs
+        self._use_multi_discrete = cfg.action.use_multi_discrete
+
+        self._launch_env_flag = False
+        self._crosses = {}
+        self._vehicle_info_dict = {}
+        self._launch_env(False)
+        for tl in self._cfg.tls:
+            self._crosses[tl] = Crossing(tl, self, None)
+        self._init_info()
+        self.close()
+    
+    def _launch_env(self, gui=False):
+        # set gui=True can get visualization simulation result with sumo, apply gui=False in the normal training
+        # and test setting
+
+        # sumo things - we need to import python modules from the $SUMO_HOME/tools directory
+        if 'SUMO_HOME' in os.environ:
+            tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
+            sys.path.append(tools)
+        else:
+            sys.exit("please declare environment variable 'SUMO_HOME'")
+
+        # setting the cmd mode or the visual mode
+        if gui is False:
+            sumoBinary = checkBinary('sumo')
+        else:
+            sumoBinary = checkBinary('sumo-gui')
+
+        # setting the cmd command to run sumo at simulation time
+        sumo_cmd = [
+            sumoBinary,
+            "-c",
+            self._sumocfg_path,
+            "--no-step-log",
+            "--no-warnings",
+        ]
+        traci.start(sumo_cmd, label=time.time())
+        self._launch_env_flag = True
+
+    def _init_info(self):
+        obs_shape = []
+        action_shape = []
+        for tl, cross in self._crosses.items():
+            tl_obs = 0
+            if 'phase' in self._obs_type:
+                tl_obs += cross.phase_num
+            if 'lane_pos_vec' in self._obs_type:
+                self._lane_grid_num = self._cfg.obs.lane_grid_num
+                tl_obs += cross.lane_num * self._lane_grid_num
+            if 'traffic_volumn' in self._obs_type:
+                self._volumn_ratio = self._cfg.obs.traffic_volumn_ratio
+                tl_obs += cross.lane_num
+            if 'queue_len' in self._obs_type:
+                self._volumn_ratio = self._cfg.obs.traffic_volumn_ratio
+                tl_obs += cross.lane_num
+            obs_shape.append(tl_obs)
+            if self._action_type == 'change':
+                action_shape.append(cross.phase_num)
+            else:
+                # TODO: add switch action
+                raise NotImplementedError
+        if self._use_centralized_obs:
+            self._obs_shape = sum(obs_shape)
+        else:
+            self._obs_shape = obs_shape
+        if self._use_multi_discrete:
+            self._action_shape = action_shape
+        else:
+            # TODO: add naive discrete action
+            raise NotImplementedError
+        
+    def _get_observation(self):
+        obs = {}
+        for tl in self._tls:
+            tl_obs = []
+            cross = self._crosses[tl]
+            cross.update_timestep()
+            if 'phase' in self._obs_type:
+                tl_obs += cross.get_onehot_phase()
+            if 'lane_pos_vec' in self._obs_type:
+                tl_obs += [ele for lst in cross.get_lane_vehicle_pos_vector(self._lane_grid_num).values() for ele in lst]
+            if 'traffic_volumn' in self._obs_type:
+                tl_obs += list(cross.get_lane_traffic_volumn(self._volumn_ratio).values())
+            if 'queue_len' in self._obs_type:
+                tl_obs += list(cross.get_lane_queue_len(self._volumn_ratio).values())
+            obs[tl] = tl_obs
+        if self._use_centralized_obs:
+            obs = [element for lis in obs.values() for element in lis]
+        else:
+            # TODO: add independent obs
+            raise NotImplementedError
+        return obs
+    
+    def _get_action(self, raw_action):
+        if self._last_action is None:
+            self._last_action = [None for _ in range(len(raw_action))]
+        action = {tl: {} for tl in self._tls}
+        for tl, act, last_act in zip(self._tls, raw_action, self._last_action):
+            if last_act is not None and act != last_act:
+                yellow_phase = self._crosses[tl].get_yellow_phase_index(last_act)
+            else:
+                yellow_phase = None
+            action[tl]['yellow'] = yellow_phase
+            action[tl]['green'] = self._crosses[tl].get_green_phase_index(act)
+        self._last_action = raw_action
+        return action
+    
+    def _get_reward(self):
+        reward = {tl: 0 for tl in self._tls}
+        for tl in self._tls:
+            cross = self._crosses[tl]
+            if 'queue_len' in self._reward_type:
+                queue_len = sum(cross.get_lane_queue_len().values())
+                reward[tl] += self._reward_type['queue_len'] * -queue_len
+            if 'wait_time' in self._reward_type:
+                wait_time = sum(cross.get_lane_wait_time().values())
+                reward[tl] += self._reward_type['wait_time'] * -wait_time
+            if 'delay_time' in self._reward_type:
+                delay_time = sum(cross.get_lane_delay_time().values())
+                reward[tl] += self._reward_type['delay_time'] * -delay_time
+            if 'pressure' in self._reward_type:
+                pressure = cross.get_pressure()
+                reward[tl] += self._reward_type['pressure'] * -pressure
+        if self._use_centralized_obs:
+            reward = sum(reward.values())
+        return reward
+    
+    def _simulate(self, action):
+        for tl, a in action.items():
+            yellow_phase = a['yellow']
+            if yellow_phase is not None:
+                self._crosses[tl].set_phase(yellow_phase, self._yellow_duration)
+        self._current_steps += self._yellow_duration
+        traci.simulationStep(self._current_steps)
+
+        for tl, a in action.items():
+            green_phase = a['green']
+            self._crosses[tl].set_phase(green_phase, self._yellow_duration + self._green_duration + 1)
+        self._current_steps += self._green_duration
+        traci.simulationStep(self._current_steps)
+
+    def reset(self) -> Any:
+        self._current_steps = 0
+        self._last_action = None
+        self._crosses.clear()
+        self._vehicle_info_dict.clear()
+        self._launch_env(self._gui)
+        for tl in self._cfg.tls:
+            self._crosses[tl] = Crossing(tl, self, None)
+        return to_ndarray(self._get_observation())
+    
+    def step(self, action: Any) -> 'BaseEnv.timestep':
+        action_per_tl = self._get_action(action)
+        self._simulate(action_per_tl)
+        obs = self._get_observation()
+        reward = self._get_reward()
+        done = self._current_steps > self._max_episode_steps
+        info = {}
+        obs = to_ndarray(obs)
+        reward = to_ndarray(reward)
+        return BaseEnvTimestep(obs, reward, done, info)
+
+    def seed(self, seed: int, dynamic_seed: bool = True) -> None:
+        self._seed = seed
+        self._dynamic_seed = dynamic_seed
+        np.random.seed(self._seed)
+
+    def close(self) -> None:
+        r"""
+        close traci, set launch_env_flag as False
+        """
+        if self._launch_env_flag:
+            self._launch_env_flag = False
+            traci.close()
+
+    def info(self) -> 'BaseEnvInfo':
+        info_data = {
+            'agent_num': 1,
+            'obs_space': self._obs_shape,
+            'act_space': self._action_shape,
+            'rew_space': None,
+            'use_wrappers': False
+        }
+        return BaseEnvInfo(**info_data)
+
+    def __repr__(self) -> str:
+        return "SumoEnv"
+
+    @property
+    def vehicle_info(self):
+        return self._vehicle_info_dict

@@ -1,0 +1,23 @@
+env:
+  sumocfg_path: 'arterial_wj3/rl_wj.sumocfg'
+  gui: False
+  inference: False
+  max_episode_steps: 1500
+  green_duration: 10
+  yellow_duration: 3
+  tls: ['ftddj_wjj', 'ftddj_frj', 'htddj_gsndj']
+  obs:
+    obs_type: [phase, lane_pos_vec, traffic_volumn, queue_len]
+    obs_type: [queue_len]
+    lane_grid_num: 10
+    traffic_volumn_ratio: 7.5
+    use_centralized_obs: True
+  action:
+    action_type: change
+    use_multi_discrete: True
+  reward:
+    reward_type: 
+      queue_len: 1.0
+      wait_time: 1.0
+      delay_time: 1.0
+      pressure: 1.0
