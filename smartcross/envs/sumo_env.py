@@ -131,6 +131,7 @@ class SumoEnv(BaseEnv):
         return obs
     
     def _get_action(self, raw_action):
+        raw_action = np.squeeze(raw_action)
         if self._last_action is None:
             self._last_action = [None for _ in range(len(raw_action))]
         action = {tl: {} for tl in self._tls}
@@ -149,13 +150,13 @@ class SumoEnv(BaseEnv):
         for tl in self._tls:
             cross = self._crosses[tl]
             if 'queue_len' in self._reward_type:
-                queue_len = sum(cross.get_lane_queue_len().values())
+                queue_len = np.average(list(cross.get_lane_queue_len().values()))
                 reward[tl] += self._reward_type['queue_len'] * -queue_len
             if 'wait_time' in self._reward_type:
-                wait_time = sum(cross.get_lane_wait_time().values())
+                wait_time = np.average(list(cross.get_lane_wait_time().values()))
                 reward[tl] += self._reward_type['wait_time'] * -wait_time
             if 'delay_time' in self._reward_type:
-                delay_time = sum(cross.get_lane_delay_time().values())
+                delay_time = np.average(list(cross.get_lane_delay_time().values()))
                 reward[tl] += self._reward_type['delay_time'] * -delay_time
             if 'pressure' in self._reward_type:
                 pressure = cross.get_pressure()
@@ -180,6 +181,7 @@ class SumoEnv(BaseEnv):
 
     def reset(self) -> Any:
         self._current_steps = 0
+        self._total_reward = 0
         self._last_action = None
         self._crosses.clear()
         self._vehicle_info_dict.clear()
@@ -193,10 +195,14 @@ class SumoEnv(BaseEnv):
         self._simulate(action_per_tl)
         obs = self._get_observation()
         reward = self._get_reward()
+        self._total_reward += reward
         done = self._current_steps > self._max_episode_steps
         info = {}
-        obs = to_ndarray(obs)
-        reward = to_ndarray(reward)
+        if done:
+            info['final_eval_reward'] = self._total_reward
+            self.close()
+        obs = to_ndarray(obs, dtype=np.float32)
+        reward = to_ndarray(reward, dtype=np.float32)
         return BaseEnvTimestep(obs, reward, done, info)
 
     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
@@ -217,7 +223,7 @@ class SumoEnv(BaseEnv):
             'agent_num': 1,
             'obs_space': self._obs_shape,
             'act_space': self._action_shape,
-            'rew_space': None,
+            'rew_space': (1, ),
             'use_wrappers': False
         }
         return BaseEnvInfo(**info_data)

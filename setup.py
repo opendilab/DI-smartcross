@@ -2,12 +2,12 @@ from __future__ import absolute_import
 
 from setuptools import setup, find_packages
 
-description = """DI-smartcross: OpenDILab Decision Intelligence Traffic Signal Control Platform"""
+description = """DI-smartcross: OpenDILab Decision Intelligence Traffic Crossing Signal Control Platform"""
 
 setup(
     name='DI-smartcross',
     version='0.1.0',
-    description='OpenDILab Decision Intelligence Traffic Signal Control Platform',
+    description='OpenDILab Decision Intelligence Traffic Crossing Signal Control Platform',
     long_description=description,
     author='OpenDILab',
     license='Apache 2.0',
@@ -15,10 +15,10 @@ setup(
     packages=[
         *find_packages(include=('smartcross', 'smartcross.*')),
     ],
-    # scripts=[
-    #     'entry/sumo_train',
+    scripts=[
+        'entry/sumo_train',
     #     'entry/sumo_eval',
-    # ],
+    ],
     install_requires=[
         "torch>=1.4,<=1.8",
         "di-engine>=0.2",
