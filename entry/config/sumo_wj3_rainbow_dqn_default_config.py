@@ -1,8 +1,8 @@
 from easydict import EasyDict
 
-nstep = 1
-sumo_dqn_default_config = dict(
-    exp_name='sumo_wj3_md_dqn',
+nstep = 3
+sumo_rainbow_dqn_default_config = dict(
+    exp_name='sumo_wj3_md_rainbow_dqn',
     env=dict(
         manager=dict(
             # Whether to use shared memory. Only effective if manager type is 'subprocess'
@@ -26,16 +26,17 @@ sumo_dqn_default_config = dict(
         # Whether use priority
         priority=True,
         priority_IS_weight=True,
-        # How many steps in td error.
-        nstep=nstep,
         # Reward's future discount facotr, aka. gamma.
         discount_factor=0.99,
+        # How many steps in td error.
+        nstep=nstep,
         # Model config used for model creating. Remember to change "obs_shape" and "action_shape" according to env.
         model=dict(
             obs_shape=442,
             action_shape=[4, 4, 4],
-            # Whether to use dueling head.
-            dueling=True,
+            v_max=10,
+            v_min=-10,
+            n_atom=51
         ),
         # learn_mode config
         learn=dict(
@@ -51,7 +52,6 @@ sumo_dqn_default_config = dict(
                     log_show_after_iter=1000,
                 ),
             ),
-            ignore_done=True,
         ),
         # collect_mode config
         collect=dict(
@@ -60,6 +60,8 @@ sumo_dqn_default_config = dict(
             # You can use either "n_sample" or "n_episode" in collector.collect.
             # Get "n_sample" samples per collect.
             n_sample=600,
+            # Get "n_episode" complete episodic trajectories per collect.
+            # n_episode=8,
             collector=dict(
                 # Get "n_episode" complete episodic trajectories per collect.
                 # n_episode=8,
@@ -73,7 +75,6 @@ sumo_dqn_default_config = dict(
                 eval_freq=1000,
             )
         ),
-
         # command_mode config
         other=dict(
             # Epsilon greedy with decay.
@@ -92,7 +93,7 @@ sumo_dqn_default_config = dict(
                     periodic_thruput=dict(seconds=300, ),
                 ),
             ),
-        ),
+        )
     ),
 )
 
@@ -105,11 +106,11 @@ create_config = dict(
     ),
     # RL policy register name (refer to function "register_policy").
     policy=dict(
-        import_names=['dizoo.common.policy.md_dqn'],
-        type='md_dqn',
+        import_names=['dizoo.common.policy.md_rainbow_dqn'],
+        type='md_rainbow_dqn',
     ),
 )
 
 create_config = EasyDict(create_config)
-sumo_dqn_default_config = EasyDict(sumo_dqn_default_config)
-main_config = sumo_dqn_default_config
+sumo_rainbow_dqn_default_config = EasyDict(sumo_rainbow_dqn_default_config)
+main_config = sumo_rainbow_dqn_default_config
