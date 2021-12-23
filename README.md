@@ -12,6 +12,13 @@ DI-smartcross is application platform under [OpenDILab](http://opendilab.org/)
 
 DI-smartcross uses [**DI-engine**](https://github.com/opendilab/DI-engine), a Reinforcement Learning platform to build RL experiments. DI-smartcross uses [SUMO](https://www.eclipse.org/sumo/) (Simulation of Urban MObility) traffic simulator package to run signal control simulation.
 
+DI-smartcross supports:
+
+- **Single-Agent** and **Multi-Agent** Reinforcement Learning
+- **Synthetic** and **Real** roadnet, **Arterial** and **Grid** network shape
+- **Customizable** observation, action and reward types
+- Easy access for **Environment Parallel**, training **Asynchronous Parallel** with DI-engine
+
 ## Installation
 
 DI-smartcross supports SUMO version >= 1.6.0. Here we show an easy guide of installation with SUMO 1.8.0 on Linux.
@@ -58,11 +65,11 @@ If success, the following message will be shown in the shell.
 
 ```
 Eclipse SUMO sumo Version 1.8.0
- Build features: Linux-3.10.0-957.el7.x86_64 x86_64 GNU 5.3.1 Release Proj GUI SWIG GDAL GL2PS
- Copyright (C) 2001-2020 German Aerospace Center (DLR) and others; https://sumo.dlr.de
- License EPL-2.0: Eclipse Public License Version 2 <https://eclipse.org/legal/epl-v20.html>
- Use --help to get the list of options.
- ```
+  Build features: Linux-3.10.0-957.el7.x86_64 x86_64 GNU 5.3.1 Release Proj GUI SWIG GDAL GL2PS
+  Copyright (C) 2001-2020 German Aerospace Center (DLR) and others; https://sumo.dlr.de
+  License EPL-2.0: Eclipse Public License Version 2 <https://eclipse.org/legal/epl-v20.html>
+  Use --help to get the list of options.
+```
 
 ### Install DI-smartcross
 
