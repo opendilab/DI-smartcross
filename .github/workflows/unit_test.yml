@@ -24,7 +24,7 @@ jobs:
           sudo add-apt-repository ppa:sumo/stable
           sudo apt-get update
           sudo apt-get install sumo sumo-tools
-          export SUMO_HOME = /usr/share/sumo/tools
+          export SUMO_HOME=/usr/share/sumo/tools
           python -m pip install -e .
           python -m pip install -e ".[test]"
           ./modify_traci_connect_timeout.sh
