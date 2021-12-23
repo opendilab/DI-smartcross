@@ -21,6 +21,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: do_envtest
         run: |
+          apt-get install sumo sumo-tools
+          export SUMO_HOME = /usr/share/sumo/toolss
           python -m pip install -e .
           python -m pip install -e ".[test]"
           ./modify_traci_connect_timeout.sh
