@@ -54,6 +54,15 @@ source ~/.bashrc
 ```bash
 sumo
 ```
+If success, the following message will be shown in the shell.
+
+```
+Eclipse SUMO sumo Version 1.8.0
+ Build features: Linux-3.10.0-957.el7.x86_64 x86_64 GNU 5.3.1 Release Proj GUI SWIG GDAL GL2PS
+ Copyright (C) 2001-2020 German Aerospace Center (DLR) and others; https://sumo.dlr.de
+ License EPL-2.0: Eclipse Public License Version 2 <https://eclipse.org/legal/epl-v20.html>
+ Use --help to get the list of options.
+ ```
 
 ### Install DI-smartcross
 
@@ -71,7 +80,7 @@ DI-smartcross supports DQN, Off-policy PPO and Rainbow DQN RL methods with multi
 
 - train RL policies
 
-```bash
+```
 usage: sumo_train [-h] -d DING_CFG -e ENV_CFG [-s SEED] [--dynamic-flow]
                   [-cn COLLECT_ENV_NUM] [-en EVALUATE_ENV_NUM]
                   [--exp-name EXP_NAME]
@@ -93,9 +102,15 @@ optional arguments:
   --exp-name EXP_NAME   experiment name to save log and ckpt
 ```
 
-- evaluate existing policies
+Example of running DQN in wj3 env with default config.
 
 ```bash
+sumo_train -e smartcross/envs/sumo_arterial_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
+```
+
+- evaluate existing policies
+
+```
 usage: sumo_eval [-h] [-d DING_CFG] -e ENV_CFG [-s SEED]
                  [-p {random,fix,dqn,rainbow,ppo}] [--dynamic-flow]
                  [-n ENV_NUM] [--gui] [-c CKPT_PATH]
@@ -117,6 +132,12 @@ optional arguments:
   --gui                 open gui for visualize
   -c CKPT_PATH, --ckpt-path CKPT_PATH
                         model ckpt path
+```
+
+Example of running random policy in wj3 env.
+
+```bash
+sumo_eval -p random -e smartcross/envs/sumo_arterial_wj3_default_config.yaml     
 ```
 
 ## Environments
