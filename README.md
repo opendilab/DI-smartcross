@@ -14,7 +14,7 @@ DI-smartcross uses [**DI-engine**](https://github.com/opendilab/DI-engine), a Re
 
 ## Installation
 
-DI-smartcross supports SUMO version >= 1.6.0. Here we show an easily guide of installation of SUMO 1.8.0 on Linux.
+DI-smartcross supports SUMO version >= 1.6.0. Here we show an easy guide of installation with SUMO 1.8.0 on Linux.
 
 ### Install sumo
 
@@ -119,11 +119,11 @@ optional arguments:
                         model ckpt path
 ```
 
-### environment configurations
+## Environments
 
-- sumo env configuration
+### sumo env configuration
 
-The configuration of sumo env is stored in a config yaml file. You can take a look at the default config file to see how to modify env settings.
+The configuration of sumo env is stored in a config *.yaml* file. You can take a look at the default config file to see how to modify env settings.
 
 ``` python
 import yaml
@@ -150,8 +150,29 @@ env:
         ...
     reward:
         ...
-
 ```
+
+### Observation
+
+We provide several types of observations of a traffic cross. If `use_centrolized_obs` is set `True`, the observation of each cross will be concatenated into one vector. The contents of observation can me modified by setting `obs_type`. The following observation is supported now.
+
+- phase: One-hot phase vector of current cross signal
+- lane_pos_vec: Lane occupancy in each grid position. The grid num can be set with `lane_grid_num`
+- traffic_volumn: Traffic volumn of each lane. Vehicle num / lane length * volumn ratio
+- queue_len: Vehicle waiting queue length of each lane. Waiting num / lane length * volumn ratio
+
+### Action
+
+Sumo environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.
+
+### Reward
+
+Reward can be set with `reward_type`. Reward is calculated cross by cross. If `use_centrolized_obs` is set True, the reward of each cross will be summed up.
+
+- queue_len: Vehicle waiting queue num of each lane
+- wait_time: Wait time increment of vehicles in each lane
+- delay_time: Delay time of all vahicles in incomming and outgoing lanes
+- pressure: Pressure of a cross
 
 ## Contributing
 
