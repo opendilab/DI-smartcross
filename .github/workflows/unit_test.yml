@@ -21,8 +21,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: do_envtest
         run: |
-          python -m pip install .
-          python -m pip install ".[test]"
+          python -m pip install -e .
+          python -m pip install -e ".[test]"
           ./modify_traci_connect_timeout.sh
           pytest -sv -m envtest
           
