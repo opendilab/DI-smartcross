@@ -30,7 +30,7 @@ class TestSumoEnv:
     def test_naive(self, setup_config):
         env = SumoEnv(setup_config)
         obs = env.reset()
-        assert(len(obs) == env.info().obs_space)
+        assert (len(obs) == env.info().obs_space)
         for i in range(10):
             action = self.get_random_action(env.info().act_space)
             timestep = env.step(action)
