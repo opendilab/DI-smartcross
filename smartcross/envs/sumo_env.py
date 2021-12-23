@@ -12,7 +12,6 @@ from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
 
-
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 ALL_ACTION_TYPE = set(['change'])
 ALL_REWARD_TYPE = set(['queue_len', 'wait_time', 'delay_time', 'pressure'])
@@ -47,7 +46,7 @@ class SumoEnv(BaseEnv):
             self._crosses[tl] = Crossing(tl, self, None)
         self._init_info()
         self.close()
-    
+
     def _launch_env(self, gui=False):
         # set gui=True can get visualization simulation result with sumo, apply gui=False in the normal training
         # and test setting
@@ -107,7 +106,7 @@ class SumoEnv(BaseEnv):
         else:
             # TODO: add naive discrete action
             raise NotImplementedError
-        
+
     def _get_observation(self):
         obs = {}
         for tl in self._tls:
@@ -117,7 +116,9 @@ class SumoEnv(BaseEnv):
             if 'phase' in self._obs_type:
                 tl_obs += cross.get_onehot_phase()
             if 'lane_pos_vec' in self._obs_type:
-                tl_obs += [ele for lst in cross.get_lane_vehicle_pos_vector(self._lane_grid_num).values() for ele in lst]
+                tl_obs += [
+                    ele for lst in cross.get_lane_vehicle_pos_vector(self._lane_grid_num).values() for ele in lst
+                ]
             if 'traffic_volumn' in self._obs_type:
                 tl_obs += list(cross.get_lane_traffic_volumn(self._volumn_ratio).values())
             if 'queue_len' in self._obs_type:
@@ -129,7 +130,7 @@ class SumoEnv(BaseEnv):
             # TODO: add independent obs
             raise NotImplementedError
         return obs
-    
+
     def _get_action(self, raw_action):
         raw_action = np.squeeze(raw_action)
         if self._last_action is None:
@@ -144,7 +145,7 @@ class SumoEnv(BaseEnv):
             action[tl]['green'] = self._crosses[tl].get_green_phase_index(act)
         self._last_action = raw_action
         return action
-    
+
     def _get_reward(self):
         reward = {tl: 0 for tl in self._tls}
         for tl in self._tls:
@@ -164,7 +165,7 @@ class SumoEnv(BaseEnv):
         if self._use_centralized_obs:
             reward = sum(reward.values())
         return reward
-    
+
     def _simulate(self, action):
         for tl, a in action.items():
             yellow_phase = a['yellow']
@@ -189,7 +190,7 @@ class SumoEnv(BaseEnv):
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self, None)
         return to_ndarray(self._get_observation())
-    
+
     def step(self, action: Any) -> 'BaseEnv.timestep':
         action_per_tl = self._get_action(action)
         self._simulate(action_per_tl)

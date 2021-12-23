@@ -43,7 +43,7 @@ class Crossing:
     def update_timestep(self):
         self._update_measurement()
         self._update_lane_vehicle_info()
-    
+
     def set_phase(self, phase_id, duration):
         traci.trafficlight.setPhase(self._id, phase_id)
         traci.trafficlight.setPhaseDuration(self._id, duration)
@@ -72,7 +72,7 @@ class Crossing:
                 lane_vec[pos_idx] = 1
             vehicle_pos_vector[lane] = lane_vec
         return vehicle_pos_vector
-    
+
     def get_lane_traffic_volumn(self, volumn_ratio):
         traffic_volumn_dict = {}
         for lane in self._incoming_lanes:
@@ -80,14 +80,14 @@ class Crossing:
             traffic_volumn = veh_num / (self._lane_length[lane] / volumn_ratio)
             traffic_volumn_dict[lane] = traffic_volumn
         return traffic_volumn_dict
-    
+
     def get_lane_occupancy(self):
         occupancy_dict = {}
         for lane in self._incoming_lanes:
             occupancy = traci.lane.getLastStepOccupancy(lane)
             occupancy_dict[lane] = occupancy
         return occupancy_dict
-    
+
     def get_lane_queue_len(self, len_ratio=None):
         queue_len_dict = {}
         for lane in self._incoming_lanes:
@@ -109,7 +109,7 @@ class Crossing:
                 self._env.vehicle_info[veh]['wait_time'] = cur_wait_time
             wait_time_dict[lane] = wait_time
         return wait_time_dict
-    
+
     def get_lane_delay_time(self):
         delay_time_dict = {}
         for lane in self._incoming_lanes + self._outgoing_lanes:
@@ -135,15 +135,15 @@ class Crossing:
         for lane in self._outgoing_lanes:
             pressure -= traci.lane.getLastStepVehicleNumber(lane)
         return abs(pressure)
-    
+
     @property
     def current_phase(self):
         return self._current_phase, self._current_phase_duration
-    
+
     @property
     def phase_num(self):
         return len(self._green_phases)
-    
+
     @property
     def lane_num(self):
         return len(self._incoming_lanes)
