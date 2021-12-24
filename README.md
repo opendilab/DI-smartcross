@@ -17,7 +17,7 @@ DI-smartcross supports:
 - **Single-Agent** and **Multi-Agent** Reinforcement Learning
 - **Synthetic** and **Real** roadnet, **Arterial** and **Grid** network shape
 - **Customizable** observation, action and reward types
-- Easy access for **Environment Parallel**, training **Asynchronous Parallel** with DI-engine
+- Easily achieve **Multi-Environment Parallel**, **Actor-Learner Asynchronous Parallel** when training with DI-engine
 
 ## Installation
 
