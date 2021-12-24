@@ -6,7 +6,7 @@ from functools import partial
 from tensorboardX import SummaryWriter
 
 from ding.config import compile_config
-from ding.policy import create_policy
+from ding.policy import create_policy, PolicyFactory
 from ding.envs import get_vec_env_setting, create_env_manager
 from ding.worker import BaseLearner, InteractionSerialEvaluator, create_serial_collector, create_buffer
 from ding.utils.default_helper import set_pkg_seed
@@ -56,7 +56,16 @@ def main(args, seed=None):
     eps_cfg = cfg.policy.other.get('eps', None)
     if eps_cfg is not None:
         epsilon_greedy = get_epsilon_greedy_fn(eps_cfg.start, eps_cfg.end, eps_cfg.decay, eps_cfg.type)
-    # Learner's after_run hook.
+
+    # Accumulate plenty of data at the beginning of training.
+    if cfg.policy.get('random_collect_size', 0) > 0:
+        action_space = collector_env.env_info().act_space
+        random_policy = PolicyFactory.get_random_policy(policy.collect_mode, action_space=action_space)
+        collector.reset_policy(random_policy)
+        new_data = collector.collect(n_sample=cfg.policy.random_collect_size)
+        replay_buffer.push(new_data, cur_collector_envstep=0)
+        collector.reset_policy(policy.collect_mode)
+    
     for _ in range(cfg.policy.learn.learner.train_iterations):
         # Evaluate policy performance
         if evaluator.should_eval(learner.train_iter):
@@ -90,7 +99,9 @@ def main(args, seed=None):
                 if learner.policy.get_attribute('priority'):
                     replay_buffer.update(learner.priority_info)
 
+    # Learner's after_run hook.
     learner.call_hook('after_run')
+
     learner.close()
     collector.close()
     evaluator.close()

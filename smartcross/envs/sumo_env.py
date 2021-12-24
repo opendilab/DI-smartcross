@@ -8,6 +8,7 @@ import traci
 from sumolib import checkBinary
 
 from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
+from ding.envs.common.env_element import EnvElementInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
@@ -106,6 +107,16 @@ class SumoEnv(BaseEnv):
         else:
             # TODO: add naive discrete action
             raise NotImplementedError
+        self._obs_value = {
+            'min': 0,
+            'max': 1,
+            'dtype': float,
+        }
+        self._action_value = {
+            'min': 0,
+            'max': self._action_shape[0],
+            'dtype': int,
+        }
 
     def _get_observation(self):
         obs = {}
@@ -222,8 +233,8 @@ class SumoEnv(BaseEnv):
     def info(self) -> 'BaseEnvInfo':
         info_data = {
             'agent_num': 1,
-            'obs_space': self._obs_shape,
-            'act_space': self._action_shape,
+            'obs_space': EnvElementInfo(shape=self._obs_shape, value=self._obs_value),
+            'act_space': EnvElementInfo(shape=[len(self._action_shape)], value=self._action_value),
             'rew_space': (1, ),
             'use_wrappers': False
         }

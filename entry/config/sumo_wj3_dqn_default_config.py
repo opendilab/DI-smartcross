@@ -30,6 +30,7 @@ sumo_dqn_default_config = dict(
         nstep=nstep,
         # Reward's future discount facotr, aka. gamma.
         discount_factor=0.99,
+        random_collect_size=10000,
         # Model config used for model creating. Remember to change "obs_shape" and "action_shape" according to env.
         model=dict(
             obs_shape=442,
@@ -41,7 +42,7 @@ sumo_dqn_default_config = dict(
         learn=dict(
             # How many steps to train after one collection. Bigger "update_per_collect" means bigger off-policy.
             # collect data -> train fixed steps -> collect data -> ...
-            update_per_collect=100,
+            update_per_collect=200,
             batch_size=64,
             learning_rate=1e-4,
             target_update_freq=100,
