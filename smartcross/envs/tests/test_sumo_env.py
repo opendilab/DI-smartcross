@@ -1,6 +1,5 @@
 import os
-import random
-
+import numpy as np
 import pytest
 import torch
 import yaml
@@ -20,17 +19,16 @@ def setup_config():
 @pytest.mark.envtest
 class TestSumoEnv:
 
-    def get_random_action(self, action_dim):
-        action = []
-        for k in action_dim:
-            action.append(random.choice(list(range(k))))
+    def get_random_action(self, action_space):
+        min, max, shape = action_space.value['min'], action_space.value['max'], action_space.shape
+        action = np.random.randint(min, max, shape)
         action = [torch.LongTensor([v]) for v in action]
         return action
 
     def test_naive(self, setup_config):
         env = SumoEnv(setup_config)
         obs = env.reset()
-        assert (len(obs) == env.info().obs_space)
+        assert (len(obs) == env.info().obs_space.shape)
         for i in range(10):
             action = self.get_random_action(env.info().act_space)
             timestep = env.step(action)

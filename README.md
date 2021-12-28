@@ -211,7 +211,7 @@ We appreciate all contributions to improve DI-smartcross, both algorithms and sy
 DI-smartcross released under the Apache 2.0 license.
 
 ## Citation
-
+```latex
 @misc{smartcross,
     title={{DI-smartcross: OpenDILab} Decision Intelligence platform for Traffic Crossing Signal Control},
     author={DI-smartcross Contributors},
@@ -219,4 +219,5 @@ DI-smartcross released under the Apache 2.0 license.
     howpublished = {\url{`https://github.com/opendilab/DI-smartcross`}},
     year={2021},
 }
+```
 
