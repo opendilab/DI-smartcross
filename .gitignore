@@ -130,6 +130,8 @@ dmypy.json
 
 # sumo env config ignore
 *.out.xml
+*eg.rou.xml
+*_case_info.json
 
 debug
 exp
