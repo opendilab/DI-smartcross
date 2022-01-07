@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+   <input>
+      <net-file value="standard.net.xml"/>
+      <route-files value="./route/1100/2_eg.rou.xml"/>
+   </input>
+   <time>
+      <begin value="0"/>
+      <end value="4800.0"/>
+   </time>
+   <processing>
+      <time-to-teleport value="-1"/>
+   </processing>
+</configuration>

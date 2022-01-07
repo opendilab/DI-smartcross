@@ -12,6 +12,7 @@ from ding.envs.common.env_element import EnvElementInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
+from smartcross.utils.config_utils import set_route_flow
 
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 ALL_ACTION_TYPE = set(['change'])
@@ -25,6 +26,9 @@ class SumoEnv(BaseEnv):
         self._cfg = cfg
         self._sumocfg_path = os.path.dirname(__file__) + '/' + cfg.sumocfg_path
         self._gui = cfg.get('gui', False)
+        self._dynamic_flow = cfg.get('dynamic_flow', False)
+        if self._dynamic_flow:
+            self._flow_range = cfg.flow_range
         self._tls = cfg.tls
         self._max_episode_steps = cfg.max_episode_steps
         self._yellow_duration = cfg.yellow_duration
@@ -42,6 +46,7 @@ class SumoEnv(BaseEnv):
         self._launch_env_flag = False
         self._crosses = {}
         self._vehicle_info_dict = {}
+        self._label = str(time.time_ns() // (10 ** 3))[-6:]
         self._launch_env(False)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self, None)
@@ -73,7 +78,7 @@ class SumoEnv(BaseEnv):
             "--no-step-log",
             "--no-warnings",
         ]
-        traci.start(sumo_cmd, label=time.time())
+        traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
 
     def _init_info(self):
@@ -191,16 +196,26 @@ class SumoEnv(BaseEnv):
         self._current_steps += self._green_duration
         traci.simulationStep(self._current_steps)
 
+    def _set_route_flow(self, route_flow):
+        self._sumocfg_path = set_route_flow(
+            os.path.dirname(__file__) + '/' + self._cfg.sumocfg_path, route_flow, self._label
+        )
+        self._route_flow = route_flow
+        print("reset sumocfg file to ", self._sumocfg_path)
+
     def reset(self) -> Any:
         self._current_steps = 0
         self._total_reward = 0
         self._last_action = None
+        if self._dynamic_flow:
+            route_flow = np.random.randint(*self._flow_range) * 100
+            self._set_route_flow(route_flow)
         self._crosses.clear()
         self._vehicle_info_dict.clear()
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self, None)
-        return to_ndarray(self._get_observation())
+        return to_ndarray(self._get_observation(), dtype=np.float32)
 
     def step(self, action: Any) -> 'BaseEnv.timestep':
         action_per_tl = self._get_action(action)

@@ -38,3 +38,34 @@ def get_sumo_config(args):
     main_cfg = deep_merge_dicts(sumoenv_cfg, main_cfg)
 
     return main_cfg, create_config
+
+
+def get_route_flow(sumocfg_file):
+    tree = ET.parse(sumocfg_file)
+    root = tree.getroot()
+    try:
+        rf = root.find('input').find('route-files').get('value', None)
+        route_flow = int(rf.split('/')[2])
+        return route_flow
+    except BaseException:
+        return None
+
+
+def set_route_flow(sumocfg_file, route_flow, label=''):
+    sumocfg_parent_path = os.path.split(sumocfg_file)[0]
+    if get_route_flow(sumocfg_file) != route_flow:
+        tree = ET.parse(sumocfg_file)
+        root = tree.getroot()
+        rf = root.find('input').find('route-files').get('value', None)
+        route_flow_l = rf.split('/')
+        eg_rou = str(random.randint(0, 200)) + '_eg.rou.xml'
+        rf_new = os.path.join(*route_flow_l[:2], str(route_flow), eg_rou)
+        root.find('input').find('route-files').set('value', rf_new)
+        sumocfg_path_new = os.path.split(sumocfg_file)[-1]
+        sumocfg_path_new = os.path.splitext(sumocfg_path_new
+                                            )[0].split('_')[0] + '{}_flow{}.sumocfg'.format(label, route_flow)
+        sumocfg_path_new = os.path.join(sumocfg_parent_path, sumocfg_path_new)
+        tree.write(sumocfg_path_new)
+        return sumocfg_path_new
+    else:
+        return sumocfg_file
