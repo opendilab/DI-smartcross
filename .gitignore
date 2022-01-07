@@ -132,6 +132,7 @@ dmypy.json
 *.out.xml
 *eg.rou.xml
 *_case_info.json
+*_flow*.sumocfg
 
 debug
 exp
