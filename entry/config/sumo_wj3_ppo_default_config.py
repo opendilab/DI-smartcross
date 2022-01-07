@@ -1,4 +1,5 @@
 from easydict import EasyDict
+from torch import nn
 
 sumo_ppo_default_config = dict(
     exp_name='sumo_wj3_md_ppo',
@@ -27,8 +28,9 @@ sumo_ppo_default_config = dict(
         # ()
         continuous=False,
         model=dict(
-            obs_shape=430,
+            obs_shape=442,
             action_shape=[4, 4, 4],
+            activation=nn.Tanh(),
         ),
         learn=dict(
             update_per_collect=100,
@@ -73,7 +75,7 @@ create_config = dict(
         type='subprocess',
     ),
     env=dict(
-        import_names=['ditra.envs.sumo_env'],
+        import_names=['smartcross.envs.sumo_env'],
         type='sumo_env',
     ),
     policy=dict(

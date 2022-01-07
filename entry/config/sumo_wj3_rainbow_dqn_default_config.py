@@ -1,4 +1,5 @@
 from easydict import EasyDict
+from torch import nn
 
 nstep = 3
 sumo_rainbow_dqn_default_config = dict(
@@ -36,13 +37,14 @@ sumo_rainbow_dqn_default_config = dict(
             action_shape=[4, 4, 4],
             v_max=10,
             v_min=-10,
-            n_atom=51
+            n_atom=51,
+            activation=nn.Tanh(),
         ),
         # learn_mode config
         learn=dict(
             # How many steps to train after one collection. Bigger "update_per_collect" means bigger off-policy.
             # collect data -> train fixed steps -> collect data -> ...
-            update_per_collect=100,
+            update_per_collect=200,
             batch_size=64,
             learning_rate=1e-4,
             target_update_freq=100,

@@ -1,4 +1,5 @@
 from easydict import EasyDict
+from torch import nn
 
 nstep = 1
 sumo_dqn_default_config = dict(
@@ -37,6 +38,7 @@ sumo_dqn_default_config = dict(
             action_shape=[4, 4, 4],
             # Whether to use dueling head.
             dueling=True,
+            activation=nn.Tanh(),
         ),
         # learn_mode config
         learn=dict(
@@ -83,7 +85,7 @@ sumo_dqn_default_config = dict(
                 type='exp',
                 start=0.95,
                 end=0.1,
-                decay=50000,
+                decay=100000,
             ),
             replay_buffer=dict(
                 replay_buffer_size=400000,

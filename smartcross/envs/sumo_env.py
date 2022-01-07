@@ -214,7 +214,7 @@ class SumoEnv(BaseEnv):
             info['final_eval_reward'] = self._total_reward
             self.close()
         obs = to_ndarray(obs, dtype=np.float32)
-        reward = to_ndarray(reward, dtype=np.float32)
+        reward = to_ndarray([reward], dtype=np.float32)
         return BaseEnvTimestep(obs, reward, done, info)
 
     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
