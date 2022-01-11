@@ -1,5 +1,5 @@
 import torch
-import random
+import numpy as np
 from easydict import EasyDict
 import copy
 
@@ -13,14 +13,15 @@ class RandomPolicy():
 
     def __init__(self, act_space):
         self._act_space = act_space
+        self._min_val = self._act_space.value['min']
+        self._max_val = self._act_space.value['max']
+        self._act_shape = act_space.shape
 
     def reset(self, *args, **keargs):
         pass
 
     def get_random_action(self):
-        action = []
-        for k in self._act_space:
-            action.append(random.choice(list(range(k))))
+        action = np.random.randint(self._min_val, self._max_val, self._act_shape)
         action = [torch.LongTensor([v]) for v in action]
         return action
 
@@ -46,24 +47,27 @@ class FixedPolicy():
 
     def __init__(self, act_space):
         self._act_space = act_space
+        self._min_val = self._act_space.value['min']
+        self._max_val = self._act_space.value['max']
+        self._act_shape = act_space.shape
         self._last_act = {}
 
     def reset(self, *args, **keargs):
         self._last_act.clear()
 
     def get_next_action(self, i):
-        action = []
         if i not in self._last_act:
-            for k in self._act_space:
-                action.append(0)
+            action = np.zeros(self._act_shape)
         else:
-            pos = 0
-            for k in self._act_space:
-                act = self._last_act[i][pos] + 1
-                if act >= k:
-                    act = 0
-                action.append(act)
-                pos += 1
+            action = self._last_act[i] + 1
+            action[action >= self._max_val] = 0
+            # pos = 0
+            # for k in self._act_shape[0]:
+            #     act = self._last_act[i][pos] + 1
+            #     if act >= self._max_val:
+            #         act = 0
+            #     action.append(act)
+            #     pos += 1
         self._last_act[i] = action
         action = [torch.LongTensor([v]) for v in action]
         return action
