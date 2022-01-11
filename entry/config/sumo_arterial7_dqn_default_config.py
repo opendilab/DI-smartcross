@@ -1,4 +1,5 @@
 from easydict import EasyDict
+from torch import nn
 
 nstep = 1
 sumo_dqn_default_config = dict(
@@ -8,7 +9,7 @@ sumo_dqn_default_config = dict(
             shared_memory=False,
             context='spawn',
             retry_type='renew',
-            max_retry=2,
+            max_retry=5,
         ),
         # Episode number for evaluation.
         n_evaluator_episode=1,
@@ -36,6 +37,7 @@ sumo_dqn_default_config = dict(
             action_shape=[4] * 7,
             # Whether to use dueling head.
             dueling=True,
+            activation=nn.Tanh(),
         ),
         # learn_mode config
         learn=dict(

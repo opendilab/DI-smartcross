@@ -2,7 +2,7 @@ env:
   sumocfg_path: 'rl_arterial_7roads_scene/standard.sumocfg'
   gui: False
   inference: False
-  dynamic_flow: True
+  dynamic_flow: False
   flow_range: [9, 19]
   max_episode_steps: 1600
   green_duration: 10
@@ -17,4 +17,4 @@ env:
     use_multi_discrete: True
   reward:
     reward_type: 
-      pressure: 1.0
+      pressure: 0.1

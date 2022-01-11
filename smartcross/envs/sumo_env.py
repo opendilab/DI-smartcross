@@ -46,7 +46,7 @@ class SumoEnv(BaseEnv):
         self._launch_env_flag = False
         self._crosses = {}
         self._vehicle_info_dict = {}
-        self._label = str(time.time_ns() // (10 ** 3))[-6:]
+        self._label = str(int(time.time() * (10 ** 6)))[-6:]
         self._launch_env(False)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self, None)
@@ -92,7 +92,6 @@ class SumoEnv(BaseEnv):
                 self._lane_grid_num = self._cfg.obs.lane_grid_num
                 tl_obs += cross.lane_num * self._lane_grid_num
             if 'traffic_volumn' in self._obs_type:
-                self._volumn_ratio = self._cfg.obs.traffic_volumn_ratio
                 tl_obs += cross.lane_num
             if 'queue_len' in self._obs_type:
                 self._volumn_ratio = self._cfg.obs.traffic_volumn_ratio
@@ -136,7 +135,7 @@ class SumoEnv(BaseEnv):
                     ele for lst in cross.get_lane_vehicle_pos_vector(self._lane_grid_num).values() for ele in lst
                 ]
             if 'traffic_volumn' in self._obs_type:
-                tl_obs += list(cross.get_lane_traffic_volumn(self._volumn_ratio).values())
+                tl_obs += list(cross.get_lane_traffic_volumn(self._green_duration + self._yellow_duration).values())
             if 'queue_len' in self._obs_type:
                 tl_obs += list(cross.get_lane_queue_len(self._volumn_ratio).values())
             obs[tl] = tl_obs
@@ -229,7 +228,7 @@ class SumoEnv(BaseEnv):
             info['final_eval_reward'] = self._total_reward
             self.close()
         obs = to_ndarray(obs, dtype=np.float32)
-        reward = to_ndarray(reward, dtype=np.float32)
+        reward = to_ndarray([reward], dtype=np.float32)
         return BaseEnvTimestep(obs, reward, done, info)
 
     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
