@@ -1,4 +1,5 @@
 from typing import Dict
+import numpy as np
 
 from ding.envs import BaseEnv
 from ding.envs.common.env_element import EnvElementInfo
@@ -11,6 +12,7 @@ class SumoObsHelper():
     def __init__(self, core: BaseEnv, cfg: Dict):
         self._core = core
         self._cfg = cfg
+        self._tl_num = len(self._core.crosses)
         self._obs_type = self._cfg.obs_type
         assert set(self._obs_type).issubset(ALL_OBS_TPYE)
         self._use_centralized_obs = self._cfg.use_centralized_obs
@@ -38,16 +40,20 @@ class SumoObsHelper():
             else:
                 tl_obs_max_dict = max_dict(tl_obs_max_dict, tl_obs_shape_map)
 
-        self._global_state_shape = obs_shape
-        if self._padding:
-            self._tl_feature_shape = tl_obs_max_dict
-            self._agent_state_shape = sum(self._tl_feature_shape.values())
+        if self._use_centralized_obs:
+            self._obs_shape = sum(obs_shape)
         else:
-            self._agent_state_shape = max(obs_shape)
-        self._obs_shape = {
-            'agent_state': self._agent_state_shape,
-            'global_state': self._global_state_shape,
-        }
+            global_state_shape = sum(obs_shape)
+            if self._padding:
+                self._tl_feature_shape = tl_obs_max_dict
+                agent_state_shape = sum(self._tl_feature_shape.values())
+            else:
+                agent_state_shape = max(obs_shape)
+            self._obs_shape = {
+                'agent_state': agent_state_shape,
+                'global_state': global_state_shape,
+                'action_mask': self._tl_num
+            }
         self._obs_value = {
             'min': 0,
             'max': 1,
@@ -71,17 +77,29 @@ class SumoObsHelper():
 
     def get_observation(self):
         obs = {}
+        tl_num = len(self._core.crosses)
         for tl in self._core.crosses.keys():
             tl_obs = self._get_tls_feature(tl)
-            if self._padding:
-                tl_obs = padding_obs_by_fearure(tl_obs, self._tl_feature_shape)
             obs[tl] = tl_obs
+        global_obs = squeeze_obs(obs)
+        if self._use_centralized_obs:
+            return global_obs
+        else:
+            agent_obs = []
+            for tl, tl_obs in obs.items():
+                if self._padding:
+                    tl_obs = padding_obs_by_fearure(tl_obs, self._tl_feature_shape)
+                tl_obs = [element for lis in tl_obs.values() for element in lis]
+                agent_obs.append(tl_obs)
+            return {
+                'global_state': np.array([global_obs] * tl_num),
+                'agent_state': np.array(agent_obs),
+                'action_mask': [1] * tl_num,
+            }
+
         return obs
 
-    def info(self, centralized=False):
-        if centralized:
-            obs_shape = sum(self._global_state_shape)
-            return EnvElementInfo(obs_shape, self._obs_value)
+    def info(self):
         return EnvElementInfo(self._obs_shape, self._obs_value)
 
 
@@ -101,3 +119,15 @@ def padding_obs_by_fearure(tl_obs, tl_feature_shape):
         if len(tl_obs[feature]) < tl_feature_shape[feature]:
             tl_obs[feature] += [0] * (tl_feature_shape[feature] - len(tl_obs[feature]))
     return tl_obs
+
+
+def squeeze_obs(obs):
+    assert obs is not None
+    if isinstance(obs, dict):
+        return [value for key in sorted(obs) for value in squeeze_obs(obs[key])]
+    elif isinstance(obs, (tuple, list, set)):
+        return [value for item in obs for value in squeeze_obs(item)]
+    elif isinstance(obs, (int, float, str)):
+        return (obs, )
+    else:
+        raise ValueError('Cannot process type: {}, {}'.format(type(obs), obs))

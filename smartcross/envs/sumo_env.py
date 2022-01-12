@@ -35,23 +35,23 @@ class SumoEnv(BaseEnv):
         self._yellow_duration = cfg.yellow_duration
         self._green_duration = cfg.green_duration
 
-        self._obs_helper = SumoObsHelper(self, cfg.obs)
-        self._use_centralized_obs = cfg.obs.use_centralized_obs
-
         self._action_type = cfg.action.action_type
         self._reward_type = cfg.reward.reward_type
         assert self._action_type in ALL_ACTION_TYPE
         assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
 
         self._use_multi_discrete = cfg.action.use_multi_discrete
+        self._use_centralized_reward = cfg.reward.use_centralized_reward
 
         self._launch_env_flag = False
         self._crosses = {}
         self._vehicle_info_dict = {}
         self._label = str(int(time.time() * (10 ** 6)))[-6:]
+
         self._launch_env(False)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
+        self._obs_helper = SumoObsHelper(self, cfg.obs)
         self._init_info()
         self.close()
 
@@ -107,10 +107,6 @@ class SumoEnv(BaseEnv):
         for cross in self._crosses.values():
             cross.update_timestep()
         obs = self._obs_helper.get_observation()
-        for tl, tl_obs in obs.items():
-            obs[tl] = [element for lis in tl_obs.values() for element in lis]
-        if self._use_centralized_obs:
-            obs = [element for lis in obs.values() for element in lis]
         return obs
 
     def _get_action(self, raw_action):
@@ -144,7 +140,7 @@ class SumoEnv(BaseEnv):
             if 'pressure' in self._reward_type:
                 pressure = cross.get_pressure()
                 reward[tl] += self._reward_type['pressure'] * -pressure
-        if self._use_centralized_obs:
+        if self._use_centralized_reward:
             reward = sum(reward.values())
         return reward
 
@@ -188,7 +184,7 @@ class SumoEnv(BaseEnv):
         self._simulate(action_per_tl)
         obs = self._get_observation()
         reward = self._get_reward()
-        if self._use_centralized_obs:
+        if self._use_centralized_reward:
             self._total_reward += reward
         else:
             self._total_reward += sum(reward.values())
@@ -217,7 +213,7 @@ class SumoEnv(BaseEnv):
     def info(self) -> 'BaseEnvInfo':
         info_data = {
             'agent_num': len(self._tls),
-            'obs_space': self._obs_helper.info(self._use_centralized_obs),
+            'obs_space': self._obs_helper.info(),
             'act_space': EnvElementInfo(shape=[len(self._action_shape)], value=self._action_value),
             'rew_space': len(self._tls),
             'use_wrappers': False
