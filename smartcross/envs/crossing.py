@@ -1,18 +1,22 @@
 import traci
 import numpy as np
 
+from ding.envs import BaseEnv
+
 
 class Crossing:
 
-    def __init__(self, tls_id, env, tcnn):
+    def __init__(self, tls_id: str, env: 'BaseEnv'):
         self._id = tls_id
         self._env = env
+        self._green_duration = self._env._green_duration
+        self._yellow_duration = self._env._yellow_duration
         self._incoming_lanes = list(set(traci.trafficlight.getControlledLanes(self._id)))
         self._outgoing_lanes = list(set([l[0][1] for l in traci.trafficlight.getControlledLinks(self._id)]))
         self._lane_length = {l: traci.lane.getLength(l) for l in self._incoming_lanes}
 
         self._lane_vehicle_dict = {}
-        self._vehicle_lane_dict = {}
+        self._previous_lane_vehicle_dict = {}
         signal_definition = traci.trafficlight.getCompleteRedYellowGreenDefinition(self._id)[0]
         self._green_phases = []
         self._yellow_phases = []
@@ -41,6 +45,7 @@ class Crossing:
                     self._env.vehicle_info[veh] = {}
 
     def update_timestep(self):
+        self._previous_lane_vehicle_dict = self._lane_vehicle_dict.copy()
         self._update_measurement()
         self._update_lane_vehicle_info()
 
@@ -73,11 +78,15 @@ class Crossing:
             vehicle_pos_vector[lane] = lane_vec
         return vehicle_pos_vector
 
-    def get_lane_traffic_volumn(self, volumn_ratio):
+    def get_lane_traffic_volumn(self):
         traffic_volumn_dict = {}
         for lane in self._incoming_lanes:
-            veh_num = traci.lane.getLastStepVehicleNumber(lane)
-            traffic_volumn = veh_num / (self._lane_length[lane] / volumn_ratio)
+            traffic_volumn = 0
+            if lane in self._previous_lane_vehicle_dict:
+                for veh in self._previous_lane_vehicle_dict[lane]:
+                    if veh not in self._lane_vehicle_dict:
+                        traffic_volumn += 1
+            traffic_volumn = traffic_volumn / (self._green_duration + self._yellow_duration)
             traffic_volumn_dict[lane] = traffic_volumn
         return traffic_volumn_dict
 

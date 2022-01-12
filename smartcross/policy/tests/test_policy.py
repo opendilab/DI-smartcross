@@ -32,7 +32,7 @@ class TestPolicy:
             print(action)
         print('end')
         env.close()
-    
+
     def test_fix_policy(self, setup_env):
         env = setup_env
         obs = env.reset()

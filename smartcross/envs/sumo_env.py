@@ -12,6 +12,7 @@ from ding.envs.common.env_element import EnvElementInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
+from smartcross.envs.obs.sumo_obs_helper import SumoObsHelper
 from smartcross.utils.config_utils import set_route_flow
 
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
@@ -34,13 +35,14 @@ class SumoEnv(BaseEnv):
         self._yellow_duration = cfg.yellow_duration
         self._green_duration = cfg.green_duration
 
-        self._obs_type = cfg.obs.obs_type
+        self._obs_helper = SumoObsHelper(self, cfg.obs)
+        self._use_centralized_obs = cfg.obs.use_centralized_obs
+
         self._action_type = cfg.action.action_type
         self._reward_type = cfg.reward.reward_type
-        assert set(self._obs_type).issubset(ALL_OBS_TPYE)
         assert self._action_type in ALL_ACTION_TYPE
         assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
-        self._use_centralized_obs = cfg.obs.use_centralized_obs
+
         self._use_multi_discrete = cfg.action.use_multi_discrete
 
         self._launch_env_flag = False
@@ -49,7 +51,7 @@ class SumoEnv(BaseEnv):
         self._label = str(int(time.time() * (10 ** 6)))[-6:]
         self._launch_env(False)
         for tl in self._cfg.tls:
-            self._crosses[tl] = Crossing(tl, self, None)
+            self._crosses[tl] = Crossing(tl, self)
         self._init_info()
         self.close()
 
@@ -82,40 +84,19 @@ class SumoEnv(BaseEnv):
         self._launch_env_flag = True
 
     def _init_info(self):
-        obs_shape = []
+        self._obs_helper.init_info()
         action_shape = []
         for tl, cross in self._crosses.items():
-            tl_obs = 0
-            if 'phase' in self._obs_type:
-                tl_obs += cross.phase_num
-            if 'lane_pos_vec' in self._obs_type:
-                self._lane_grid_num = self._cfg.obs.lane_grid_num
-                tl_obs += cross.lane_num * self._lane_grid_num
-            if 'traffic_volumn' in self._obs_type:
-                tl_obs += cross.lane_num
-            if 'queue_len' in self._obs_type:
-                self._volumn_ratio = self._cfg.obs.traffic_volumn_ratio
-                tl_obs += cross.lane_num
-            obs_shape.append(tl_obs)
             if self._action_type == 'change':
                 action_shape.append(cross.phase_num)
             else:
                 # TODO: add switch action
                 raise NotImplementedError
-        if self._use_centralized_obs:
-            self._obs_shape = sum(obs_shape)
-        else:
-            self._obs_shape = obs_shape
         if self._use_multi_discrete:
             self._action_shape = action_shape
         else:
             # TODO: add naive discrete action
             raise NotImplementedError
-        self._obs_value = {
-            'min': 0,
-            'max': 1,
-            'dtype': float,
-        }
         self._action_value = {
             'min': 0,
             'max': self._action_shape[0],
@@ -123,27 +104,13 @@ class SumoEnv(BaseEnv):
         }
 
     def _get_observation(self):
-        obs = {}
-        for tl in self._tls:
-            tl_obs = []
-            cross = self._crosses[tl]
+        for cross in self._crosses.values():
             cross.update_timestep()
-            if 'phase' in self._obs_type:
-                tl_obs += cross.get_onehot_phase()
-            if 'lane_pos_vec' in self._obs_type:
-                tl_obs += [
-                    ele for lst in cross.get_lane_vehicle_pos_vector(self._lane_grid_num).values() for ele in lst
-                ]
-            if 'traffic_volumn' in self._obs_type:
-                tl_obs += list(cross.get_lane_traffic_volumn(self._green_duration + self._yellow_duration).values())
-            if 'queue_len' in self._obs_type:
-                tl_obs += list(cross.get_lane_queue_len(self._volumn_ratio).values())
-            obs[tl] = tl_obs
+        obs = self._obs_helper.get_observation()
+        for tl, tl_obs in obs.items():
+            obs[tl] = [element for lis in tl_obs.values() for element in lis]
         if self._use_centralized_obs:
             obs = [element for lis in obs.values() for element in lis]
-        else:
-            # TODO: add independent obs
-            raise NotImplementedError
         return obs
 
     def _get_action(self, raw_action):
@@ -213,7 +180,7 @@ class SumoEnv(BaseEnv):
         self._vehicle_info_dict.clear()
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
-            self._crosses[tl] = Crossing(tl, self, None)
+            self._crosses[tl] = Crossing(tl, self)
         return to_ndarray(self._get_observation(), dtype=np.float32)
 
     def step(self, action: Any) -> 'BaseEnv.timestep':
@@ -221,7 +188,10 @@ class SumoEnv(BaseEnv):
         self._simulate(action_per_tl)
         obs = self._get_observation()
         reward = self._get_reward()
-        self._total_reward += reward
+        if self._use_centralized_obs:
+            self._total_reward += reward
+        else:
+            self._total_reward += sum(reward.values())
         done = self._current_steps > self._max_episode_steps
         info = {}
         if done:
@@ -246,10 +216,10 @@ class SumoEnv(BaseEnv):
 
     def info(self) -> 'BaseEnvInfo':
         info_data = {
-            'agent_num': 1,
-            'obs_space': EnvElementInfo(shape=self._obs_shape, value=self._obs_value),
+            'agent_num': len(self._tls),
+            'obs_space': self._obs_helper.info(self._use_centralized_obs),
             'act_space': EnvElementInfo(shape=[len(self._action_shape)], value=self._action_value),
-            'rew_space': (1, ),
+            'rew_space': len(self._tls),
             'use_wrappers': False
         }
         return BaseEnvInfo(**info_data)
@@ -260,3 +230,14 @@ class SumoEnv(BaseEnv):
     @property
     def vehicle_info(self):
         return self._vehicle_info_dict
+
+    @property
+    def crosses(self):
+        return self._crosses
+
+
+def squeeze(obs):
+    res = []
+    for tl, tl_obs in obs.itmes():
+        res += tl_obs
+    return res
