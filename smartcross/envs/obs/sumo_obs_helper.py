@@ -72,7 +72,7 @@ class SumoObsHelper():
         if 'traffic_volumn' in self._obs_type:
             tl_obs['traffic_volumn'] = list(cross.get_lane_traffic_volumn().values())
         if 'queue_len' in self._obs_type:
-            tl_obs['queue_len'] += list(cross.get_lane_queue_len(self._queue_len_ratio).values())
+            tl_obs['queue_len'] = list(cross.get_lane_queue_len(self._queue_len_ratio).values())
         return tl_obs
 
     def get_observation(self) -> Dict[str, np.ndarray]:

@@ -9,13 +9,15 @@ env:
   obs:
     obs_type: [phase, lane_pos_vec]
     lane_grid_num: 10
-    traffic_volumn_ratio: 7.5
+    queue_len_ratio: 7.5
     use_centralized_obs: True
+    padding: False
   action:
     action_type: change
     use_multi_discrete: True
   reward:
-    reward_type: 
+    use_centralized_reward: True
+    reward_type:
       queue_len: 1.0
       # wait_time: 1.0
       # delay_time: 1.0

@@ -1,7 +1,7 @@
 from easydict import EasyDict
 from torch import nn
 
-sumo_ppo_default_config = dict(
+sumo_mappo_default_config = dict(
     exp_name='sumo_wj3_mappo',
     env=dict(
         manager=dict(
@@ -87,5 +87,5 @@ create_config = dict(
 )
 
 create_config = EasyDict(create_config)
-sumo_ppo_default_config = EasyDict(sumo_ppo_default_config)
-main_config = sumo_ppo_default_config
+sumo_mappo_default_config = EasyDict(sumo_mappo_default_config)
+main_config = sumo_mappo_default_config
