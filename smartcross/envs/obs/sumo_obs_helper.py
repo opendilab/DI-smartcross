@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import numpy as np
 
 from ding.envs import BaseEnv
@@ -9,7 +9,7 @@ ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 
 class SumoObsHelper():
 
-    def __init__(self, core: BaseEnv, cfg: Dict):
+    def __init__(self, core: BaseEnv, cfg: Dict) -> None:
         self._core = core
         self._cfg = cfg
         self._tl_num = len(self._core.crosses)
@@ -18,7 +18,7 @@ class SumoObsHelper():
         self._use_centralized_obs = self._cfg.use_centralized_obs
         self._padding = self._cfg.padding
 
-    def init_info(self):
+    def init_info(self) -> None:
         obs_shape = []
         tl_obs_max_dict = None
         for tl, cross in self._core.crosses.items():
@@ -60,7 +60,7 @@ class SumoObsHelper():
             'dtype': float,
         }
 
-    def _get_tls_feature(self, tl_id):
+    def _get_tls_feature(self, tl_id: int) -> Dict:
         cross = self._core.crosses[tl_id]
         tl_obs = {}
         if 'phase' in self._obs_type:
@@ -75,7 +75,7 @@ class SumoObsHelper():
             tl_obs['queue_len'] += list(cross.get_lane_queue_len(self._queue_len_ratio).values())
         return tl_obs
 
-    def get_observation(self):
+    def get_observation(self) -> Dict[str, np.ndarray]:
         obs = {}
         tl_num = len(self._core.crosses)
         for tl in self._core.crosses.keys():
@@ -91,13 +91,13 @@ class SumoObsHelper():
                     tl_obs = padding_obs_by_fearure(tl_obs, self._tl_feature_shape)
                 tl_obs = [element for lis in tl_obs.values() for element in lis]
                 agent_obs.append(tl_obs)
+            action_num = self._core.info().act_space.value['max']
+            action_mask = [1] * action_num
             return {
                 'global_state': np.array([global_obs] * tl_num),
                 'agent_state': np.array(agent_obs),
-                'action_mask': [1] * tl_num,
+                'action_mask': np.array([action_mask] * tl_num)
             }
-
-        return obs
 
     def info(self):
         return EnvElementInfo(self._obs_shape, self._obs_value)
@@ -114,14 +114,14 @@ def max_dict(dict1: Dict, dict2: Dict) -> Dict:
     return dict1
 
 
-def padding_obs_by_fearure(tl_obs, tl_feature_shape):
+def padding_obs_by_fearure(tl_obs: Dict, tl_feature_shape: Dict) -> Dict:
     for feature in tl_obs:
         if len(tl_obs[feature]) < tl_feature_shape[feature]:
             tl_obs[feature] += [0] * (tl_feature_shape[feature] - len(tl_obs[feature]))
     return tl_obs
 
 
-def squeeze_obs(obs):
+def squeeze_obs(obs: Dict) -> List:
     assert obs is not None
     if isinstance(obs, dict):
         return [value for key in sorted(obs) for value in squeeze_obs(obs[key])]

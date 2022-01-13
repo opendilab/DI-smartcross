@@ -1,3 +1,4 @@
+from typing import Dict, List
 import traci
 import numpy as np
 
@@ -6,11 +7,10 @@ from ding.envs import BaseEnv
 
 class Crossing:
 
-    def __init__(self, tls_id: str, env: 'BaseEnv'):
+    def __init__(self, tls_id: str, env: 'BaseEnv') -> None:
         self._id = tls_id
         self._env = env
-        self._green_duration = self._env._green_duration
-        self._yellow_duration = self._env._yellow_duration
+        self._green_duration, self._yellow_duration = self._env.duration
         self._incoming_lanes = list(set(traci.trafficlight.getControlledLanes(self._id)))
         self._outgoing_lanes = list(set([l[0][1] for l in traci.trafficlight.getControlledLinks(self._id)]))
         self._lane_length = {l: traci.lane.getLength(l) for l in self._incoming_lanes}
@@ -27,7 +27,7 @@ class Crossing:
                 self._yellow_phases.append(idx)
         assert len(self._green_phases) == len(self._green_phases) > 0
 
-    def _update_measurement(self):
+    def _update_measurement(self) -> None:
         raw_phase = traci.trafficlight.getPhase(self._id)
         if raw_phase in self._green_phases:
             self._current_phase = self._green_phases.index(raw_phase)
@@ -37,34 +37,34 @@ class Crossing:
             self._current_phase = -1
         self._current_phase_duration = traci.trafficlight.getPhaseDuration(self._id)
 
-    def _update_lane_vehicle_info(self):
+    def _update_lane_vehicle_info(self) -> None:
         for lane in self._incoming_lanes + self._outgoing_lanes:
             self._lane_vehicle_dict[lane] = traci.lane.getLastStepVehicleIDs(lane)
             for veh in self._lane_vehicle_dict[lane]:
                 if veh not in self._env.vehicle_info:
                     self._env.vehicle_info[veh] = {}
 
-    def update_timestep(self):
+    def update_timestep(self) -> None:
         self._previous_lane_vehicle_dict = self._lane_vehicle_dict.copy()
         self._update_measurement()
         self._update_lane_vehicle_info()
 
-    def set_phase(self, phase_id, duration):
+    def set_phase(self, phase_id: int, duration: float) -> None:
         traci.trafficlight.setPhase(self._id, phase_id)
         traci.trafficlight.setPhaseDuration(self._id, duration)
 
-    def get_onehot_phase(self):
+    def get_onehot_phase(self) -> List:
         onehot = [0] * len(self._green_phases)
         onehot[self._current_phase] = 1
         return onehot
 
-    def get_green_phase_index(self, idx):
+    def get_green_phase_index(self, idx: int) -> int:
         return self._green_phases[idx]
 
-    def get_yellow_phase_index(self, idx):
+    def get_yellow_phase_index(self, idx: int) -> int:
         return self._yellow_phases[idx]
 
-    def get_lane_vehicle_pos_vector(self, grid_num):
+    def get_lane_vehicle_pos_vector(self, grid_num: int) -> Dict:
         vehicle_pos_vector = {}
         for lane in self._incoming_lanes:
             lane_vec = [0] * grid_num

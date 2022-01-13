@@ -1,7 +1,7 @@
 import os
 import sys
 import time
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple, Union
 import numpy as np
 
 import traci
@@ -55,7 +55,7 @@ class SumoEnv(BaseEnv):
         self._init_info()
         self.close()
 
-    def _launch_env(self, gui=False):
+    def _launch_env(self, gui: bool = False) -> None:
         # set gui=True can get visualization simulation result with sumo, apply gui=False in the normal training
         # and test setting
 
@@ -83,7 +83,7 @@ class SumoEnv(BaseEnv):
         traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
 
-    def _init_info(self):
+    def _init_info(self) -> None:
         self._obs_helper.init_info()
         action_shape = []
         for tl, cross in self._crosses.items():
@@ -103,13 +103,13 @@ class SumoEnv(BaseEnv):
             'dtype': int,
         }
 
-    def _get_observation(self):
+    def _get_observation(self) -> Union[Dict, List]:
         for cross in self._crosses.values():
             cross.update_timestep()
         obs = self._obs_helper.get_observation()
         return obs
 
-    def _get_action(self, raw_action):
+    def _get_action(self, raw_action: np.ndarray) -> Dict:
         raw_action = np.squeeze(raw_action)
         if self._last_action is None:
             self._last_action = [None for _ in range(len(raw_action))]
@@ -124,7 +124,7 @@ class SumoEnv(BaseEnv):
         self._last_action = raw_action
         return action
 
-    def _get_reward(self):
+    def _get_reward(self) -> Union[float, Dict]:
         reward = {tl: 0 for tl in self._tls}
         for tl in self._tls:
             cross = self._crosses[tl]
@@ -144,7 +144,7 @@ class SumoEnv(BaseEnv):
             reward = sum(reward.values())
         return reward
 
-    def _simulate(self, action):
+    def _simulate(self, action: Dict) -> None:
         for tl, a in action.items():
             yellow_phase = a['yellow']
             if yellow_phase is not None:
@@ -158,7 +158,7 @@ class SumoEnv(BaseEnv):
         self._current_steps += self._green_duration
         traci.simulationStep(self._current_steps)
 
-    def _set_route_flow(self, route_flow):
+    def _set_route_flow(self, route_flow: int) -> None:
         self._sumocfg_path = set_route_flow(
             os.path.dirname(__file__) + '/' + self._cfg.sumocfg_path, route_flow, self._label
         )
@@ -224,16 +224,13 @@ class SumoEnv(BaseEnv):
         return "SumoEnv"
 
     @property
-    def vehicle_info(self):
+    def vehicle_info(self) -> Dict[str, Dict]:
         return self._vehicle_info_dict
 
     @property
-    def crosses(self):
+    def crosses(self) -> Dict[int, Crossing]:
         return self._crosses
 
-
-def squeeze(obs):
-    res = []
-    for tl, tl_obs in obs.itmes():
-        res += tl_obs
-    return res
+    @property
+    def duration(self) -> Tuple[float]:
+        return self._green_duration, self._yellow_duration

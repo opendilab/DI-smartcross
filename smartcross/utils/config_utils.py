@@ -1,6 +1,5 @@
 import os
 import yaml
-import logging
 from easydict import EasyDict
 from importlib import import_module
 import xml.etree.ElementTree as ET
