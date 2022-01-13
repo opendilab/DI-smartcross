@@ -5,6 +5,7 @@ from easydict import EasyDict
 import copy
 
 from ding.utils import POLICY_REGISTRY
+from ding.envs.common import EnvElementInfo
 
 
 @POLICY_REGISTRY.register('smartcross_random')
@@ -12,7 +13,7 @@ class RandomPolicy():
 
     config = dict()
 
-    def __init__(self, act_space: 'EnvElementInfo') -> None:
+    def __init__(self, act_space: EnvElementInfo) -> None:
         self._act_space = act_space
         self._min_val = self._act_space.value['min']
         self._max_val = self._act_space.value['max']
@@ -46,7 +47,7 @@ class FixedPolicy():
 
     config = dict()
 
-    def __init__(self, act_space: 'EnvElementInfo') -> None:
+    def __init__(self, act_space: EnvElementInfo) -> None:
         self._act_space = act_space
         self._min_val = self._act_space.value['min']
         self._max_val = self._act_space.value['max']
