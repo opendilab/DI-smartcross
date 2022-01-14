@@ -2,7 +2,7 @@ from easydict import EasyDict
 from torch import nn
 
 nstep = 1
-sumo_dqn_default_config = dict(
+sumo_mddqn_default_config = dict(
     exp_name='sumo_arterial7_md_dqn',
     env=dict(
         manager=dict(
@@ -21,8 +21,6 @@ sumo_dqn_default_config = dict(
     policy=dict(
         # Whether to use cuda for network.
         cuda=True,
-        # Whether the RL algorithm is on-policy or off-policy.
-        on_policy=False,
         # Whether use priority
         priority=True,
         priority_IS_weight=True,
@@ -112,5 +110,5 @@ create_config = dict(
 )
 
 create_config = EasyDict(create_config)
-sumo_dqn_default_config = EasyDict(sumo_dqn_default_config)
-main_config = sumo_dqn_default_config
+sumo_mddqn_default_config = EasyDict(sumo_mddqn_default_config)
+main_config = sumo_mddqn_default_config

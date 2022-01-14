@@ -21,8 +21,6 @@ sumo_mappo_default_config = dict(
     policy=dict(
         # (bool) Whether to use cuda for network.
         cuda=True,
-        # (bool) Whether the RL algorithm is on-policy or off-policy. (Note: in practice PPO can be off-policy used)
-        on_policy=True,
         # (bool) Whether to use priority(priority sample, IS weight, update priority)
         priority=False,
         # ()
@@ -60,16 +58,7 @@ sumo_mappo_default_config = dict(
             )
         ),
         eval=dict(evaluator=dict(eval_freq=1000, )),
-        other=dict(
-            # replay_buffer=dict(
-            #     replay_buffer_size=400000,
-            #     max_use=10000,
-            #     monitor=dict(
-            #         sampled_data_attr=dict(print_freq=300, ),
-            #         periodic_thruput=dict(seconds=300, ),
-            #     ),
-            # ),
-        )
+        other=dict()
     ),
 )
 

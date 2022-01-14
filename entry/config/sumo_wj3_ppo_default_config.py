@@ -1,7 +1,7 @@
 from easydict import EasyDict
 from torch import nn
 
-sumo_ppo_default_config = dict(
+sumo_mdppo_default_config = dict(
     exp_name='sumo_wj3_md_ppo',
     env=dict(
         manager=dict(
@@ -21,8 +21,6 @@ sumo_ppo_default_config = dict(
     policy=dict(
         # (bool) Whether to use cuda for network.
         cuda=True,
-        # (bool) Whether the RL algorithm is on-policy or off-policy. (Note: in practice PPO can be off-policy used)
-        on_policy=False,
         # (bool) Whether to use priority(priority sample, IS weight, update priority)
         priority=False,
         # ()
@@ -33,7 +31,7 @@ sumo_ppo_default_config = dict(
             activation=nn.Tanh(),
         ),
         learn=dict(
-            update_per_collect=100,
+            epoch_per_collect=10,
             batch_size=64,
             learning_rate=1e-4,
             value_weight=0.5,
@@ -57,16 +55,7 @@ sumo_ppo_default_config = dict(
             )
         ),
         eval=dict(evaluator=dict(eval_freq=1000, )),
-        other=dict(
-            replay_buffer=dict(
-                replay_buffer_size=400000,
-                max_use=10000,
-                monitor=dict(
-                    sampled_data_attr=dict(print_freq=300, ),
-                    periodic_thruput=dict(seconds=300, ),
-                ),
-            ),
-        )
+        other=dict()
     ),
 )
 
@@ -80,10 +69,10 @@ create_config = dict(
     ),
     policy=dict(
         import_names=['dizoo.common.policy.md_ppo'],
-        type='md_ppo_offpolicy',
+        type='md_ppo',
     ),
 )
 
 create_config = EasyDict(create_config)
-sumo_ppo_default_config = EasyDict(sumo_ppo_default_config)
-main_config = sumo_ppo_default_config
+sumo_mdppo_default_config = EasyDict(sumo_mdppo_default_config)
+main_config = sumo_mdppo_default_config
