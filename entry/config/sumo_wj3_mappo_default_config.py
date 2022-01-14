@@ -26,6 +26,7 @@ sumo_mappo_default_config = dict(
         # (bool) Whether to use priority(priority sample, IS weight, update priority)
         priority=False,
         # ()
+        multi_agent=True,
         action_space='discrete',
         model=dict(
             agent_obs_shape=174,
