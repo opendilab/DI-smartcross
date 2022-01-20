@@ -69,8 +69,8 @@ class SumoEnv(BaseEnv):
         for k, v in self._sumo_inputs.items():
             sumo_cmd.append('--' + k)
             sumo_cmd.append(v)
-        sumo_cmd.append("--no-warnings",)
-        sumo_cmd.append("--no-step-log",)
+        sumo_cmd.append("--no-warnings")
+        sumo_cmd.append("--no-step-log")
         traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
 

@@ -56,4 +56,3 @@ def get_sumocfg_inputs(sumocfg_file):
                     value = os.path.join(sumocfg_parent_path, value)
             inputs[leaf.tag] = value
     return inputs
-
