@@ -1,9 +1,9 @@
 env:
-  sumocfg_path: 'rl_arterial_7roads_scene/standard.sumocfg'
+  sumocfg_path: 'rl_arterial_7roads/standard.sumocfg'
   gui: False
   inference: False
   dynamic_flow: False
-  flow_range: [9, 19]
+  flow_range: [900, 1900, 100]
   max_episode_steps: 1600
   green_duration: 10
   yellow_duration: 3

@@ -2,7 +2,7 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
    <input>
       <net-file value="standard.net.xml"/>
-      <route-files value="./route/1100/2_eg.rou.xml"/>
+      <route-files value="route/1100/2_eg.rou.xml"/>
    </input>
    <time>
       <begin value="0"/>

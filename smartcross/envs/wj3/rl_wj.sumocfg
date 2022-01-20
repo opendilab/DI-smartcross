@@ -3,7 +3,7 @@
    <input>
       <net-file value="rl_wj.net.xml"/>
       <route-files value="testflow.rou.xml"/>
-      <additional-files value="./detector/detector1_lane_start.add.xml,./detector/detector1_lane_end.add.xml,./detector/detector2_length_7_freq_1.add.xml,./detector/detector2_length_49_freq_60.add.xml,./detector/detector3.add.xml,./edge_measure.add.xml"/>
+      <additional-files value="detector/detector1_lane_start.add.xml,detector/detector1_lane_end.add.xml,detector/detector2_length_7_freq_1.add.xml,detector/detector2_length_49_freq_60.add.xml,detector/detector3.add.xml,edge_measure.add.xml"/>
    </input>
    <time>
       <begin value="0"/>

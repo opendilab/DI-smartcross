@@ -9,7 +9,7 @@ from smartcross.policy import RandomPolicy, FixedPolicy
 
 @pytest.fixture(scope='function')
 def setup_env():
-    with open(os.path.join(os.path.dirname(__file__), '../../envs/sumo_arterial_wj3_default_config.yaml')) as f:
+    with open(os.path.join(os.path.dirname(__file__), '../../envs/sumo_wj3_default_config.yaml')) as f:
         cfg = yaml.safe_load(f)
     cfg = EasyDict(cfg)
     env = SumoEnv(cfg.env)

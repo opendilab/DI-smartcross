@@ -3,6 +3,7 @@ import sys
 import time
 from typing import Dict, Any, List, Tuple, Union
 import numpy as np
+import random
 
 import traci
 from sumolib import checkBinary
@@ -14,7 +15,7 @@ from smartcross.envs.crossing import Crossing
 from smartcross.envs.obs import SumoObsRunner
 from smartcross.envs.action import SumoActionRunner
 from smartcross.envs.reward import SumoRewardRunner
-from smartcross.utils.config_utils import set_route_flow
+from smartcross.utils.config_utils import get_sumocfg_inputs
 
 
 @ENV_REGISTRY.register('sumo_env')
@@ -23,6 +24,7 @@ class SumoEnv(BaseEnv):
     def __init__(self, cfg: Dict) -> None:
         self._cfg = cfg
         self._sumocfg_path = os.path.dirname(__file__) + '/' + cfg.sumocfg_path
+        self._sumo_inputs = get_sumocfg_inputs(self._sumocfg_path)
         self._gui = cfg.get('gui', False)
         self._dynamic_flow = cfg.get('dynamic_flow', False)
         if self._dynamic_flow:
@@ -63,13 +65,12 @@ class SumoEnv(BaseEnv):
             sumoBinary = checkBinary('sumo-gui')
 
         # setting the cmd command to run sumo at simulation time
-        sumo_cmd = [
-            sumoBinary,
-            "-c",
-            self._sumocfg_path,
-            "--no-step-log",
-            "--no-warnings",
-        ]
+        sumo_cmd = [sumoBinary]
+        for k, v in self._sumo_inputs.items():
+            sumo_cmd.append('--' + k)
+            sumo_cmd.append(v)
+        sumo_cmd.append("--no-warnings",)
+        sumo_cmd.append("--no-step-log",)
         traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
 
@@ -88,18 +89,22 @@ class SumoEnv(BaseEnv):
         traci.simulationStep(self._current_steps)
 
     def _set_route_flow(self, route_flow: int) -> None:
-        self._sumocfg_path = set_route_flow(
-            os.path.dirname(__file__) + '/' + self._cfg.sumocfg_path, route_flow, self._label
-        )
-        self._route_flow = route_flow
-        print("reset sumocfg file to ", self._sumocfg_path)
+        assert 'route-files' in self._sumo_inputs
+        rf_old = self._sumo_inputs['route-files']
+        rf_parent = os.path.split(os.path.split(rf_old)[0])[0]
+        rf_folder = os.path.join(rf_parent, str(route_flow))
+        rf_list = [f for f in os.listdir(rf_folder) if f[-3:] == 'xml']
+        rf_new_flow = random.choice(rf_list)
+        rf_new = os.path.join(rf_folder, rf_new_flow)
+        self._sumo_inputs['route-files'] = rf_new
+        print("reset sumocfg file to ", route_flow)
 
     def reset(self) -> Any:
         self._current_steps = 0
         self._total_reward = 0
         self._last_action = None
         if self._dynamic_flow:
-            route_flow = np.random.randint(*self._flow_range) * 100
+            route_flow = random.choice(list(range(*self._flow_range)))
             self._set_route_flow(route_flow)
         self._crosses.clear()
         self._vehicle_info_dict.clear()

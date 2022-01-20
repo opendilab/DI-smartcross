@@ -112,7 +112,7 @@ optional arguments:
 Example of running DQN in wj3 env with default config.
 
 ```bash
-sumo_train -e smartcross/envs/sumo_arterial_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
+sumo_train -e smartcross/envs/sumo_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
 ```
 
 - evaluate existing policies
@@ -144,7 +144,7 @@ optional arguments:
 Example of running random policy in wj3 env.
 
 ```bash
-sumo_eval -p random -e smartcross/envs/sumo_arterial_wj3_default_config.yaml     
+sumo_eval -p random -e smartcross/envs/sumo_wj3_default_config.yaml     
 ```
 
 ## Environments
@@ -158,7 +158,7 @@ import yaml
 from easy_dict import EasyDict
 from smartcross.env import SumoEnv
 
-with open('smartcross/envs/sumo_arterial_wj3_default_config.yaml') as f:
+with open('smartcross/envs/sumo_wj3_default_config.yaml') as f:
     cfg = yaml.safe_load(f)
 cfg = EasyDict(cfg)
 env = SumoEnv(config=cfg.env)
@@ -168,7 +168,7 @@ The env configuration consists of basic definition and observation\action\reward
 
 ```yaml
 env:
-    sumocfg_path: 'arterial_wj3/rl_wj.sumocfg'
+    sumocfg_path: 'wj3/rl_wj.sumocfg'
     max_episode_steps: 1500
     green_duration: 10
     yellow_duration: 3
