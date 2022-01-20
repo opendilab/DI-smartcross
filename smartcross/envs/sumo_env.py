@@ -12,10 +12,9 @@ from ding.envs.common.env_element import EnvElementInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
-from smartcross.envs.obs.sumo_obs_helper import SumoObsHelper
+from smartcross.envs.obs import SumoObsRunner
 from smartcross.utils.config_utils import set_route_flow
 
-ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 ALL_ACTION_TYPE = set(['change'])
 ALL_REWARD_TYPE = set(['queue_len', 'wait_time', 'delay_time', 'pressure'])
 
@@ -51,7 +50,7 @@ class SumoEnv(BaseEnv):
         self._launch_env(False)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
-        self._obs_helper = SumoObsHelper(self, cfg.obs)
+        self._obs_runner = SumoObsRunner(self, cfg.obs)
         self._init_info()
         self.close()
 
@@ -84,7 +83,6 @@ class SumoEnv(BaseEnv):
         self._launch_env_flag = True
 
     def _init_info(self) -> None:
-        self._obs_helper.init_info()
         action_shape = []
         for tl, cross in self._crosses.items():
             if self._action_type == 'change':
@@ -102,12 +100,6 @@ class SumoEnv(BaseEnv):
             'max': self._action_shape[0],
             'dtype': int,
         }
-
-    def _get_observation(self) -> Union[Dict, List]:
-        for cross in self._crosses.values():
-            cross.update_timestep()
-        obs = self._obs_helper.get_observation()
-        return obs
 
     def _get_action(self, raw_action: np.ndarray) -> Dict:
         raw_action = np.squeeze(raw_action)
@@ -177,12 +169,15 @@ class SumoEnv(BaseEnv):
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
-        return to_ndarray(self._get_observation(), dtype=np.float32)
+            self._crosses[tl].update_timestep()
+        return self._obs_runner.get()
 
     def step(self, action: Any) -> 'BaseEnv.timestep':
         action_per_tl = self._get_action(action)
         self._simulate(action_per_tl)
-        obs = self._get_observation()
+        for cross in self._crosses.values():
+            cross.update_timestep()
+        obs = self._obs_runner.get()
         reward = self._get_reward()
         if self._use_centralized_reward:
             self._total_reward += reward
@@ -213,7 +208,7 @@ class SumoEnv(BaseEnv):
     def info(self) -> 'BaseEnvInfo':
         info_data = {
             'agent_num': len(self._tls),
-            'obs_space': self._obs_helper.info(),
+            'obs_space': self._obs_runner.info,
             'act_space': EnvElementInfo(shape=[len(self._action_shape)], value=self._action_value),
             'rew_space': len(self._tls),
             'use_wrappers': False

@@ -3,14 +3,24 @@ import numpy as np
 
 from ding.envs import BaseEnv
 from ding.envs.common.env_element import EnvElementInfo
+from ding.envs.common import EnvElement
 
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 
 
-class SumoObsHelper():
+class SumoObs(EnvElement):
+    r"""
+    Overview:
+        the observation element of Sumo enviroment
 
-    def __init__(self, core: BaseEnv, cfg: Dict) -> None:
-        self._core = core
+    Interface:
+        _init, to_agent_processor
+    """
+
+    _name = "SumoObs"
+
+    def _init(self, env: BaseEnv, cfg: Dict) -> None:
+        self._core = env
         self._cfg = cfg
         self._tl_num = len(self._core.crosses)
         self._obs_type = self._cfg.obs_type
@@ -18,7 +28,6 @@ class SumoObsHelper():
         self._use_centralized_obs = self._cfg.use_centralized_obs
         self._padding = self._cfg.padding
 
-    def init_info(self) -> None:
         obs_shape = []
         tl_obs_max_dict = None
         for tl, cross in self._core.crosses.items():
@@ -41,7 +50,7 @@ class SumoObsHelper():
                 tl_obs_max_dict = max_dict(tl_obs_max_dict, tl_obs_shape_map)
 
         if self._use_centralized_obs:
-            self._obs_shape = sum(obs_shape)
+            self._shape = sum(obs_shape)
         else:
             global_state_shape = sum(obs_shape)
             if self._padding:
@@ -49,12 +58,12 @@ class SumoObsHelper():
                 agent_state_shape = sum(self._tl_feature_shape.values())
             else:
                 agent_state_shape = max(obs_shape)
-            self._obs_shape = {
+            self._shape = {
                 'agent_state': agent_state_shape,
                 'global_state': global_state_shape,
                 'action_mask': self._tl_num
             }
-        self._obs_value = {
+        self._value = {
             'min': 0,
             'max': 1,
             'dtype': float,
@@ -74,8 +83,8 @@ class SumoObsHelper():
         if 'queue_len' in self._obs_type:
             tl_obs['queue_len'] = list(cross.get_lane_queue_len(self._queue_len_ratio).values())
         return tl_obs
-
-    def get_observation(self) -> Dict[str, np.ndarray]:
+    
+    def _to_agent_processor(self) -> Dict[str, np.ndarray]:
         obs = {}
         tl_num = len(self._core.crosses)
         for tl in self._core.crosses.keys():
@@ -99,9 +108,12 @@ class SumoObsHelper():
                 'action_mask': np.array([action_mask] * tl_num)
             }
 
-    def info(self):
-        return EnvElementInfo(self._obs_shape, self._obs_value)
+    def __repr__(self) -> str:
+        return '{}: {}'.format(self._name, self._details())
 
+    def _details(self) -> str:
+        return '{}'.format(self._shape)
+    
 
 def max_dict(dict1: Dict, dict2: Dict) -> Dict:
     assert len(dict1) == len(dict2)
@@ -131,3 +143,4 @@ def squeeze_obs(obs: Dict) -> List:
         return (obs, )
     else:
         raise ValueError('Cannot process type: {}, {}'.format(type(obs), obs))
+
