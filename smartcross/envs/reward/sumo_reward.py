@@ -30,14 +30,10 @@ class SumoReward(EnvElement):
         assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
         self._use_centralized_reward = cfg.use_centralized_reward
         if self._use_centralized_reward:
-            self._shape = (1,)
+            self._shape = (1, )
         else:
             raise NotImplementedError
-        self._value = {
-            'min': '-inf',
-            'max': 'inf',
-            'dtype': float
-        }
+        self._value = {'min': '-inf', 'max': 'inf', 'dtype': float}
 
     def _to_agent_processor(self):
         reward = {k: 0 for k in self._env.crosses.keys()}

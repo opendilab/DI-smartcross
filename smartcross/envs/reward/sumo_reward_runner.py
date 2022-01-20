@@ -6,6 +6,7 @@ from ding.envs.env.base_env import BaseEnv
 from ding.torch_utils import to_ndarray
 from .sumo_reward import SumoReward
 
+
 class SumoRewardRunner(EnvElementRunner):
     r"""
     Overview:
@@ -25,11 +26,11 @@ class SumoRewardRunner(EnvElementRunner):
         self._engine = engine
         self._core = SumoReward(engine, cfg)
         self._final_eval_reward = 0
-    
+
     def get(self) -> Any:
         reward = self._core._to_agent_processor()
         self._final_eval_reward += reward
         return reward
-    
+
     def reset(self) -> None:
         self._final_eval_reward = 0

@@ -21,7 +21,7 @@ class SumoActionRunner(EnvElementRunner):
         self._engine = engine
         self._core = SumoAction(engine, cfg)
         self._last_action = None
-    
+
     def get(self, raw_action: Any) -> Dict:
         raw_action = np.squeeze(raw_action)
         if self._last_action is None:
@@ -34,4 +34,3 @@ class SumoActionRunner(EnvElementRunner):
 
     def reset(self) -> None:
         self._last_action = None
-        

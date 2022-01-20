@@ -83,7 +83,7 @@ class SumoObs(EnvElement):
         if 'queue_len' in self._obs_type:
             tl_obs['queue_len'] = list(cross.get_lane_queue_len(self._queue_len_ratio).values())
         return tl_obs
-    
+
     def _to_agent_processor(self) -> Dict:
         obs = {}
         tl_num = len(self._core.crosses)
@@ -113,7 +113,7 @@ class SumoObs(EnvElement):
 
     def _details(self) -> str:
         return '{}'.format(self._shape)
-    
+
 
 def max_dict(dict1: Dict, dict2: Dict) -> Dict:
     assert len(dict1) == len(dict2)
@@ -143,4 +143,3 @@ def squeeze_obs(obs: Dict) -> List:
         return (obs, )
     else:
         raise ValueError('Cannot process type: {}, {}'.format(type(obs), obs))
-
