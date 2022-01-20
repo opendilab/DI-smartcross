@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Dict
 
 from ding.envs.common import EnvElementRunner
 from ding.envs.env.base_env import BaseEnv

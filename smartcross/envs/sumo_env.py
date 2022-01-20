@@ -13,9 +13,8 @@ from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
 from smartcross.envs.obs import SumoObsRunner
 from smartcross.envs.action import SumoActionRunner
+from smartcross.envs.reward import SumoRewardRunner
 from smartcross.utils.config_utils import set_route_flow
-
-ALL_REWARD_TYPE = set(['queue_len', 'wait_time', 'delay_time', 'pressure'])
 
 
 @ENV_REGISTRY.register('sumo_env')
@@ -33,11 +32,6 @@ class SumoEnv(BaseEnv):
         self._yellow_duration = cfg.yellow_duration
         self._green_duration = cfg.green_duration
 
-        self._reward_type = cfg.reward.reward_type
-        assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
-
-        self._use_centralized_reward = cfg.reward.use_centralized_reward
-
         self._launch_env_flag = False
         self._crosses = {}
         self._vehicle_info_dict = {}
@@ -48,6 +42,7 @@ class SumoEnv(BaseEnv):
             self._crosses[tl] = Crossing(tl, self)
         self._obs_runner = SumoObsRunner(self, cfg.obs)
         self._action_runner = SumoActionRunner(self, cfg.action)
+        self._reward_runner = SumoRewardRunner(self, cfg.reward)
         self.close()
 
     def _launch_env(self, gui: bool = False) -> None:
@@ -77,26 +72,6 @@ class SumoEnv(BaseEnv):
         ]
         traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
-
-    def _get_reward(self) -> Union[float, Dict]:
-        reward = {tl: 0 for tl in self._tls}
-        for tl in self._tls:
-            cross = self._crosses[tl]
-            if 'queue_len' in self._reward_type:
-                queue_len = np.average(list(cross.get_lane_queue_len().values()))
-                reward[tl] += self._reward_type['queue_len'] * -queue_len
-            if 'wait_time' in self._reward_type:
-                wait_time = np.average(list(cross.get_lane_wait_time().values()))
-                reward[tl] += self._reward_type['wait_time'] * -wait_time
-            if 'delay_time' in self._reward_type:
-                delay_time = np.average(list(cross.get_lane_delay_time().values()))
-                reward[tl] += self._reward_type['delay_time'] * -delay_time
-            if 'pressure' in self._reward_type:
-                pressure = cross.get_pressure()
-                reward[tl] += self._reward_type['pressure'] * -pressure
-        if self._use_centralized_reward:
-            reward = sum(reward.values())
-        return reward
 
     def _simulate(self, action: Dict) -> None:
         for tl, a in action.items():
@@ -128,6 +103,9 @@ class SumoEnv(BaseEnv):
             self._set_route_flow(route_flow)
         self._crosses.clear()
         self._vehicle_info_dict.clear()
+        self._action_runner.reset()
+        self._obs_runner.reset()
+        self._reward_runner.reset()
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
@@ -140,11 +118,8 @@ class SumoEnv(BaseEnv):
         for cross in self._crosses.values():
             cross.update_timestep()
         obs = self._obs_runner.get()
-        reward = self._get_reward()
-        if self._use_centralized_reward:
-            self._total_reward += reward
-        else:
-            self._total_reward += sum(reward.values())
+        reward = self._reward_runner.get()
+        self._total_reward += reward
         done = self._current_steps > self._max_episode_steps
         info = {}
         if done:

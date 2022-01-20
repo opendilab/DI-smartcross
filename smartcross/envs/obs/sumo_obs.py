@@ -84,7 +84,7 @@ class SumoObs(EnvElement):
             tl_obs['queue_len'] = list(cross.get_lane_queue_len(self._queue_len_ratio).values())
         return tl_obs
     
-    def _to_agent_processor(self) -> Dict[str, np.ndarray]:
+    def _to_agent_processor(self) -> Dict:
         obs = {}
         tl_num = len(self._core.crosses)
         for tl in self._core.crosses.keys():
