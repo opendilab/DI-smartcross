@@ -26,7 +26,7 @@ class TestPolicy:
         for i in range(10):
             action = policy.forward({0: obs})
             assert 0 in action
-            assert len(action[0]['action']) == env.info().act_space.shape[0]
+            assert len(action[0]['action']) == env.info().act_space.shape
             timestep = env.step(action[0]['action'])
             obs = timestep.obs
             print(action)
@@ -40,7 +40,7 @@ class TestPolicy:
         for i in range(10):
             action = policy.forward({0: obs})
             assert 0 in action
-            assert len(action[0]['action']) == env.info().act_space.shape[0]
+            assert len(action[0]['action']) == env.info().act_space.shape
             assert action[0]['action'][0].item() == i % env.info().act_space.value['max']
             timestep = env.step(action[0]['action'])
             obs = timestep.obs

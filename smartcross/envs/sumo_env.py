@@ -8,14 +8,13 @@ import traci
 from sumolib import checkBinary
 
 from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
-from ding.envs.common.env_element import EnvElementInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
 from smartcross.envs.obs import SumoObsRunner
+from smartcross.envs.action import SumoActionRunner
 from smartcross.utils.config_utils import set_route_flow
 
-ALL_ACTION_TYPE = set(['change'])
 ALL_REWARD_TYPE = set(['queue_len', 'wait_time', 'delay_time', 'pressure'])
 
 
@@ -34,12 +33,9 @@ class SumoEnv(BaseEnv):
         self._yellow_duration = cfg.yellow_duration
         self._green_duration = cfg.green_duration
 
-        self._action_type = cfg.action.action_type
         self._reward_type = cfg.reward.reward_type
-        assert self._action_type in ALL_ACTION_TYPE
         assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
 
-        self._use_multi_discrete = cfg.action.use_multi_discrete
         self._use_centralized_reward = cfg.reward.use_centralized_reward
 
         self._launch_env_flag = False
@@ -51,7 +47,7 @@ class SumoEnv(BaseEnv):
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
         self._obs_runner = SumoObsRunner(self, cfg.obs)
-        self._init_info()
+        self._action_runner = SumoActionRunner(self, cfg.action)
         self.close()
 
     def _launch_env(self, gui: bool = False) -> None:
@@ -81,40 +77,6 @@ class SumoEnv(BaseEnv):
         ]
         traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
-
-    def _init_info(self) -> None:
-        action_shape = []
-        for tl, cross in self._crosses.items():
-            if self._action_type == 'change':
-                action_shape.append(cross.phase_num)
-            else:
-                # TODO: add switch action
-                raise NotImplementedError
-        if self._use_multi_discrete:
-            self._action_shape = action_shape
-        else:
-            # TODO: add naive discrete action
-            raise NotImplementedError
-        self._action_value = {
-            'min': 0,
-            'max': self._action_shape[0],
-            'dtype': int,
-        }
-
-    def _get_action(self, raw_action: np.ndarray) -> Dict:
-        raw_action = np.squeeze(raw_action)
-        if self._last_action is None:
-            self._last_action = [None for _ in range(len(raw_action))]
-        action = {tl: {} for tl in self._tls}
-        for tl, act, last_act in zip(self._tls, raw_action, self._last_action):
-            if last_act is not None and act != last_act:
-                yellow_phase = self._crosses[tl].get_yellow_phase_index(last_act)
-            else:
-                yellow_phase = None
-            action[tl]['yellow'] = yellow_phase
-            action[tl]['green'] = self._crosses[tl].get_green_phase_index(act)
-        self._last_action = raw_action
-        return action
 
     def _get_reward(self) -> Union[float, Dict]:
         reward = {tl: 0 for tl in self._tls}
@@ -173,7 +135,7 @@ class SumoEnv(BaseEnv):
         return self._obs_runner.get()
 
     def step(self, action: Any) -> 'BaseEnv.timestep':
-        action_per_tl = self._get_action(action)
+        action_per_tl = self._action_runner.get(action)
         self._simulate(action_per_tl)
         for cross in self._crosses.values():
             cross.update_timestep()
@@ -188,7 +150,6 @@ class SumoEnv(BaseEnv):
         if done:
             info['final_eval_reward'] = self._total_reward
             self.close()
-        obs = to_ndarray(obs, dtype=np.float32)
         reward = to_ndarray([reward], dtype=np.float32)
         return BaseEnvTimestep(obs, reward, done, info)
 
@@ -209,7 +170,7 @@ class SumoEnv(BaseEnv):
         info_data = {
             'agent_num': len(self._tls),
             'obs_space': self._obs_runner.info,
-            'act_space': EnvElementInfo(shape=[len(self._action_shape)], value=self._action_value),
+            'act_space': self._action_runner.info,
             'rew_space': len(self._tls),
             'use_wrappers': False
         }
