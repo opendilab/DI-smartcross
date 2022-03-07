@@ -13,7 +13,7 @@ of SUMO installation on Linux.
 Install SUMO via apt-get or homebrew
 --------------------------------------
 
-On debian or ubuntu, SUMO can be directly installed using ``apt``:
+On Debian or Ubuntu, SUMO can be directly installed using ``apt``:
 
 .. code:: bash
 
@@ -31,19 +31,19 @@ On macOS, SUMO can be installed using ``homebrew``.
     brew install --cask sumo-gui
 
 After that, you need to set the ``SUMO_HOME`` environment variable pointing to the directory 
-of your SUMO installation. Just insert the following new line at the end of ``.bashrc``:
+of your SUMO installation. Just insert the following line at the end of ``.bashrc``:
 
 .. code:: bash
 
     export SUMO_HOME=/your/path/to/sumo
 
 There might be some trouble arosen when installing with the method above. It is recommended
-to build and install SUMO from source as follow.
+to build and install SUMO from source code as follows.
 
 Install SUMO from source code
 ---------------------------------
 
-Here we show a step-by-step guidance of installation with SUMO 1.8.0 on Linux.
+Here we show step-by-step guidance of installation with SUMO 1.8.0 on Linux.
 
 1. install required libraries and dependencies
 
@@ -82,7 +82,7 @@ Here we show a step-by-step guidance of installation with SUMO 1.8.0 on Linux.
 
     sumo
 
-If success, the following message will be shown in the shell.
+If successful, the following message will be shown in the shell.
 
 .. code::
 
@@ -97,13 +97,13 @@ Install DI-smartcross
 
 
 Simply run `pip install` in the root folder of this repository. This will automatically 
-insall `DI-engine <https://github.com/opendilab/DI-engine>`_ as well.
+install `DI-engine <https://github.com/opendilab/DI-engine>`_ as well.
 
 .. code:: bash
 
     pip install -e . --user
 
-You can check install by running the following command.
+You can check the installation by running the following command.
 
 .. code:: bash
 
