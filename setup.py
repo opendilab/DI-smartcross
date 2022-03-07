@@ -24,6 +24,7 @@ setup(
         "di-engine>=0.2",
         "sumolib",
         "traci",
+        "MarkupSafe<=2.0.1'",
     ],
     extras_require={
         'doc': [
