@@ -27,24 +27,27 @@ Last updated on
 -----
 
 **DI-smartcross** is an open-source application platform under **OpenDILab**.
-**DI-smartcross** use Reinforcement Learning in precise control of traffic crossing signals in order
+**DI-smartcross** uses Reinforcement Learning in precise control of traffic crossing signals in order
 to optimize transportation time cost by coordinating vehicles' movements at crosses.
 **DI-smartcross** applies training & evaluation for various RL policies using `DI-engine <https://github.com/opendilab/DI-engine>`_
 in provided road nets.
 **DI-smartcross** supports `SUMO <https://www.eclipse.org/sumo/>`_  and 
-`CityFlow <https://github.com/cityflow-project/CityFlow>`_ simulator to enable 
+`CityFlow <https://github.com/cityflow-project/CityFlow>`_ simulators to enable 
 traffic flow simulation with different granularity. 
 
 
 Main Features
 =================
 
-- Design ease to use crossing signal control environments, with various State, Action and Reward options.
+- Design easy-to-use crossing signal control environments, with various State, Action, and Reward options.
 
-- Build a variety of road network of different scales, ideal or from real world.
+- Build a variety of road networks of different scales, ideal or from the real world.
 
 - Adapting several Reinforcement Learning strategies using **DI-engine**, including discrete or continuous space, multi-agent etc.
 
+
+Content
+==============
 
 `Installation <installation.html>`_
 --------------------------------------

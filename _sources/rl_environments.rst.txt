@@ -21,7 +21,7 @@ The configuration of sumo env is stored in a config ``.yaml`` file. You can take
     cfg = EasyDict(cfg)
     env = SumoEnv(config=cfg.env)
 
-The env configuration consists of basic definition and observation\action\reward settings. The basic definition includes the cumo config file, episode length and light duration. The obs\action\reward define the detail setting of each contains.
+The env configuration consists of basic definition and observation\\action\\reward settings. The basic definition includes the cumo config file, episode length and light duration. The obs\action\reward define the detail setting of each contains.
 
 .. code:: yaml
 
@@ -61,3 +61,11 @@ Reward can be set with `reward_type`. Reward is calculated cross by cross. If `u
 - wait_time: Wait time increment of vehicles in each lane
 - delay_time: Delay time of all vahicles in incomming and outgoing lanes
 - pressure: Pressure of a cross
+
+Multi-agent
+---------------
+
+**DI-smartcross** supports a one-step configurable multi-agent RL training.
+It is only necessary to add ``multi_agent`` in **DI-engine** config file to convert common PPO into MAPPO,
+and change the ``use_centrolized_obs`` in environment config into ``True``. The policy and observations can
+be automatically changed to run individual agent for each cross.

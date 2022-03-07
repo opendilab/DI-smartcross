@@ -95,6 +95,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#observation">Observation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#action">Action</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reward">Reward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-agent">Multi-agent</a></li>
 </ul>
 </li>
 </ul>
@@ -180,7 +181,7 @@
 <span class="n">env</span> <span class="o">=</span> <span class="n">SumoEnv</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The env configuration consists of basic definition and observationactionreward settings. The basic definition includes the cumo config file, episode length and light duration. The obsactionreward define the detail setting of each contains.</p>
+<p>The env configuration consists of basic definition and observation\action\reward settings. The basic definition includes the cumo config file, episode length and light duration. The obsactionreward define the detail setting of each contains.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">sumocfg_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;wj3/rl_wj.sumocfg&#39;</span><span class="w"></span>
 <span class="w">    </span><span class="nt">max_episode_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span><span class="w"></span>
@@ -218,6 +219,13 @@
 <li><p>delay_time: Delay time of all vahicles in incomming and outgoing lanes</p></li>
 <li><p>pressure: Pressure of a cross</p></li>
 </ul>
+</div>
+<div class="section" id="multi-agent">
+<h3>Multi-agent<a class="headerlink" href="#multi-agent" title="Permalink to this headline">¶</a></h3>
+<p><strong>DI-smartcross</strong> supports a one-step configurable multi-agent RL training.
+It is only necessary to add <code class="docutils literal notranslate"><span class="pre">multi_agent</span></code> in <strong>DI-engine</strong> config file to convert common PPO into MAPPO,
+and change the <code class="docutils literal notranslate"><span class="pre">use_centrolized_obs</span></code> in environment config into <code class="docutils literal notranslate"><span class="pre">True</span></code>. The policy and observations can
+be automatically changed to run individual agent for each cross.</p>
 </div>
 </div>
 </div>

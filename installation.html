@@ -173,7 +173,7 @@
 of SUMO installation on Linux.</p>
 <div class="section" id="install-sumo-via-apt-get-or-homebrew">
 <h3>Install SUMO via apt-get or homebrew<a class="headerlink" href="#install-sumo-via-apt-get-or-homebrew" title="Permalink to this headline">¶</a></h3>
-<p>On debian or ubuntu, SUMO can be directly installed using <code class="docutils literal notranslate"><span class="pre">apt</span></code>:</p>
+<p>On Debian or Ubuntu, SUMO can be directly installed using <code class="docutils literal notranslate"><span class="pre">apt</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo add-apt-repository ppa:sumo/stable
 sudo apt-get update
 sudo apt-get install sumo sumo-tools sumo-doc
@@ -187,16 +187,16 @@ brew install --cask sumo-gui
 </pre></div>
 </div>
 <p>After that, you need to set the <code class="docutils literal notranslate"><span class="pre">SUMO_HOME</span></code> environment variable pointing to the directory
-of your SUMO installation. Just insert the following new line at the end of <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
+of your SUMO installation. Just insert the following line at the end of <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SUMO_HOME</span><span class="o">=</span>/your/path/to/sumo
 </pre></div>
 </div>
 <p>There might be some trouble arosen when installing with the method above. It is recommended
-to build and install SUMO from source as follow.</p>
+to build and install SUMO from source code as follows.</p>
 </div>
 <div class="section" id="install-sumo-from-source-code">
 <h3>Install SUMO from source code<a class="headerlink" href="#install-sumo-from-source-code" title="Permalink to this headline">¶</a></h3>
-<p>Here we show a step-by-step guidance of installation with SUMO 1.8.0 on Linux.</p>
+<p>Here we show step-by-step guidance of installation with SUMO 1.8.0 on Linux.</p>
 <ol class="arabic simple">
 <li><p>install required libraries and dependencies</p></li>
 </ol>
@@ -234,7 +234,7 @@ make -j <span class="k">$(</span>nproc<span class="k">)</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sumo
 </pre></div>
 </div>
-<p>If success, the following message will be shown in the shell.</p>
+<p>If successful, the following message will be shown in the shell.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Eclipse</span> <span class="n">SUMO</span> <span class="n">sumo</span> <span class="n">Version</span> <span class="mf">1.8.0</span>
 <span class="n">Build</span> <span class="n">features</span><span class="p">:</span> <span class="n">Linux</span><span class="o">-</span><span class="mf">3.10.0</span><span class="o">-</span><span class="mf">957.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span> <span class="n">x86_64</span> <span class="n">GNU</span> <span class="mf">5.3.1</span> <span class="n">Release</span> <span class="n">Proj</span> <span class="n">GUI</span> <span class="n">SWIG</span> <span class="n">GDAL</span> <span class="n">GL2PS</span>
 <span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2001</span><span class="o">-</span><span class="mi">2020</span> <span class="n">German</span> <span class="n">Aerospace</span> <span class="n">Center</span> <span class="p">(</span><span class="n">DLR</span><span class="p">)</span> <span class="ow">and</span> <span class="n">others</span><span class="p">;</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sumo</span><span class="o">.</span><span class="n">dlr</span><span class="o">.</span><span class="n">de</span>
@@ -247,11 +247,11 @@ make -j <span class="k">$(</span>nproc<span class="k">)</span>
 <div class="section" id="install-di-smartcross">
 <h2>Install DI-smartcross<a class="headerlink" href="#install-di-smartcross" title="Permalink to this headline">¶</a></h2>
 <p>Simply run <cite>pip install</cite> in the root folder of this repository. This will automatically
-insall <a class="reference external" href="https://github.com/opendilab/DI-engine">DI-engine</a> as well.</p>
+install <a class="reference external" href="https://github.com/opendilab/DI-engine">DI-engine</a> as well.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -e . --user
 </pre></div>
 </div>
-<p>You can check install by running the following command.</p>
+<p>You can check the installation by running the following command.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;import ding; import smartcross&#39;</span>
 </pre></div>
 </div>
