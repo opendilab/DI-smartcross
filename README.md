@@ -1,6 +1,6 @@
 # DI-smartcross
 
-<img src="./figs/di-smartcross_logo.png" width="200" alt="icon"/>
+<img src="./docs/figs/di-smartcross_logo.png" width="200" alt="icon"/>
 
 DI-smartcross - Decision Intelligence Platform for Traffic Crossing Signal Control.
 
