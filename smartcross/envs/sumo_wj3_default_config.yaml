@@ -1,5 +1,5 @@
 env:
-  sumocfg_path: 'arterial_wj3/rl_wj.sumocfg'
+  sumocfg_path: 'wj3/rl_wj.sumocfg'
   gui: False
   inference: False
   max_episode_steps: 1500

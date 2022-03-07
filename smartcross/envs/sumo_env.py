@@ -3,21 +3,19 @@ import sys
 import time
 from typing import Dict, Any, List, Tuple, Union
 import numpy as np
+import random
 
 import traci
 from sumolib import checkBinary
 
 from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
-from ding.envs.common.env_element import EnvElementInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
-from smartcross.envs.obs.sumo_obs_helper import SumoObsHelper
-from smartcross.utils.config_utils import set_route_flow
-
-ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
-ALL_ACTION_TYPE = set(['change'])
-ALL_REWARD_TYPE = set(['queue_len', 'wait_time', 'delay_time', 'pressure'])
+from smartcross.envs.obs import SumoObsRunner
+from smartcross.envs.action import SumoActionRunner
+from smartcross.envs.reward import SumoRewardRunner
+from smartcross.utils.config_utils import get_sumocfg_inputs
 
 
 @ENV_REGISTRY.register('sumo_env')
@@ -26,6 +24,7 @@ class SumoEnv(BaseEnv):
     def __init__(self, cfg: Dict) -> None:
         self._cfg = cfg
         self._sumocfg_path = os.path.dirname(__file__) + '/' + cfg.sumocfg_path
+        self._sumo_inputs = get_sumocfg_inputs(self._sumocfg_path)
         self._gui = cfg.get('gui', False)
         self._dynamic_flow = cfg.get('dynamic_flow', False)
         if self._dynamic_flow:
@@ -35,14 +34,6 @@ class SumoEnv(BaseEnv):
         self._yellow_duration = cfg.yellow_duration
         self._green_duration = cfg.green_duration
 
-        self._action_type = cfg.action.action_type
-        self._reward_type = cfg.reward.reward_type
-        assert self._action_type in ALL_ACTION_TYPE
-        assert set(self._reward_type.keys()).issubset(ALL_REWARD_TYPE)
-
-        self._use_multi_discrete = cfg.action.use_multi_discrete
-        self._use_centralized_reward = cfg.reward.use_centralized_reward
-
         self._launch_env_flag = False
         self._crosses = {}
         self._vehicle_info_dict = {}
@@ -51,8 +42,9 @@ class SumoEnv(BaseEnv):
         self._launch_env(False)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
-        self._obs_helper = SumoObsHelper(self, cfg.obs)
-        self._init_info()
+        self._obs_runner = SumoObsRunner(self, cfg.obs)
+        self._action_runner = SumoActionRunner(self, cfg.action)
+        self._reward_runner = SumoRewardRunner(self, cfg.reward)
         self.close()
 
     def _launch_env(self, gui: bool = False) -> None:
@@ -73,76 +65,14 @@ class SumoEnv(BaseEnv):
             sumoBinary = checkBinary('sumo-gui')
 
         # setting the cmd command to run sumo at simulation time
-        sumo_cmd = [
-            sumoBinary,
-            "-c",
-            self._sumocfg_path,
-            "--no-step-log",
-            "--no-warnings",
-        ]
+        sumo_cmd = [sumoBinary]
+        for k, v in self._sumo_inputs.items():
+            sumo_cmd.append('--' + k)
+            sumo_cmd.append(v)
+        sumo_cmd.append("--no-warnings")
+        sumo_cmd.append("--no-step-log")
         traci.start(sumo_cmd, label=self._label)
         self._launch_env_flag = True
-
-    def _init_info(self) -> None:
-        self._obs_helper.init_info()
-        action_shape = []
-        for tl, cross in self._crosses.items():
-            if self._action_type == 'change':
-                action_shape.append(cross.phase_num)
-            else:
-                # TODO: add switch action
-                raise NotImplementedError
-        if self._use_multi_discrete:
-            self._action_shape = action_shape
-        else:
-            # TODO: add naive discrete action
-            raise NotImplementedError
-        self._action_value = {
-            'min': 0,
-            'max': self._action_shape[0],
-            'dtype': int,
-        }
-
-    def _get_observation(self) -> Union[Dict, List]:
-        for cross in self._crosses.values():
-            cross.update_timestep()
-        obs = self._obs_helper.get_observation()
-        return obs
-
-    def _get_action(self, raw_action: np.ndarray) -> Dict:
-        raw_action = np.squeeze(raw_action)
-        if self._last_action is None:
-            self._last_action = [None for _ in range(len(raw_action))]
-        action = {tl: {} for tl in self._tls}
-        for tl, act, last_act in zip(self._tls, raw_action, self._last_action):
-            if last_act is not None and act != last_act:
-                yellow_phase = self._crosses[tl].get_yellow_phase_index(last_act)
-            else:
-                yellow_phase = None
-            action[tl]['yellow'] = yellow_phase
-            action[tl]['green'] = self._crosses[tl].get_green_phase_index(act)
-        self._last_action = raw_action
-        return action
-
-    def _get_reward(self) -> Union[float, Dict]:
-        reward = {tl: 0 for tl in self._tls}
-        for tl in self._tls:
-            cross = self._crosses[tl]
-            if 'queue_len' in self._reward_type:
-                queue_len = np.average(list(cross.get_lane_queue_len().values()))
-                reward[tl] += self._reward_type['queue_len'] * -queue_len
-            if 'wait_time' in self._reward_type:
-                wait_time = np.average(list(cross.get_lane_wait_time().values()))
-                reward[tl] += self._reward_type['wait_time'] * -wait_time
-            if 'delay_time' in self._reward_type:
-                delay_time = np.average(list(cross.get_lane_delay_time().values()))
-                reward[tl] += self._reward_type['delay_time'] * -delay_time
-            if 'pressure' in self._reward_type:
-                pressure = cross.get_pressure()
-                reward[tl] += self._reward_type['pressure'] * -pressure
-        if self._use_centralized_reward:
-            reward = sum(reward.values())
-        return reward
 
     def _simulate(self, action: Dict) -> None:
         for tl, a in action.items():
@@ -159,41 +89,47 @@ class SumoEnv(BaseEnv):
         traci.simulationStep(self._current_steps)
 
     def _set_route_flow(self, route_flow: int) -> None:
-        self._sumocfg_path = set_route_flow(
-            os.path.dirname(__file__) + '/' + self._cfg.sumocfg_path, route_flow, self._label
-        )
-        self._route_flow = route_flow
-        print("reset sumocfg file to ", self._sumocfg_path)
+        assert 'route-files' in self._sumo_inputs
+        rf_old = self._sumo_inputs['route-files']
+        rf_parent = os.path.split(os.path.split(rf_old)[0])[0]
+        rf_folder = os.path.join(rf_parent, str(route_flow))
+        rf_list = [f for f in os.listdir(rf_folder) if f[-3:] == 'xml']
+        rf_new_flow = random.choice(rf_list)
+        rf_new = os.path.join(rf_folder, rf_new_flow)
+        self._sumo_inputs['route-files'] = rf_new
+        print("reset sumocfg file to ", route_flow)
 
     def reset(self) -> Any:
         self._current_steps = 0
         self._total_reward = 0
         self._last_action = None
         if self._dynamic_flow:
-            route_flow = np.random.randint(*self._flow_range) * 100
+            route_flow = random.choice(list(range(*self._flow_range)))
             self._set_route_flow(route_flow)
         self._crosses.clear()
         self._vehicle_info_dict.clear()
+        self._action_runner.reset()
+        self._obs_runner.reset()
+        self._reward_runner.reset()
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
-        return to_ndarray(self._get_observation(), dtype=np.float32)
+            self._crosses[tl].update_timestep()
+        return self._obs_runner.get()
 
     def step(self, action: Any) -> 'BaseEnv.timestep':
-        action_per_tl = self._get_action(action)
+        action_per_tl = self._action_runner.get(action)
         self._simulate(action_per_tl)
-        obs = self._get_observation()
-        reward = self._get_reward()
-        if self._use_centralized_reward:
-            self._total_reward += reward
-        else:
-            self._total_reward += sum(reward.values())
+        for cross in self._crosses.values():
+            cross.update_timestep()
+        obs = self._obs_runner.get()
+        reward = self._reward_runner.get()
+        self._total_reward += reward
         done = self._current_steps > self._max_episode_steps
         info = {}
         if done:
             info['final_eval_reward'] = self._total_reward
             self.close()
-        obs = to_ndarray(obs, dtype=np.float32)
         reward = to_ndarray([reward], dtype=np.float32)
         return BaseEnvTimestep(obs, reward, done, info)
 
@@ -213,8 +149,8 @@ class SumoEnv(BaseEnv):
     def info(self) -> 'BaseEnvInfo':
         info_data = {
             'agent_num': len(self._tls),
-            'obs_space': self._obs_helper.info(),
-            'act_space': EnvElementInfo(shape=[len(self._action_shape)], value=self._action_value),
+            'obs_space': self._obs_runner.info,
+            'act_space': self._action_runner.info,
             'rew_space': len(self._tls),
             'use_wrappers': False
         }

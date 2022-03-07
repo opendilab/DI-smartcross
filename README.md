@@ -21,59 +21,13 @@ DI-smartcross supports:
 
 ## Installation
 
-DI-smartcross supports SUMO version >= 1.6.0. Here we show an easy guide of installation with SUMO 1.8.0 on Linux.
+DI-smartcross supports SUMO version >= 1.6.0. You can refer to 
+[SUMO documentation](https://sumo.dlr.de/docs/Installing/index.html) or follow our installation guidance in 
+[documents](https://opendilab.github.io/DI-smartcross/installation.html).
 
-### Install sumo
-
-1. install required libraries and dependencies
-
-```bash
-sudo apt-get install cmake python g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev swig
-```
-
-2. download and unzip the installation package
-
-```bash
-tar xzf sumo-src-1.8.0.tar.gz
-cd sumo-1.8.0
-pwd 
-```
-
-3. compile sumo
-
-```bash
-mkdir build/cmake-build
-cd build/cmake-build
-cmake ../..
-make -j $(nproc)
-```
-
-4. environment variables
-
-```bash
-echo 'export PATH=$HOME/sumo-1.8.0/bin:$PATH
-export SUMO_HOME=$HOME/sumo-1.8.0' | tee -a $HOME/.bashrc
-source ~/.bashrc
-```
-
-5. check install
-
-```bash
-sumo
-```
-If success, the following message will be shown in the shell.
-
-```
-Eclipse SUMO sumo Version 1.8.0
-  Build features: Linux-3.10.0-957.el7.x86_64 x86_64 GNU 5.3.1 Release Proj GUI SWIG GDAL GL2PS
-  Copyright (C) 2001-2020 German Aerospace Center (DLR) and others; https://sumo.dlr.de
-  License EPL-2.0: Eclipse Public License Version 2 <https://eclipse.org/legal/epl-v20.html>
-  Use --help to get the list of options.
-```
-
-### Install DI-smartcross
-
-To install DI-smartcross, simply run `pip install` in the root folder of this repository. This will automatically insall [DI-engine](https://github.com/opendilab/DI-engine) as well.
+Then, DI-smartcross is able to be installed from source code.
+Simply run `pip install` in the root folder of this repository.
+This will automatically insall [DI-engine](https://github.com/opendilab/DI-engine) as well.
 
 ```bash
 pip install -e . --user
@@ -81,126 +35,29 @@ pip install -e . --user
 
 ## Quick Start
 
-### Run training and evaluation
-
-DI-smartcross supports DQN, Off-policy PPO and Rainbow DQN RL methods with multi-discrete actions for each crossing. A set of default DI-engine configs is provided for each policy. You can check the document of DI-engine to get detail instructions of these configs.
+DI-smartcross provides simple entry for RL training and evaluation. DI-smartcross supports DQN, Off-policy PPO
+and Rainbow DQN RL methods with multi-discrete actions for each crossing, as well as multi-agent RL policies
+in which each crossing is handled by a individual agent. A set of default DI-engine configs is provided for 
+each policy. You can check the document of DI-engine to get detail instructions of these configs.
 
 - train RL policies
-
-```
-usage: sumo_train [-h] -d DING_CFG -e ENV_CFG [-s SEED] [--dynamic-flow]
-                  [-cn COLLECT_ENV_NUM] [-en EVALUATE_ENV_NUM]
-                  [--exp-name EXP_NAME]
-
-DI-smartcross training script
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -d DING_CFG, --ding-cfg DING_CFG
-                        DI-engine configuration path
-  -e ENV_CFG, --env-cfg ENV_CFG
-                        sumo environment configuration path
-  -s SEED, --seed SEED  random seed for sumo
-  --dynamic-flow        use dynamic route flow
-  -cn COLLECT_ENV_NUM, --collect-env-num COLLECT_ENV_NUM
-                        collector sumo env num for training
-  -en EVALUATE_ENV_NUM, --evaluate-env-num EVALUATE_ENV_NUM
-                        evaluator sumo env num for training
-  --exp-name EXP_NAME   experiment name to save log and ckpt
-```
 
 Example of running DQN in wj3 env with default config.
 
 ```bash
-sumo_train -e smartcross/envs/sumo_arterial_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
+sumo_train -e smartcross/envs/sumo_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
 ```
 
 - evaluate existing policies
 
-```
-usage: sumo_eval [-h] [-d DING_CFG] -e ENV_CFG [-s SEED]
-                 [-p {random,fix,dqn,rainbow,ppo}] [--dynamic-flow]
-                 [-n ENV_NUM] [--gui] [-c CKPT_PATH]
-
-DI-smartcross training script
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -d DING_CFG, --ding-cfg DING_CFG
-                        DI-engine configuration path
-  -e ENV_CFG, --env-cfg ENV_CFG
-                        sumo environment configuration path
-  -s SEED, --seed SEED  random seed for sumo
-  -p {random,fix,dqn,rainbow,ppo}, --policy-type {random,fix,dqn,rainbow,ppo}
-                        RL policy type
-  --dynamic-flow        use dynamic route flow
-  -n ENV_NUM, --env-num ENV_NUM
-                        sumo env num for evaluation
-  --gui                 open gui for visualize
-  -c CKPT_PATH, --ckpt-path CKPT_PATH
-                        model ckpt path
-```
-
 Example of running random policy in wj3 env.
 
 ```bash
-sumo_eval -p random -e smartcross/envs/sumo_arterial_wj3_default_config.yaml     
+sumo_eval -p random -e smartcross/envs/sumo_wj3_default_config.yaml     
 ```
 
-## Environments
-
-### sumo env configuration
-
-The configuration of sumo env is stored in a config *.yaml* file. You can take a look at the default config file to see how to modify env settings.
-
-``` python
-import yaml
-from easy_dict import EasyDict
-from smartcross.env import SumoEnv
-
-with open('smartcross/envs/sumo_arterial_wj3_default_config.yaml') as f:
-    cfg = yaml.safe_load(f)
-cfg = EasyDict(cfg)
-env = SumoEnv(config=cfg.env)
-```
-
-The env configuration consists of basic definition and observation\action\reward settings. The basic definition includes the cumo config file, episode length and light duration. The obs\action\reward define the detail setting of each contains.
-
-```yaml
-env:
-    sumocfg_path: 'arterial_wj3/rl_wj.sumocfg'
-    max_episode_steps: 1500
-    green_duration: 10
-    yellow_duration: 3
-    obs:
-        ...
-    action:
-        ...
-    reward:
-        ...
-```
-
-### Observation
-
-We provide several types of observations of a traffic cross. If `use_centrolized_obs` is set `True`, the observation of each cross will be concatenated into one vector. The contents of observation can me modified by setting `obs_type`. The following observation is supported now.
-
-- phase: One-hot phase vector of current cross signal
-- lane_pos_vec: Lane occupancy in each grid position. The grid num can be set with `lane_grid_num`
-- traffic_volumn: Traffic volumn of each lane. Vehicle num / lane length * volumn ratio
-- queue_len: Vehicle waiting queue length of each lane. Waiting num / lane length * volumn ratio
-
-### Action
-
-Sumo environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.
-
-### Reward
-
-Reward can be set with `reward_type`. Reward is calculated cross by cross. If `use_centrolized_obs` is set True, the reward of each cross will be summed up.
-
-- queue_len: Vehicle waiting queue num of each lane
-- wait_time: Wait time increment of vehicles in each lane
-- delay_time: Delay time of all vahicles in incomming and outgoing lanes
-- pressure: Pressure of a cross
+It is rerecommended to refer to [documation](https://opendilab.github.io/DI-smartcross/index.html)
+for detail information.
 
 ## Contributing
 

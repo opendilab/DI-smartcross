@@ -2,8 +2,8 @@ from easydict import EasyDict
 from torch import nn
 
 nstep = 1
-sumo_mdppo_default_config = dict(
-    exp_name='sumo_arterial7_md_ppo',
+sumo_off_mdppo_default_config = dict(
+    exp_name='sumo_arterial7_off_md_ppo',
     env=dict(
         manager=dict(
             shared_memory=False,
@@ -64,7 +64,16 @@ sumo_mdppo_default_config = dict(
             )
         ),
         # command_mode config
-        other=dict(),
+        other=dict(
+            replay_buffer=dict(
+                replay_buffer_size=400000,
+                max_use=10000,
+                monitor=dict(
+                    sampled_data_attr=dict(print_freq=300, ),
+                    periodic_thruput=dict(seconds=300, ),
+                ),
+            ),
+        ),
     ),
 )
 
@@ -78,10 +87,10 @@ create_config = dict(
     # RL policy register name (refer to function "register_policy").
     policy=dict(
         import_names=['dizoo.common.policy.md_ppo'],
-        type='md_ppo',
+        type='md_ppo_offpolicy',
     ),
 )
 
 create_config = EasyDict(create_config)
-sumo_mdppo_default_config = EasyDict(sumo_mdppo_default_config)
-main_config = sumo_mdppo_default_config
+sumo_off_mdppo_default_config = EasyDict(sumo_off_mdppo_default_config)
+main_config = sumo_off_mdppo_default_config
