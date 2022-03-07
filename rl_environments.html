@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reinforcement Learning Environments &mdash; DI-smartcross 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Quick Start" href="quick_start.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> DI-smartcross
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">First steps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reinforcement Learning Environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sumo-environments">SUMO environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observation">Observation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#action">Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reward">Reward</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DI-smartcross</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Reinforcement Learning Environments</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/rl_environments.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reinforcement-learning-environments">
+<h1>Reinforcement Learning Environments<a class="headerlink" href="#reinforcement-learning-environments" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sumo-environments">
+<h2>SUMO environments<a class="headerlink" href="#sumo-environments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configuration">
+<h3>configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>The configuration of sumo env is stored in a config <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> file. You can take a look at the default config file to see how to modify env settings.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">easy_dict</span> <span class="kn">import</span> <span class="n">EasyDict</span>
+<span class="kn">from</span> <span class="nn">smartcross.env</span> <span class="kn">import</span> <span class="n">SumoEnv</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;smartcross/envs/sumo_wj3_default_config.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">EasyDict</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">SumoEnv</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">env</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The env configuration consists of basic definition and observationactionreward settings. The basic definition includes the cumo config file, episode length and light duration. The obsactionreward define the detail setting of each contains.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sumocfg_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;wj3/rl_wj.sumocfg&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">max_episode_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span><span class="w"></span>
+<span class="w">    </span><span class="nt">green_duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">    </span><span class="nt">yellow_duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="w">    </span><span class="nt">obs</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="w">    </span><span class="nt">reward</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="observation">
+<h3>Observation<a class="headerlink" href="#observation" title="Permalink to this headline">¶</a></h3>
+<p>We provide several types of observations of a traffic cross. If <cite>use_centrolized_obs</cite> is set <cite>True</cite>, the observation of each cross will be concatenated into one vector. The contents of observation can me modified by setting <cite>obs_type</cite>. The following observation is supported now.</p>
+<ul class="simple">
+<li><p>phase: One-hot phase vector of current cross signal</p></li>
+<li><p>lane_pos_vec: Lane occupancy in each grid position. The grid num can be set with <cite>lane_grid_num</cite></p></li>
+<li><p>traffic_volumn: Traffic volumn of each lane. Vehicle num / lane length * volumn ratio</p></li>
+<li><p>queue_len: Vehicle waiting queue length of each lane. Waiting num / lane length * volumn ratio</p></li>
+</ul>
+</div>
+<div class="section" id="action">
+<h3>Action<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
+<p>Sumo environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.</p>
+</div>
+<div class="section" id="reward">
+<h3>Reward<a class="headerlink" href="#reward" title="Permalink to this headline">¶</a></h3>
+<p>Reward can be set with <cite>reward_type</cite>. Reward is calculated cross by cross. If <cite>use_centrolized_obs</cite> is set True, the reward of each cross will be summed up.</p>
+<ul class="simple">
+<li><p>queue_len: Vehicle waiting queue num of each lane</p></li>
+<li><p>wait_time: Wait time increment of vehicles in each lane</p></li>
+<li><p>delay_time: Delay time of all vahicles in incomming and outgoing lanes</p></li>
+<li><p>pressure: Pressure of a cross</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="quick_start.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, OpenDILab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
