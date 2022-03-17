@@ -27,11 +27,11 @@ class CityflowEnv(BaseEnv):
         self._eng = cityflow.Engine(self._config_path)
         self._parse_config_file()
         self._init_info()
-    
+
     def _parse_config_file(self):
         with open(self._config_path, 'r') as fc:
             file_config = json.load(fc)
-            
+
         roadnet_file = os.path.join(file_config['dir'], file_config['roadnetFile'])
         with open(roadnet_file, 'r') as fr:
             roadnet_config = json.load(fr)
@@ -54,7 +54,7 @@ class CityflowEnv(BaseEnv):
                     self._crossing_out_roads[crossing_id].append(road_id)
                 else:
                     self._crossing_in_roads[crossing_id].append(road_id)
-            self._crossing_phases[crossing_id] = {'G':[], 'Y':[], 'R':[]}
+            self._crossing_phases[crossing_id] = {'G': [], 'Y': [], 'R': []}
             light_phases = item['trafficLight']['lightphases']
             for id, it in enumerate(light_phases):
                 if len(it['availableRoadLinks']) > 4:
@@ -65,7 +65,7 @@ class CityflowEnv(BaseEnv):
                     self._crossing_phases[crossing_id]['R'].append(id)
                 else:
                     print("Unrecognized phase!")
-            
+
         self._crossings = list(self._crossing_in_roads.keys())
         self._road_lanes = {}
         all_lanes = list(self._eng.get_lane_vehicle_count().keys())
@@ -73,10 +73,10 @@ class CityflowEnv(BaseEnv):
         for road in roadnet_config['roads']:
             road_id = road['id']
             self._road_lanes[road_id] = []
-        
+
         for lane in all_lanes:
             self._road_lanes[lane[:-2]].append(lane)
-    
+
     def _init_info(self):
         obs_len = 0
         act_shape = []
@@ -95,7 +95,7 @@ class CityflowEnv(BaseEnv):
             act_shape.append(len(self._crossing_phases[cross]['G']))
         self._obs_shape = obs_len
         self._action_shape = act_shape
-    
+
     def _get_obs(self) -> Dict:
         obs = {cross: [] for cross in self._crossings}
         if 'phase' in self._obs_type:
@@ -121,7 +121,7 @@ class CityflowEnv(BaseEnv):
                         vehicle_nums.append(v)
                 obs[cross] += vehicle_nums
         return obs
-    
+
     def _get_reward(self):
         reward = {cross: 0 for cross in self._crossings}
         all_lane_waiting_vehicle = self._eng.get_lane_waiting_vehicle_count()
@@ -137,7 +137,7 @@ class CityflowEnv(BaseEnv):
                         cross_reward -= v
             reward[cross] = -cross_reward
         return reward
-    
+
     def _process_action(self, raw_action):
         raw_action = np.squeeze(raw_action)
         if self._last_action is None:
@@ -187,10 +187,10 @@ class CityflowEnv(BaseEnv):
                 self._eng.set_tl_phase(cross, green_phase)
                 self._current_phases[cross] = int(act)
             for t in range(self._green_duration):
-                    self._eng.next_step()
-        
+                self._eng.next_step()
+
         self._total_duration += self._red_duration + self._yellow_duration + self._green_duration
-        
+
     def reset(self) -> Any:
         self._eng.reset()
         self._total_duration = 0
@@ -217,29 +217,36 @@ class CityflowEnv(BaseEnv):
             info['final_eval_reward'] = self._total_reward
             self.close()
         return BaseEnvTimestep(obs, reward, done, info)
-    
+
     def close(self) -> None:
-        return 
-    
+        return
+
     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
         self._seed = seed
         self._dynamic_seed = dynamic_seed
-    
+
     def info(self) -> 'BaseEnvInfo':
         info_data = {
             'agent_num': 1,
             'obs_space': EnvElementInfo(
                 shape=self._obs_shape,
-                value={'min': 0, 'max': float('inf')},
+                value={
+                    'min': 0,
+                    'max': float('inf')
+                },
             ),
             'act_space': EnvElementInfo(
-                shape=len(self._crossings), 
-                value={'min': 0, 'max': self._action_shape[0], 'dtype': int},
+                shape=len(self._crossings),
+                value={
+                    'min': 0,
+                    'max': self._action_shape[0],
+                    'dtype': int
+                },
             ),
             'rew_space': 1,
             'use_wrappers': False,
         }
         return BaseEnvInfo(**info_data)
-    
+
     def __repr__(self) -> str:
         return "CityFlowEnv"

@@ -26,5 +26,3 @@ def get_onehot_obs(obs: List, length: int) -> List:
         onehot[item] = 1
         res += onehot
     return res
-
-
