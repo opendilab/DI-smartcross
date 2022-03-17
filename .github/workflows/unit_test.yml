@@ -26,7 +26,7 @@ jobs:
           sudo apt-get install sumo sumo-tools build-essential cmake
           export SUMO_HOME=/usr/share/sumo/tools
           git clone https://github.com/cityflow-project/CityFlow.git
-          cd cityflow
+          cd CityFlow
           python -m pip install -e .
           cd ..
           python -m pip install -e .
