@@ -1,0 +1,12 @@
+{
+	"interval": 1.0,
+	"seed": 0,
+	"dir": "smartcross/envs/cityflow_grid/",
+	"roadnetFile": "roadnet_2_3.json", 
+	"flowFile": "flow_2_3.json", 
+	"rlTrafficLight": true,
+	"saveReplay": true,
+	"roadnetLogFile": "replay_roadnet.json", 
+	"replayLogFile": "replay.txt",
+	"laneChange": true
+}

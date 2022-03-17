@@ -5,6 +5,8 @@ from ding.envs import BaseEnv
 from ding.envs.common.env_element import EnvElementInfo
 from ding.envs.common import EnvElement
 
+from smartcross.utils.env_utils import squeeze_obs
+
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 
 
@@ -131,15 +133,3 @@ def padding_obs_by_fearure(tl_obs: Dict, tl_feature_shape: Dict) -> Dict:
         if len(tl_obs[feature]) < tl_feature_shape[feature]:
             tl_obs[feature] += [0] * (tl_feature_shape[feature] - len(tl_obs[feature]))
     return tl_obs
-
-
-def squeeze_obs(obs: Dict) -> List:
-    assert obs is not None
-    if isinstance(obs, dict):
-        return [value for key in sorted(obs) for value in squeeze_obs(obs[key])]
-    elif isinstance(obs, (tuple, list, set)):
-        return [value for item in obs for value in squeeze_obs(item)]
-    elif isinstance(obs, (int, float, str)):
-        return (obs, )
-    else:
-        raise ValueError('Cannot process type: {}, {}'.format(type(obs), obs))
