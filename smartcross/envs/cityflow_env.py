@@ -23,7 +23,6 @@ class CityflowEnv(BaseEnv):
         self._green_duration = cfg.green_duration
         self._yellow_duration = cfg.yellow_duration
         self._red_duration = cfg.red_duration
-        self._debug = cfg.debug
         self._eng = cityflow.Engine(self._config_path)
         self._parse_config_file()
         self._init_info()

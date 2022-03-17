@@ -15,7 +15,6 @@ cityflow_mddqn_default_config = dict(
         green_duration=30,
         yellow_duration=5,
         red_duration=0,
-        debug=False,
         # Episode number for evaluation.
         n_evaluator_episode=1,
         # Once evaluation reward reaches "stop_value", which means the policy converges, the training can end.
