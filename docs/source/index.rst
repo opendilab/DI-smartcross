@@ -22,7 +22,7 @@ DI-smartcross Documentation
 
 Decision Intelligence Platform for Traffic Crossing Signal Control.
 
-Last updated on 
+Last updated on 2022.03.20
 
 -----
 
