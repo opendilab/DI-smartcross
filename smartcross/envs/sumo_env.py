@@ -49,9 +49,7 @@ class SumoEnv(BaseEnv):
         self.close()
         self._observation_space = self._obs_runner.space
         self._action_space = self._action_runner.space
-        self._reward_space = gym.spaces.Box(
-            low=-float('inf'), high=0, shape=(1, ), dtype=np.float32
-        )
+        self._reward_space = gym.spaces.Box(low=-float('inf'), high=0, shape=(1, ), dtype=np.float32)
 
     def _launch_env(self, gui: bool = False) -> None:
         # set gui=True can get visualization simulation result with sumo, apply gui=False in the normal training

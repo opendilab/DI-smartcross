@@ -97,9 +97,7 @@ class CityflowEnv(BaseEnv):
             act_shape.append(len(self._crossing_phases[cross]['G']))
         self._observation_space = gym.spaces.Box(low=0, high=100, shape=(obs_len, ), dtype=np.float32)
         self._action_space = gym.spaces.MultiDiscrete(act_shape)
-        self._reward_space = gym.spaces.Box(
-            low=-float('inf'), high=0, shape=(1, ), dtype=np.float32
-        )
+        self._reward_space = gym.spaces.Box(low=-float('inf'), high=0, shape=(1, ), dtype=np.float32)
 
     def _get_obs(self) -> Dict:
         obs = {cross: [] for cross in self._crossings}

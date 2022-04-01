@@ -54,7 +54,7 @@ class SumoObs(EnvElement):
 
         if self._use_centralized_obs:
             self._shape = sum(obs_shape)
-            self._space = gym.spaces.Box(low=0, high=1, shape=(self._shape,), dtype=np.float32)
+            self._space = gym.spaces.Box(low=0, high=1, shape=(self._shape, ), dtype=np.float32)
         else:
             global_state_shape = sum(obs_shape)
             if self._padding:
@@ -67,11 +67,13 @@ class SumoObs(EnvElement):
                 'global_state': global_state_shape,
                 'action_mask': self._tl_num
             }
-            self._space = gym.spaces.Dict({
-                'agent_state': gym.spaces.Box(low=0, high=1, shape=(agent_state_shape,)),
-                'global_state': gym.spaces.Box(low=0, high=1, shape=(global_state_shape,)),
-                'action_mask': gym.spaces.Box(low=0, high=1, shape=(self._tl_num,)),
-            })
+            self._space = gym.spaces.Dict(
+                {
+                    'agent_state': gym.spaces.Box(low=0, high=1, shape=(agent_state_shape, )),
+                    'global_state': gym.spaces.Box(low=0, high=1, shape=(global_state_shape, )),
+                    'action_mask': gym.spaces.Box(low=0, high=1, shape=(self._tl_num, )),
+                }
+            )
         self._value = {
             'min': 0,
             'max': 1,
