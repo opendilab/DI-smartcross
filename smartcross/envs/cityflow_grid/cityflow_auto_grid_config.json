@@ -4,9 +4,9 @@
 	"dir": "smartcross/envs/cityflow_grid/",
 	"roadnetFile": "roadnet_2_3.json", 
 	"flowFile": "flow_2_3.json", 
-	"rlTrafficLight": true,
-	"saveReplay": false,
-	"roadnetLogFile": "replay_roadnet.json", 
-	"replayLogFile": "replay.txt",
+	"rlTrafficLight": false,
+	"saveReplay": true,
+	"roadnetLogFile": "replay_auto_roadnet.json", 
+	"replayLogFile": "replay_auto.txt",
 	"laneChange": true
 }

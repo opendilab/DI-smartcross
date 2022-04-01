@@ -41,6 +41,7 @@ setup(
         'entry/sumo_train',
         'entry/sumo_eval',
         'entry/cityflow_train',
+        'entry/cityflow_eval',
     ],
     install_requires=[
         "di-engine>=0.2",
