@@ -45,3 +45,7 @@ class SumoObsRunner(EnvElementRunner):
             reset obs runner, and return the initial obs
         """
         return to_ndarray(self._obs, dtype=np.float32)
+
+    @property
+    def space(self):
+        return self._core.space

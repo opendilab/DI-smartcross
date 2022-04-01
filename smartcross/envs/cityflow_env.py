@@ -1,5 +1,6 @@
 import os
 import json
+import gym
 import numpy as np
 from typing import Dict, Any, List, Tuple, Union
 
@@ -30,6 +31,8 @@ class CityflowEnv(BaseEnv):
     def _parse_config_file(self):
         with open(self._config_path, 'r') as fc:
             file_config = json.load(fc)
+
+        self._no_actions = not file_config['rlTrafficLight']
 
         roadnet_file = os.path.join(file_config['dir'], file_config['roadnetFile'])
         with open(roadnet_file, 'r') as fr:
@@ -92,8 +95,11 @@ class CityflowEnv(BaseEnv):
                     obs_len += len(self._road_lanes[r])
         for cross in self._crossings:
             act_shape.append(len(self._crossing_phases[cross]['G']))
-        self._obs_shape = obs_len
-        self._action_shape = act_shape
+        self._observation_space = gym.spaces.Box(low=0, high=100, shape=(obs_len, ), dtype=np.float32)
+        self._action_space = gym.spaces.MultiDiscrete(act_shape)
+        self._reward_space = gym.spaces.Box(
+            low=-float('inf'), high=0, shape=(1, ), dtype=np.float32
+        )
 
     def _get_obs(self) -> Dict:
         obs = {cross: [] for cross in self._crossings}
@@ -156,6 +162,12 @@ class CityflowEnv(BaseEnv):
         return action
 
     def _simulate(self, action):
+        if self._no_actions:
+            for t in range(self._red_duration + self._yellow_duration + self._green_duration):
+                self._eng.next_step()
+            self._total_duration += self._red_duration + self._yellow_duration + self._green_duration
+            return
+
         changed_tl_id = {}
         for act, (cross, cur_act) in zip(action, self._current_phases.items()):
             if act == cur_act:
@@ -196,8 +208,9 @@ class CityflowEnv(BaseEnv):
         self._total_reward = 0
         self._current_phases = {}
         for cross in self._crossings:
-            phase = self._crossing_phases[cross]['G'][0]
-            self._eng.set_tl_phase(cross, phase)
+            if not self._no_actions:
+                phase = self._crossing_phases[cross]['G'][0]
+                self._eng.set_tl_phase(cross, phase)
             self._current_phases[cross] = 0
         obs = self._get_obs()
         return to_ndarray(squeeze_obs(obs), dtype=np.float32)
@@ -224,28 +237,17 @@ class CityflowEnv(BaseEnv):
         self._seed = seed
         self._dynamic_seed = dynamic_seed
 
-    def info(self) -> 'BaseEnvInfo':
-        info_data = {
-            'agent_num': 1,
-            'obs_space': EnvElementInfo(
-                shape=self._obs_shape,
-                value={
-                    'min': 0,
-                    'max': float('inf')
-                },
-            ),
-            'act_space': EnvElementInfo(
-                shape=len(self._crossings),
-                value={
-                    'min': 0,
-                    'max': self._action_shape[0],
-                    'dtype': int
-                },
-            ),
-            'rew_space': 1,
-            'use_wrappers': False,
-        }
-        return BaseEnvInfo(**info_data)
+    @property
+    def observation_space(self) -> gym.spaces.Space:
+        return self._observation_space
+
+    @property
+    def action_space(self) -> gym.spaces.Space:
+        return self._action_space
+
+    @property
+    def reward_space(self) -> gym.spaces.Space:
+        return self._reward_space
 
     def __repr__(self) -> str:
         return "CityFlowEnv"

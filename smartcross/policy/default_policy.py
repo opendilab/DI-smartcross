@@ -1,11 +1,10 @@
-from typing import Dict, List
+from typing import Dict, List, Any
 import torch
 import numpy as np
 from easydict import EasyDict
 import copy
 
 from ding.utils import POLICY_REGISTRY
-from ding.envs.common import EnvElementInfo
 
 
 @POLICY_REGISTRY.register('smartcross_random')
@@ -13,17 +12,14 @@ class RandomPolicy():
 
     config = dict()
 
-    def __init__(self, act_space: EnvElementInfo) -> None:
+    def __init__(self, act_space: Any) -> None:
         self._act_space = act_space
-        self._min_val = self._act_space.value['min']
-        self._max_val = self._act_space.value['max']
-        self._act_shape = act_space.shape
 
     def reset(self, *args, **keargs) -> None:
         pass
 
     def get_random_action(self) -> List:
-        action = np.random.randint(self._min_val, self._max_val, self._act_shape)
+        action = self._act_space.sample()
         action = [torch.LongTensor([v]) for v in action]
         return action
 
@@ -47,11 +43,9 @@ class FixedPolicy():
 
     config = dict()
 
-    def __init__(self, act_space: EnvElementInfo) -> None:
+    def __init__(self, act_space: Any) -> None:
         self._act_space = act_space
-        self._min_val = self._act_space.value['min']
-        self._max_val = self._act_space.value['max']
-        self._act_shape = act_space.shape
+        self._nvec = self._act_space.nvec
         self._last_act = {}
 
     def reset(self, *args, **keargs) -> None:
@@ -59,10 +53,10 @@ class FixedPolicy():
 
     def get_next_action(self, i: int) -> List:
         if i not in self._last_act:
-            action = np.zeros(self._act_shape)
+            action = np.zeros(self._act_space.shape)
         else:
             action = self._last_act[i] + 1
-            action[action >= self._max_val] = 0
+            action[action >= self._nvec] = 0
         self._last_act[i] = action
         action = [torch.LongTensor([v]) for v in action]
         return action

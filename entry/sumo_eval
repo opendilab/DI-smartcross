@@ -17,7 +17,7 @@ from smartcross.policy import RandomPolicy, FixedPolicy
 
 def main(args, seed=0):
     if args.policy_type in ['random', 'fix']:
-        from entry.config.sumo_eval_default_config import main_config, create_config
+        from entry.sumo_config.sumo_eval_default_config import main_config, create_config
         with open(args.env_cfg, 'r') as f:
             sumoenv_cfg = yaml.safe_load(f)
         sumoenv_cfg = EasyDict(sumoenv_cfg)
@@ -39,9 +39,9 @@ def main(args, seed=0):
         set_pkg_seed(cfg.seed, use_cuda=cfg.policy.cuda)
 
     if args.policy_type == 'random':
-        policy = RandomPolicy(evaluator_env.env_info().act_space)
+        policy = RandomPolicy(evaluator_env.action_space)
     elif args.policy_type == 'fix':
-        policy = FixedPolicy(evaluator_env.env_info().act_space)
+        policy = FixedPolicy(evaluator_env.action_space)
     else:
         policy = create_policy(cfg.policy, enable_field=['eval']).eval_mode
         if args.ckpt_path is not None:

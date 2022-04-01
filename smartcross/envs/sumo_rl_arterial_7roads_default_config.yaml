@@ -19,4 +19,4 @@ env:
   reward:
     use_centralized_reward: True
     reward_type: 
-      pressure: 0.1
+      pressure: 1.0

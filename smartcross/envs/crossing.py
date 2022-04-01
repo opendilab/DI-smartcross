@@ -140,9 +140,9 @@ class Crossing:
     def get_pressure(self):
         pressure = 0
         for lane in self._incoming_lanes:
-            pressure += traci.lane.getLastStepVehicleNumber(lane)
+            pressure += traci.lane.getLastStepHaltingNumber(lane)
         for lane in self._outgoing_lanes:
-            pressure -= traci.lane.getLastStepVehicleNumber(lane)
+            pressure -= traci.lane.getLastStepHaltingNumber(lane)
         return abs(pressure)
 
     @property

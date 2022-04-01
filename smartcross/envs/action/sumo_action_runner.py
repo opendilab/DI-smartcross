@@ -34,3 +34,7 @@ class SumoActionRunner(EnvElementRunner):
 
     def reset(self) -> None:
         self._last_action = None
+
+    @property
+    def space(self):
+        return self._core.space

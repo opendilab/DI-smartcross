@@ -1,3 +1,4 @@
+import gym
 from typing import Dict
 
 from ding.envs import BaseEnv
@@ -37,6 +38,7 @@ class SumoAction(EnvElement):
                 raise NotImplementedError
         if self._use_multi_discrete:
             self._shape = len(action_shape)
+            self._space = gym.spaces.MultiDiscrete(action_shape)
         else:
             # TODO: add naive discrete action
             raise NotImplementedError
@@ -64,3 +66,7 @@ class SumoAction(EnvElement):
     # override
     def _details(self):
         return 'action dim: {}'.format(self._shape)
+
+    @property
+    def space(self):
+        return self._space
