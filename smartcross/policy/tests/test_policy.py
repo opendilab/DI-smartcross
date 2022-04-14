@@ -22,11 +22,11 @@ class TestPolicy:
     def test_random_policy(self, setup_env):
         env = setup_env
         obs = env.reset()
-        policy = RandomPolicy(env.info().act_space)
+        policy = RandomPolicy(env.action_space)
         for i in range(10):
             action = policy.forward({0: obs})
             assert 0 in action
-            assert len(action[0]['action']) == env.info().act_space.shape
+            assert len(action[0]['action']) == len(env.action_space.nvec)
             timestep = env.step(action[0]['action'])
             obs = timestep.obs
             print(action)
@@ -36,12 +36,12 @@ class TestPolicy:
     def test_fix_policy(self, setup_env):
         env = setup_env
         obs = env.reset()
-        policy = FixedPolicy(env.info().act_space)
+        policy = FixedPolicy(env.action_space)
         for i in range(10):
             action = policy.forward({0: obs})
             assert 0 in action
-            assert len(action[0]['action']) == env.info().act_space.shape
-            assert action[0]['action'][0].item() == i % env.info().act_space.value['max']
+            assert len(action[0]['action']) == len(env.action_space.nvec)
+            assert action[0]['action'][0].item() == i % env.action_space.nvec[0]
             timestep = env.step(action[0]['action'])
             obs = timestep.obs
             print(action)

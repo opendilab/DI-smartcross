@@ -27,12 +27,12 @@ def main(args, seed=0):
         if cfg.env.n_evaluator_episode < args.env_num:
             cfg.env.n_evaluator_episode = cfg.env.evaluator_env_num
     env_fn, _, evaluator_env_cfg = get_vec_env_setting(cfg.env)
-    env = env_fn(cfg = evaluator_env_cfg[0])
+    env = env_fn(cfg=evaluator_env_cfg[0])
     evaluator_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in evaluator_env_cfg])
     if seed is not None:
         evaluator_env.seed(cfg.seed, dynamic_seed=False)
         set_pkg_seed(cfg.seed, use_cuda=cfg.policy.cuda)
-    
+
     if args.policy_type == 'fix':
         policy = FixedPolicy(evaluator_env.action_space)
     else:

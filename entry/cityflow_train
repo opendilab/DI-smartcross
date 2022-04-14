@@ -26,7 +26,7 @@ def main(args, seed=None):
         main_config.env.evaluator_env_num = args.evaluate_env_num
     if args.exp_name is not None:
         main_config.exp_name = args.exp_name
-    
+
     cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
     env_fn, collecotr_env_cfg, evaluator_env_cfg = get_vec_env_setting(cfg.env)
     collector_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in collecotr_env_cfg])
@@ -68,7 +68,7 @@ def main(args, seed=None):
         new_data = collector.collect(n_sample=cfg.policy.random_collect_size)
         replay_buffer.push(new_data, cur_collector_envstep=0)
         collector.reset_policy(policy.collect_mode)
-    
+
     for _ in range(cfg.policy.learn.learner.train_iterations):
         # Evaluate policy performance
         if evaluator.should_eval(learner.train_iter):
