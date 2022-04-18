@@ -130,34 +130,16 @@ class CityflowEnv(BaseEnv):
         all_lane_waiting_vehicle = self._eng.get_lane_waiting_vehicle_count()
         for cross in self._crossings:
             cross_reward = 0
-            for roads in self._crossing_in_roads.values():
+            for roads in self._crossing_in_roads[cross]:
                 for k, v in all_lane_waiting_vehicle.items():
                     if k[:-2] in roads:
                         cross_reward += v
-            for roads in self._crossing_out_roads.values():
+            for roads in self._crossing_out_roads[cross]:
                 for k, v in all_lane_waiting_vehicle.items():
                     if k[:-2] in roads:
                         cross_reward -= v
             reward[cross] = -cross_reward
         return reward
-
-    def _process_action(self, raw_action):
-        raw_action = np.squeeze(raw_action)
-        if self._last_action is None:
-            self._last_action = [None for _ in range(len(raw_action))]
-        data = {}
-        for intersec_id, act, last_act in zip(self._crossings, raw_action, self._last_action):
-            data[intersec_id] = {'action': act, 'last_action': last_act}
-        action = {k: {} for k in data.keys()}
-        for k, v in data.items():
-            act, last_act = v['action'], v['last_action']
-            if last_act is not None and act != last_act:
-                yellow_phase = self._env.crosses[k].get_yellow_phase_index(last_act)
-            else:
-                yellow_phase = None
-            action[k]['yellow'] = yellow_phase
-            action[k]['green'] = self._env.crosses[k].get_green_phase_index(act)
-        return action
 
     def _simulate(self, action):
         if self._no_actions:
