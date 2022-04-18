@@ -44,7 +44,7 @@ setup(
         'entry/cityflow_eval',
     ],
     install_requires=[
-        "di-engine>=0.2",
+        "di-engine>=0.3",
         "torch>=1.4,<=1.8",
         "sumolib",
         "traci",
