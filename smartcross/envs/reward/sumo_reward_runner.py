@@ -21,7 +21,7 @@ class SumoRewardRunner(EnvElementRunner):
         Overview:
             init the sumo reward environment with the given config file
         Arguments:
-            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo/sumo_env_default_config.yaml`
+            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo_wj3_default_config.yaml`
         """
         self._engine = engine
         self._core = SumoReward(engine, cfg)

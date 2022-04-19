@@ -1,6 +1,6 @@
 # DI-smartcross
 
-<img src="./docs/figs/di-smartcross_logo.png" width="200" alt="icon"/>
+<img src="./docs/figs/di-smartcross_banner.png" alt="icon"/>
 
 DI-smartcross - Decision Intelligence Platform for Traffic Crossing Signal Control.
 
@@ -84,6 +84,7 @@ We appreciate all contributions to improve DI-smartcross, both algorithms and sy
 DI-smartcross released under the Apache 2.0 license.
 
 ## Citation
+
 ```latex
 @misc{smartcross,
     title={{DI-smartcross: OpenDILab} Decision Intelligence platform for Traffic Crossing Signal Control},

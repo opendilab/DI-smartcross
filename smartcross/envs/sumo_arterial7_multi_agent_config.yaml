@@ -1,5 +1,5 @@
 env:
-  sumocfg_path: 'rl_arterial_7roads/standard.sumocfg'
+  sumocfg_path: 'sumo_arterial_7roads/standard.sumocfg'
   gui: False
   inference: False
   dynamic_flow: True

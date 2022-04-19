@@ -22,7 +22,7 @@ class SumoAction(EnvElement):
         Overview:
             init the sumo action environment with the given config file
         Arguments:
-            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo/sumo_env_default_config.yaml`
+            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo_wj3_default_config.yaml`
         """
         self._env = env
         self._cfg = cfg
