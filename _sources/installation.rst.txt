@@ -4,10 +4,17 @@ Installation
 .. toctree::
     :maxdepth: 2
 
+Here we provide easy installation for **DI-smartcross** and all simulators supported.
+
+.. note::
+
+    You can choose one of the simulators to run your experiments. Only chosen one needs to be installed.
+
+
 SUMO installation
 =====================
 
-**DI-smartcross** support SUMO version >= 1.6.0. Here we show two easy guides
+**DI-smartcross** supports SUMO version >= 1.6.0. Here we show two easy guides
 of SUMO installation on Linux.
 
 Install SUMO via apt-get or homebrew
@@ -91,6 +98,23 @@ If successful, the following message will be shown in the shell.
     Copyright (C) 2001-2020 German Aerospace Center (DLR) and others; https://sumo.dlr.de
     License EPL-2.0: Eclipse Public License Version 2 <https://eclipse.org/legal/epl-v20.html>
     Use --help to get the list of options.
+
+
+CityFlow Installation
+==========================
+
+CityFlow simulator can be installed from source code via `CMake <https://cmake.org>`_.
+Please make sure it is correctly worked in your system.
+
+Simply download their source code and run ``pip install`` in the root folder to install CityFlow.
+
+.. code:: bash
+
+    git clone https://github.com/cityflow-project/CityFlow.git
+    cd CityFlow
+    pip install .
+
+You can check installation by running ``import cityflow`` in python.
 
 Install DI-smartcross
 ==========================

@@ -94,11 +94,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#install-sumo-from-source-code">Install SUMO from source code</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#cityflow-installation">CityFlow Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-di-smartcross">Install DI-smartcross</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rl_environments.html">Reinforcement Learning Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
             
@@ -167,9 +169,14 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
+<p>Here we provide easy installation for <strong>DI-smartcross</strong> and all simulators supported.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can choose one of the simulators to run your experiments. Only chosen one needs to be installed.</p>
+</div>
 <div class="section" id="sumo-installation">
 <h2>SUMO installation<a class="headerlink" href="#sumo-installation" title="Permalink to this headline">¶</a></h2>
-<p><strong>DI-smartcross</strong> support SUMO version &gt;= 1.6.0. Here we show two easy guides
+<p><strong>DI-smartcross</strong> supports SUMO version &gt;= 1.6.0. Here we show two easy guides
 of SUMO installation on Linux.</p>
 <div class="section" id="install-sumo-via-apt-get-or-homebrew">
 <h3>Install SUMO via apt-get or homebrew<a class="headerlink" href="#install-sumo-via-apt-get-or-homebrew" title="Permalink to this headline">¶</a></h3>
@@ -243,6 +250,18 @@ make -j <span class="k">$(</span>nproc<span class="k">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="cityflow-installation">
+<h2>CityFlow Installation<a class="headerlink" href="#cityflow-installation" title="Permalink to this headline">¶</a></h2>
+<p>CityFlow simulator can be installed from source code via <a class="reference external" href="https://cmake.org">CMake</a>.
+Please make sure it is correctly worked in your system.</p>
+<p>Simply download their source code and run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> in the root folder to install CityFlow.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/cityflow-project/CityFlow.git
+<span class="nb">cd</span> CityFlow
+pip install .
+</pre></div>
+</div>
+<p>You can check installation by running <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cityflow</span></code> in python.</p>
 </div>
 <div class="section" id="install-di-smartcross">
 <h2>Install DI-smartcross<a class="headerlink" href="#install-di-smartcross" title="Permalink to this headline">¶</a></h2>

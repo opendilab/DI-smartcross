@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DI-smartcross Documentation &mdash; DI-smartcross 0.1.0 documentation</title>
+  <title>FAQ &mdash; DI-smartcross 0.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="installation.html" /> 
+    <link rel="prev" title="CityFlow Grid Env" href="envs/cf_grid_env.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +51,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> DI-smartcross
+            <a href="index.html" class="icon icon-home"> DI-smartcross
           
 
           
@@ -86,11 +86,14 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">First steps</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rl_environments.html">Reinforcement Learning Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#q1-sumo-environment-always-showing-retrying-in-1-seconds">Q1: SUMO environment always showing <cite>Retrying in 1 seconds</cite></a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -105,7 +108,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">DI-smartcross</a>
+          <a href="index.html">DI-smartcross</a>
         
       </nav>
 
@@ -134,15 +137,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>DI-smartcross Documentation</li>
+      <li>FAQ</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/faq.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -155,46 +158,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="di-smartcross-documentation">
-<h1>DI-smartcross Documentation<a class="headerlink" href="#di-smartcross-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="faq">
+<h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<div class="figure align-default">
-<img alt="DI-smartcross" src="_images/di-smartcross_banner.png" />
-</div>
-<p>Decision Intelligence Platform for Traffic Crossing Signal Control.</p>
-<p>Last updated on 2022.04.16</p>
-<hr class="docutils" />
-<p><strong>DI-smartcross</strong> is an open-source application platform under <strong>OpenDILab</strong>.
-<strong>DI-smartcross</strong> uses Reinforcement Learning in precise control of traffic crossing signals in order
-to optimize transportation time cost by coordinating vehicles’ movements at crosses.
-<strong>DI-smartcross</strong> applies training &amp; evaluation for various RL policies using <a class="reference external" href="https://github.com/opendilab/DI-engine">DI-engine</a>
-in provided road nets.
-<strong>DI-smartcross</strong> supports <a class="reference external" href="https://www.eclipse.org/sumo/">SUMO</a>  and
-<a class="reference external" href="https://github.com/cityflow-project/CityFlow">CityFlow</a> simulators to enable
-traffic flow simulation with different granularity.</p>
-<div class="section" id="main-features">
-<h2>Main Features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Design easy-to-use crossing signal control environments, with various State, Action, and Reward options.</p></li>
-<li><p>Build a variety of road networks of different scales, ideal or from the real world.</p></li>
-<li><p>Adapting several Reinforcement Learning strategies using <strong>DI-engine</strong>, including discrete or continuous space, multi-agent etc.</p></li>
-</ul>
-</div>
-<div class="section" id="content">
-<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3><a class="reference external" href="installation.html">Installation</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="id2">
-<h3><a class="reference external" href="quickstart.html">Quick Start</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="id3">
-<h3><a class="reference external" href="rl_environments.html">RL Environments</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="id4">
-<h3><a class="reference external" href="faq.html">FAQ</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-</div>
+<div class="section" id="q1-sumo-environment-always-showing-retrying-in-1-seconds">
+<h2>Q1: SUMO environment always showing <cite>Retrying in 1 seconds</cite><a class="headerlink" href="#q1-sumo-environment-always-showing-retrying-in-1-seconds" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">A1</dt>
+<dd class="field-odd"><p>SUMO environments and <cite>traci</cite> lib is slow to reset when running with large roadnets.
+It only check the collection after reset for 1 sec. DI-smartcross provides an easy way
+to change the retry timeout for <cite>traci</cite>. You can run <cite>modify_traci_connect_timeout.sh</cite>
+file. It will automatically</p>
+</dd>
+</dl>
 </div>
 </div>
 
@@ -206,8 +183,8 @@ traffic flow simulation with different granularity.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+        <a href="envs/cf_grid_env.html" class="btn btn-neutral float-left" title="CityFlow Grid Env" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

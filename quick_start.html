@@ -95,9 +95,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#evaluate-existing-policies">evaluate existing policies</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#cityflow-entries">CityFlow Entries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">train RL policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">evaluate existing policies</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rl_environments.html">Reinforcement Learning Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
             
@@ -174,9 +180,10 @@ configs is provided for each policy. You can check the document of DI-engine
 to get detail instructions of these configs.</p>
 <div class="section" id="train-rl-policies">
 <h3>train RL policies<a class="headerlink" href="#train-rl-policies" title="Permalink to this headline">¶</a></h3>
+<p>The type of policy can be automatically parsed from the config file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">sumo_train</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dynamic</span><span class="o">-</span><span class="n">flow</span><span class="p">]</span>
-              <span class="p">[</span><span class="o">-</span><span class="n">cn</span> <span class="n">COLLECT_ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">en</span> <span class="n">EVALUATE_ENV_NUM</span><span class="p">]</span>
-              <span class="p">[</span><span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span> <span class="n">EXP_NAME</span><span class="p">]</span>
+                  <span class="p">[</span><span class="o">-</span><span class="n">cn</span> <span class="n">COLLECT_ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">en</span> <span class="n">EVALUATE_ENV_NUM</span><span class="p">]</span>
+                  <span class="p">[</span><span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span> <span class="n">EXP_NAME</span><span class="p">]</span>
 
 <span class="n">DI</span><span class="o">-</span><span class="n">smartcross</span> <span class="n">training</span> <span class="n">script</span>
 
@@ -196,15 +203,21 @@ to get detail instructions of these configs.</p>
 </pre></div>
 </div>
 <p>Example of running DQN in wj3 env with default config.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Running with dynamic flow is only supported for arterial7 env currently.</p>
+</div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sumo_train -e smartcross/envs/sumo_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
 </pre></div>
 </div>
 </div>
 <div class="section" id="evaluate-existing-policies">
 <h3>evaluate existing policies<a class="headerlink" href="#evaluate-existing-policies" title="Permalink to this headline">¶</a></h3>
+<p>We provide two eval policies: random and fixed-time. You can choose one to evaluate
+as comparison. It is suggested to use the <cite>eval_default_config</cite> for each env.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">sumo_eval</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span><span class="p">]</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span>
-             <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="p">{</span><span class="n">random</span><span class="p">,</span><span class="n">fix</span><span class="p">,</span><span class="n">dqn</span><span class="p">,</span><span class="n">rainbow</span><span class="p">,</span><span class="n">ppo</span><span class="p">}]</span> <span class="p">[</span><span class="o">--</span><span class="n">dynamic</span><span class="o">-</span><span class="n">flow</span><span class="p">]</span>
-             <span class="p">[</span><span class="o">-</span><span class="n">n</span> <span class="n">ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">gui</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">CKPT_PATH</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="p">{</span><span class="n">random</span><span class="p">,</span><span class="n">fix</span><span class="p">,</span><span class="n">dqn</span><span class="p">,</span><span class="n">rainbow</span><span class="p">,</span><span class="n">ppo</span><span class="p">}]</span> <span class="p">[</span><span class="o">--</span><span class="n">dynamic</span><span class="o">-</span><span class="n">flow</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">-</span><span class="n">n</span> <span class="n">ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">gui</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">CKPT_PATH</span><span class="p">]</span>
 
 <span class="n">DI</span><span class="o">-</span><span class="n">smartcross</span> <span class="n">testing</span> <span class="n">script</span>
 
@@ -227,6 +240,60 @@ to get detail instructions of these configs.</p>
 </div>
 <p>Example of running random policy in wj3 env.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sumo_eval -p random -e smartcross/envs/sumo_wj3_default_config.yaml
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cityflow-entries">
+<h2>CityFlow Entries<a class="headerlink" href="#cityflow-entries" title="Permalink to this headline">¶</a></h2>
+<p><strong>DI-smartcross</strong> provides a simple DQN and Off-policy PPO demo for CityFlow env. Each
+policy comes with a default <strong>DI-engine</strong> configs is provided for each policy. You can
+check the document of DI-engine to get detail instructions of these configs.</p>
+<div class="section" id="id1">
+<h3>train RL policies<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">cityflow_train</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span>
+                      <span class="p">[</span><span class="o">-</span><span class="n">cn</span> <span class="n">COLLECT_ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">en</span> <span class="n">EVALUATE_ENV_NUM</span><span class="p">]</span>
+                      <span class="p">[</span><span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span> <span class="n">EXP_NAME</span><span class="p">]</span>
+
+<span class="n">DI</span><span class="o">-</span><span class="n">smartcross</span> <span class="n">training</span> <span class="n">script</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+<span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+<span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span><span class="p">,</span> <span class="o">--</span><span class="n">ding</span><span class="o">-</span><span class="n">cfg</span> <span class="n">DING_CFG</span>
+                        <span class="n">DI</span><span class="o">-</span><span class="n">engine</span> <span class="n">configuration</span> <span class="n">path</span>
+<span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span><span class="p">,</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">cfg</span> <span class="n">ENV_CFG</span>
+                        <span class="n">cityflow</span> <span class="n">json</span> <span class="n">configuration</span> <span class="n">path</span>
+<span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">,</span> <span class="o">--</span><span class="n">seed</span> <span class="n">SEED</span>  <span class="n">random</span> <span class="n">seed</span>
+<span class="o">-</span><span class="n">cn</span> <span class="n">COLLECT_ENV_NUM</span><span class="p">,</span> <span class="o">--</span><span class="n">collect</span><span class="o">-</span><span class="n">env</span><span class="o">-</span><span class="n">num</span> <span class="n">COLLECT_ENV_NUM</span>
+                        <span class="n">collector</span> <span class="n">env</span> <span class="n">num</span> <span class="k">for</span> <span class="n">training</span>
+<span class="o">-</span><span class="n">en</span> <span class="n">EVALUATE_ENV_NUM</span><span class="p">,</span> <span class="o">--</span><span class="n">evaluate</span><span class="o">-</span><span class="n">env</span><span class="o">-</span><span class="n">num</span> <span class="n">EVALUATE_ENV_NUM</span>
+                        <span class="n">evaluator</span> <span class="n">env</span> <span class="n">num</span> <span class="k">for</span> <span class="n">training</span>
+<span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span> <span class="n">EXP_NAME</span>   <span class="n">experiment</span> <span class="n">name</span> <span class="n">to</span> <span class="n">save</span> <span class="n">log</span> <span class="ow">and</span> <span class="n">ckpt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>evaluate existing policies<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Note that CityFlow will run in fixed-time mode by default when not in rl mode.
+So the fix policy runs with an <cite>auto_config.json</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">cityflow_eval</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span><span class="p">]</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="p">{</span><span class="n">fix</span><span class="p">,</span><span class="n">dqn</span><span class="p">,</span><span class="n">ppo</span><span class="p">}]</span> <span class="p">[</span><span class="o">-</span><span class="n">n</span> <span class="n">ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">CKPT_PATH</span><span class="p">]</span>
+
+<span class="n">DI</span><span class="o">-</span><span class="n">smartcross</span> <span class="n">training</span> <span class="n">script</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+<span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+<span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span><span class="p">,</span> <span class="o">--</span><span class="n">ding</span><span class="o">-</span><span class="n">cfg</span> <span class="n">DING_CFG</span>
+                        <span class="n">DI</span><span class="o">-</span><span class="n">engine</span> <span class="n">configuration</span> <span class="n">path</span>
+<span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span><span class="p">,</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">cfg</span> <span class="n">ENV_CFG</span>
+                        <span class="n">sumo</span> <span class="n">environment</span> <span class="n">configuration</span> <span class="n">path</span>
+<span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">,</span> <span class="o">--</span><span class="n">seed</span> <span class="n">SEED</span>  <span class="n">random</span> <span class="n">seed</span> <span class="k">for</span> <span class="n">sumo</span>
+<span class="o">-</span><span class="n">p</span> <span class="p">{</span><span class="n">fix</span><span class="p">,</span><span class="n">dqn</span><span class="p">,</span><span class="n">ppo</span><span class="p">},</span> <span class="o">--</span><span class="n">policy</span><span class="o">-</span><span class="nb">type</span> <span class="p">{</span><span class="n">fix</span><span class="p">,</span><span class="n">dqn</span><span class="p">,</span><span class="n">ppo</span><span class="p">}</span>
+                        <span class="n">RL</span> <span class="n">policy</span> <span class="nb">type</span>
+<span class="o">-</span><span class="n">n</span> <span class="n">ENV_NUM</span><span class="p">,</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">num</span> <span class="n">ENV_NUM</span>
+                        <span class="n">sumo</span> <span class="n">env</span> <span class="n">num</span> <span class="k">for</span> <span class="n">evaluation</span>
+<span class="o">-</span><span class="n">c</span> <span class="n">CKPT_PATH</span><span class="p">,</span> <span class="o">--</span><span class="n">ckpt</span><span class="o">-</span><span class="n">path</span> <span class="n">CKPT_PATH</span>
+                        <span class="n">model</span> <span class="n">ckpt</span> <span class="n">path</span>
 </pre></div>
 </div>
 </div>

@@ -104,8 +104,20 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#cityflow-environments">CityFlow environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Observation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Reward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Roadnets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="envs/cf_grid_env.html">CityFlow Grid Env</a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
             
@@ -239,6 +251,52 @@ be automatically changed to run individual agent for each cross.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="envs/wj3_env.html">SUMO Beijing Wangjing 3 Crossings Env</a></li>
 <li class="toctree-l1"><a class="reference internal" href="envs/rl_arterial7_env.html">SUMO RL Arterial 7 Crossings Env</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="cityflow-environments">
+<h2>CityFlow environments<a class="headerlink" href="#cityflow-environments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>configuration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>CityFlow simulator has its own config <cite>json</cite> file, with roadnet file, flow file and replay file defined in it.
+DI-smartcross adds some extra configs together with CityFlow’s config file path in DI-engine’s env config.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">main_config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">env</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">obs_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">,</span> <span class="s1">&#39;lane_vehicle_num&#39;</span><span class="p">,</span> <span class="s1">&#39;lane_waiting_vehicle_num&#39;</span><span class="p">],</span>
+        <span class="n">max_episode_duration</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">green_duration</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">yellow_duration</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">red_duration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">),</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Observation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>We provide several types of observations of each cross.</p>
+<ul class="simple">
+<li><p>phase: One-hot phase vector of current cross signal</p></li>
+<li><p>lane_vehicle_num: vehicle nums of each incoming lane</p></li>
+<li><p>lane_waiting_vehicle_num: waiting vehicle nums of each incoming lane</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>Action<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>CityFlow environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.</p>
+</div>
+<div class="section" id="id4">
+<h3>Reward<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>CityFlow environment uses pressure of each cross as reward</p>
+</div>
+<div class="section" id="id5">
+<h3>Roadnets<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="envs/cf_grid_env.html">CityFlow Grid Env</a></li>
 </ul>
 </div>
 </div>
