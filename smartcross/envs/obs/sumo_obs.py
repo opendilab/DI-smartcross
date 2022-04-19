@@ -111,7 +111,7 @@ class SumoObs(EnvElement):
                     tl_obs = padding_obs_by_fearure(tl_obs, self._tl_feature_shape)
                 tl_obs = [element for lis in tl_obs.values() for element in lis]
                 agent_obs.append(tl_obs)
-            action_num = self._core.info().act_space.value['max']
+            action_num = np.max(self._core.action_space.nvec)
             action_mask = [1] * action_num
             return {
                 'global_state': np.array([global_obs] * tl_num),
