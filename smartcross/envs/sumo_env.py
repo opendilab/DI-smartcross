@@ -9,7 +9,7 @@ import random
 import traci
 from sumolib import checkBinary
 
-from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
+from ding.envs import BaseEnv, BaseEnvTimestep  #, BaseEnvInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
@@ -150,15 +150,15 @@ class SumoEnv(BaseEnv):
             self._launch_env_flag = False
             traci.close()
 
-    def info(self) -> 'BaseEnvInfo':
-        info_data = {
-            'agent_num': len(self._tls),
-            'obs_space': self._obs_runner.info,
-            'act_space': self._action_runner.info,
-            'rew_space': self._reward_runner.info,
-            'use_wrappers': False
-        }
-        return BaseEnvInfo(**info_data)
+    # def info(self) -> 'BaseEnvInfo':
+    #     info_data = {
+    #         'agent_num': len(self._tls),
+    #         'obs_space': self._obs_runner.info,
+    #         'act_space': self._action_runner.info,
+    #         'rew_space': self._reward_runner.info,
+    #         'use_wrappers': False
+    #     }
+    #     return BaseEnvInfo(**info_data)
 
     def __repr__(self) -> str:
         return "SumoEnv"

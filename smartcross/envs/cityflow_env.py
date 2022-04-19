@@ -6,8 +6,7 @@ from typing import Dict, Any, List, Tuple, Union
 
 import cityflow
 
-from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
-from ding.envs.common.env_element import EnvElementInfo
+from ding.envs import BaseEnv, BaseEnvTimestep
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray
 from smartcross.utils.env_utils import get_suffix_num, squeeze_obs, get_onehot_obs
