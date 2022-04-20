@@ -27,7 +27,7 @@ def main(args, seed=0):
         main_config, create_config = get_sumo_config(args)
     if args.gui:
         main_config.env.gui = True
-    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
+    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True, save_cfg=False)
     if args.env_num > 0:
         cfg.env.evaluator_env_num = args.env_num
         if cfg.env.n_evaluator_episode < args.env_num:

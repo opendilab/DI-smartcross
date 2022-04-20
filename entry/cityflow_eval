@@ -21,7 +21,7 @@ def main(args, seed=0):
     if args.policy_type == 'fix':
         create_config.policy['type'] = 'smartcross_fix'
     main_config.env = deep_merge_dicts(main_config.env, cityflow_env_config)
-    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
+    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True, save_cfg=False)
     if args.env_num > 0:
         cfg.env.evaluator_env_num = args.env_num
         if cfg.env.n_evaluator_episode < args.env_num:
