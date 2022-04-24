@@ -69,7 +69,7 @@ if __name__ == "__main__":
         '-p', '--policy-type', default='dqn', choices=['random', 'fix', 'dqn', 'rainbow', 'ppo'], help='RL policy type'
     )
     parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
-    parser.add_argument('-n', '--env-num', type=int, default=-1, help='sumo env num for evaluation')
+    parser.add_argument('-n', '--env-num', type=int, default=1, help='sumo env num for evaluation')
     parser.add_argument('--gui', action='store_true', help="open gui for visualize")
     parser.add_argument('-c', '--ckpt-path', type=str, default=None, help='model ckpt path')
 

@@ -61,7 +61,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '-p', '--policy-type', default='dqn', choices=['fix', 'dqn', 'ppo'], help='RL policy type'
     )
-    parser.add_argument('-n', '--env-num', type=int, default=-1, help='sumo env num for evaluation')
+    parser.add_argument('-n', '--env-num', type=int, default=1, help='sumo env num for evaluation')
     parser.add_argument('-c', '--ckpt-path', type=str, default=None, help='model ckpt path')
 
     args = parser.parse_args()

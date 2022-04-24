@@ -39,6 +39,7 @@ class RandomPolicy():
 
 
 def get_random_sample_func(act_space):
+
     def _forward(data: Dict[int, Any], *args, **kwargs) -> Dict[int, Any]:
         actions = {}
         for env_id in data:
@@ -46,6 +47,7 @@ def get_random_sample_func(act_space):
             action = [torch.LongTensor([v]) for v in action]
             actions[env_id] = {'action': action}
         return actions
+
     return _forward
 
 
