@@ -15,7 +15,7 @@ from smartcross.utils.config_utils import get_sumo_config
 from smartcross.policy import RandomPolicy, FixedPolicy
 
 
-def main(args, seed=0):
+def main(args, seed=None):
     if args.policy_type in ['random', 'fix']:
         from entry.sumo_config.sumo_eval_default_config import main_config, create_config
         with open(args.env_cfg, 'r') as f:
@@ -27,7 +27,7 @@ def main(args, seed=0):
         main_config, create_config = get_sumo_config(args)
     if args.gui:
         main_config.env.gui = True
-    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
+    cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True, save_cfg=False)
     if args.env_num > 0:
         cfg.env.evaluator_env_num = args.env_num
         if cfg.env.n_evaluator_episode < args.env_num:
@@ -54,6 +54,7 @@ def main(args, seed=0):
         policy,
     )
     _, eval_reward = evaluator.eval(None, -1, -1, cfg.env.n_evaluator_episode)
+    eval_reward = [r['final_eval_reward'].item() for r in eval_reward]
     print('Eval is over! The performance is {}'.format(eval_reward))
     evaluator.close()
     return eval_reward
@@ -63,12 +64,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='DI-smartcross training script')
     parser.add_argument('-d', '--ding-cfg', default=None, help='DI-engine configuration path')
     parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
-    parser.add_argument('-s', '--seed', default=0, type=int, help='random seed for sumo')
+    parser.add_argument('-s', '--seed', default=None, type=int, help='random seed for sumo')
     parser.add_argument(
         '-p', '--policy-type', default='dqn', choices=['random', 'fix', 'dqn', 'rainbow', 'ppo'], help='RL policy type'
     )
     parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
-    parser.add_argument('-n', '--env-num', type=int, default=-1, help='sumo env num for evaluation')
+    parser.add_argument('-n', '--env-num', type=int, default=1, help='sumo env num for evaluation')
     parser.add_argument('--gui', action='store_true', help="open gui for visualize")
     parser.add_argument('-c', '--ckpt-path', type=str, default=None, help='model ckpt path')
 

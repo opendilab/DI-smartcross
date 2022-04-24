@@ -12,6 +12,7 @@ from ding.worker import BaseLearner, InteractionSerialEvaluator, create_serial_c
 from ding.utils.default_helper import set_pkg_seed
 from ding.rl_utils import get_epsilon_greedy_fn
 from smartcross.utils.config_utils import get_sumo_config
+from smartcross.policy.default_policy import get_random_sample_func
 
 
 def main(args, seed=None):
@@ -60,7 +61,8 @@ def main(args, seed=None):
     # Accumulate plenty of data at the beginning of training.
     if cfg.policy.get('random_collect_size', 0) > 0:
         action_space = collector_env.action_space
-        random_policy = PolicyFactory.get_random_policy(policy.collect_mode, action_space=action_space)
+        random_sample_func = get_random_sample_func(action_space)
+        random_policy = PolicyFactory.get_random_policy(policy.collect_mode, forward_fn=random_sample_func)
         collector.reset_policy(random_policy)
         new_data = collector.collect(n_sample=cfg.policy.random_collect_size)
         replay_buffer.push(new_data, cur_collector_envstep=0)
@@ -113,8 +115,8 @@ if __name__ == "__main__":
     parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
     parser.add_argument('-s', '--seed', default=None, type=int, help='random seed for sumo')
     parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
-    parser.add_argument('-cn', '--collect-env-num', type=int, default=-1, help='collector sumo env num for training')
-    parser.add_argument('-en', '--evaluate-env-num', type=int, default=-1, help='evaluator sumo env num for training')
+    parser.add_argument('-cn', '--collect-env-num', type=int, default=1, help='collector sumo env num for training')
+    parser.add_argument('-en', '--evaluate-env-num', type=int, default=1, help='evaluator sumo env num for training')
     parser.add_argument('--exp-name', type=str, default=None, help='experiment name to save log and ckpt')
 
     args = parser.parse_args()

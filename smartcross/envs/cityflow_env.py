@@ -215,6 +215,7 @@ class CityflowEnv(BaseEnv):
     def seed(self, seed: int, dynamic_seed: bool = True) -> None:
         self._seed = seed
         self._dynamic_seed = dynamic_seed
+        self._eng.set_random_seed(seed)
 
     @property
     def observation_space(self) -> gym.spaces.Space:
