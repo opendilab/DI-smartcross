@@ -1,3 +1,4 @@
+import gym
 from typing import Dict
 
 from ding.envs import BaseEnv
@@ -21,7 +22,7 @@ class SumoAction(EnvElement):
         Overview:
             init the sumo action environment with the given config file
         Arguments:
-            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo/sumo_env_default_config.yaml`
+            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo_wj3_default_config.yaml`
         """
         self._env = env
         self._cfg = cfg
@@ -37,6 +38,7 @@ class SumoAction(EnvElement):
                 raise NotImplementedError
         if self._use_multi_discrete:
             self._shape = len(action_shape)
+            self._space = gym.spaces.MultiDiscrete(action_shape)
         else:
             # TODO: add naive discrete action
             raise NotImplementedError
@@ -64,3 +66,7 @@ class SumoAction(EnvElement):
     # override
     def _details(self):
         return 'action dim: {}'.format(self._shape)
+
+    @property
+    def space(self):
+        return self._space

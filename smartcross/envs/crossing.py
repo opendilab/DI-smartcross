@@ -17,7 +17,7 @@ class Crossing:
 
         self._lane_vehicle_dict = {}
         self._previous_lane_vehicle_dict = {}
-        signal_definition = traci.trafficlight.getCompleteRedYellowGreenDefinition(self._id)[0]
+        signal_definition = traci.trafficlight.getAllProgramLogics(self._id)[0]
         self._green_phases = []
         self._yellow_phases = []
         for idx, phase in enumerate(signal_definition.phases):
@@ -140,9 +140,9 @@ class Crossing:
     def get_pressure(self):
         pressure = 0
         for lane in self._incoming_lanes:
-            pressure += traci.lane.getLastStepVehicleNumber(lane)
+            pressure += traci.lane.getLastStepHaltingNumber(lane)
         for lane in self._outgoing_lanes:
-            pressure -= traci.lane.getLastStepVehicleNumber(lane)
+            pressure -= traci.lane.getLastStepHaltingNumber(lane)
         return abs(pressure)
 
     @property

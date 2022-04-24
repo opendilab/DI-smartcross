@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import os
+import torch
 import argparse
 from functools import partial
-import torch
-import yaml
 from easydict import EasyDict
 
 from ding.config import compile_config
@@ -11,36 +10,30 @@ from ding.policy import create_policy
 from ding.envs import get_vec_env_setting, create_env_manager
 from ding.worker import InteractionSerialEvaluator
 from ding.utils.default_helper import set_pkg_seed, deep_merge_dicts
-from smartcross.utils.config_utils import get_sumo_config
-from smartcross.policy import RandomPolicy, FixedPolicy
+from smartcross.utils.config_utils import read_ding_config
+from smartcross.policy import FixedPolicy
 
 
 def main(args, seed=None):
-    if args.policy_type in ['random', 'fix']:
-        from entry.sumo_config.sumo_eval_default_config import main_config, create_config
-        with open(args.env_cfg, 'r') as f:
-            sumoenv_cfg = yaml.safe_load(f)
-        sumoenv_cfg = EasyDict(sumoenv_cfg)
-        main_config = deep_merge_dicts(sumoenv_cfg, main_config)
-        create_config.policy['type'] = 'smartcross_' + args.policy_type
-    else:
-        main_config, create_config = get_sumo_config(args)
-    if args.gui:
-        main_config.env.gui = True
+    ding_cfg = args.ding_cfg
+    main_config, create_config = read_ding_config(ding_cfg)
+    cityflow_env_config = {'config_path': args.env_cfg}
+    if args.policy_type == 'fix':
+        create_config.policy['type'] = 'smartcross_fix'
+    main_config.env = deep_merge_dicts(main_config.env, cityflow_env_config)
     cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True, save_cfg=False)
     if args.env_num > 0:
         cfg.env.evaluator_env_num = args.env_num
         if cfg.env.n_evaluator_episode < args.env_num:
             cfg.env.n_evaluator_episode = cfg.env.evaluator_env_num
     env_fn, _, evaluator_env_cfg = get_vec_env_setting(cfg.env)
+    env = env_fn(cfg=evaluator_env_cfg[0])
     evaluator_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in evaluator_env_cfg])
     if seed is not None:
         evaluator_env.seed(cfg.seed, dynamic_seed=False)
         set_pkg_seed(cfg.seed, use_cuda=cfg.policy.cuda)
 
-    if args.policy_type == 'random':
-        policy = RandomPolicy(evaluator_env.action_space)
-    elif args.policy_type == 'fix':
+    if args.policy_type == 'fix':
         policy = FixedPolicy(evaluator_env.action_space)
     else:
         policy = create_policy(cfg.policy, enable_field=['eval']).eval_mode
@@ -66,11 +59,9 @@ if __name__ == "__main__":
     parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
     parser.add_argument('-s', '--seed', default=None, type=int, help='random seed for sumo')
     parser.add_argument(
-        '-p', '--policy-type', default='dqn', choices=['random', 'fix', 'dqn', 'rainbow', 'ppo'], help='RL policy type'
+        '-p', '--policy-type', default='dqn', choices=['fix', 'dqn', 'ppo'], help='RL policy type'
     )
-    parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
     parser.add_argument('-n', '--env-num', type=int, default=1, help='sumo env num for evaluation')
-    parser.add_argument('--gui', action='store_true', help="open gui for visualize")
     parser.add_argument('-c', '--ckpt-path', type=str, default=None, help='model ckpt path')
 
     args = parser.parse_args()

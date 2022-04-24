@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import gym
 from typing import Dict, Any, List, Tuple, Union
 import numpy as np
 import random
@@ -8,7 +9,7 @@ import random
 import traci
 from sumolib import checkBinary
 
-from ding.envs import BaseEnv, BaseEnvTimestep, BaseEnvInfo
+from ding.envs import BaseEnv, BaseEnvTimestep  # , BaseEnvInfo
 from ding.utils import ENV_REGISTRY
 from ding.torch_utils import to_ndarray, to_tensor
 from smartcross.envs.crossing import Crossing
@@ -46,6 +47,9 @@ class SumoEnv(BaseEnv):
         self._action_runner = SumoActionRunner(self, cfg.action)
         self._reward_runner = SumoRewardRunner(self, cfg.reward)
         self.close()
+        self._observation_space = self._obs_runner.space
+        self._action_space = self._action_runner.space
+        self._reward_space = gym.spaces.Box(low=-float('inf'), high=0, shape=(1, ), dtype=np.float32)
 
     def _launch_env(self, gui: bool = False) -> None:
         # set gui=True can get visualization simulation result with sumo, apply gui=False in the normal training
@@ -111,6 +115,8 @@ class SumoEnv(BaseEnv):
         self._action_runner.reset()
         self._obs_runner.reset()
         self._reward_runner.reset()
+        if self._launch_env_flag:
+            self.close()
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)
@@ -146,18 +152,30 @@ class SumoEnv(BaseEnv):
             self._launch_env_flag = False
             traci.close()
 
-    def info(self) -> 'BaseEnvInfo':
-        info_data = {
-            'agent_num': len(self._tls),
-            'obs_space': self._obs_runner.info,
-            'act_space': self._action_runner.info,
-            'rew_space': len(self._tls),
-            'use_wrappers': False
-        }
-        return BaseEnvInfo(**info_data)
+    # def info(self) -> 'BaseEnvInfo':
+    #     info_data = {
+    #         'agent_num': len(self._tls),
+    #         'obs_space': self._obs_runner.info,
+    #         'act_space': self._action_runner.info,
+    #         'rew_space': self._reward_runner.info,
+    #         'use_wrappers': False
+    #     }
+    #     return BaseEnvInfo(**info_data)
 
     def __repr__(self) -> str:
         return "SumoEnv"
+
+    @property
+    def observation_space(self) -> gym.spaces.Space:
+        return self._observation_space
+
+    @property
+    def action_space(self) -> gym.spaces.Space:
+        return self._action_space
+
+    @property
+    def reward_space(self) -> gym.spaces.Space:
+        return self._reward_space
 
     @property
     def vehicle_info(self) -> Dict[str, Dict]:

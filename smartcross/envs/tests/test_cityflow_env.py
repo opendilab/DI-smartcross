@@ -5,29 +5,35 @@ import torch
 import yaml
 from easydict import EasyDict
 
-from smartcross.envs import SumoEnv
+from smartcross.envs import CityflowEnv
 
 
 @pytest.fixture(scope='function')
 def setup_config():
-    with open(os.path.join(os.path.dirname(__file__), '../sumo_wj3_default_config.yaml')) as f:
-        cfg = yaml.safe_load(f)
+    cfg = dict(
+        obs_type=['phase', 'lane_vehicle_num', 'lane_waiting_vehicle_num'],
+        n_evaluator_episode=1,
+        max_episode_duration=1000,
+        green_duration=30,
+        yellow_duration=5,
+        red_duration=0,
+        stop_value=0,
+        config_path="smartcross/envs/cityflow_grid/cityflow_grid_config.json",
+    )
     cfg = EasyDict(cfg)
-    return cfg.env
+    return cfg
 
 
 @pytest.mark.envtest
-class TestSumoEnv:
+class TestCityFlowEnv:
 
     def get_random_action(self, action_space):
-        action = action_space.sample()
-        action = [torch.LongTensor([v]) for v in action]
-        return action
+        return action_space.sample()
 
     def test_naive(self, setup_config):
-        env = SumoEnv(setup_config)
+        env = CityflowEnv(setup_config)
         obs = env.reset()
-        assert (len(obs) == env.observation_space.shape[0])
+        assert len(obs) == env.observation_space.shape[0]
         for i in range(10):
             action = self.get_random_action(env.action_space)
             timestep = env.step(action)

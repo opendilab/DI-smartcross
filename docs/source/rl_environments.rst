@@ -69,3 +69,67 @@ Multi-agent
 It is only necessary to add ``multi_agent`` in **DI-engine** config file to convert common PPO into MAPPO,
 and change the ``use_centrolized_obs`` in environment config into ``True``. The policy and observations can
 be automatically changed to run individual agent for each cross.
+
+Roadnets
+-------------
+
+.. `Beijing Wangjing 3 Crossings <./envs/wj3_env.html>`_
+
+.. `RL Arterial 7 Crossings <./envs/rl_arterial7_env.html>`_
+
+.. toctree::
+    :maxdepth: 2
+
+    envs/wj3_env
+    envs/rl_arterial7_env
+
+
+CityFlow environments
+=============================
+
+configuration
+-----------------
+
+CityFlow simulator has its own config `json` file, with roadnet file, flow file and replay file defined in it.
+DI-smartcross adds some extra configs together with CityFlow's config file path in DI-engine's env config.
+
+.. code:: python
+
+    main_config = dict(
+        env=dict(
+            obs_type=['phase', 'lane_vehicle_num', 'lane_waiting_vehicle_num'],
+            max_episode_duration=1000,
+            green_duration=30,
+            yellow_duration=5,
+            red_duration=0,
+            ...
+        ),
+        ...
+    )
+
+Observation
+----------------
+
+We provide several types of observations of each cross.
+
+- phase: One-hot phase vector of current cross signal
+- lane_vehicle_num: vehicle nums of each incoming lane
+- lane_waiting_vehicle_num: waiting vehicle nums of each incoming lane
+
+Action
+-------------
+
+CityFlow environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.
+
+Reward
+-------------
+
+CityFlow environment uses pressure of each cross as reward
+
+Roadnets
+-------------
+
+.. toctree::
+    :maxdepth: 2
+
+    envs/cf_grid_env

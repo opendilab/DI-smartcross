@@ -15,7 +15,7 @@ class SumoActionRunner(EnvElementRunner):
         Overview:
             init the sumo observation helper with the given config file
         Arguments:
-            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo/sumo_env_default_config.yaml`
+            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo_wj3_default_config.yaml`
         """
         # set self._core and other state variable
         self._engine = engine
@@ -34,3 +34,7 @@ class SumoActionRunner(EnvElementRunner):
 
     def reset(self) -> None:
         self._last_action = None
+
+    @property
+    def space(self):
+        return self._core.space

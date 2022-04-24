@@ -1,9 +1,12 @@
 from typing import Dict, List
 import numpy as np
+import gym
 
 from ding.envs import BaseEnv
 from ding.envs.common.env_element import EnvElementInfo
 from ding.envs.common import EnvElement
+
+from smartcross.utils.env_utils import squeeze_obs
 
 ALL_OBS_TPYE = set(['phase', 'lane_pos_vec', 'traffic_volumn', 'queue_len'])
 
@@ -51,6 +54,7 @@ class SumoObs(EnvElement):
 
         if self._use_centralized_obs:
             self._shape = sum(obs_shape)
+            self._space = gym.spaces.Box(low=0, high=1, shape=(self._shape, ), dtype=np.float32)
         else:
             global_state_shape = sum(obs_shape)
             if self._padding:
@@ -63,10 +67,17 @@ class SumoObs(EnvElement):
                 'global_state': global_state_shape,
                 'action_mask': self._tl_num
             }
+            self._space = gym.spaces.Dict(
+                {
+                    'agent_state': gym.spaces.Box(low=0, high=1, shape=(agent_state_shape, )),
+                    'global_state': gym.spaces.Box(low=0, high=1, shape=(global_state_shape, )),
+                    'action_mask': gym.spaces.Box(low=0, high=1, shape=(self._tl_num, )),
+                }
+            )
         self._value = {
             'min': 0,
             'max': 1,
-            'dtype': float,
+            'dtype': np.float32,
         }
 
     def _get_tls_feature(self, tl_id: int) -> Dict:
@@ -100,7 +111,7 @@ class SumoObs(EnvElement):
                     tl_obs = padding_obs_by_fearure(tl_obs, self._tl_feature_shape)
                 tl_obs = [element for lis in tl_obs.values() for element in lis]
                 agent_obs.append(tl_obs)
-            action_num = self._core.info().act_space.value['max']
+            action_num = np.max(self._core.action_space.nvec)
             action_mask = [1] * action_num
             return {
                 'global_state': np.array([global_obs] * tl_num),
@@ -113,6 +124,10 @@ class SumoObs(EnvElement):
 
     def _details(self) -> str:
         return '{}'.format(self._shape)
+
+    @property
+    def space(self):
+        return self._space
 
 
 def max_dict(dict1: Dict, dict2: Dict) -> Dict:
@@ -131,15 +146,3 @@ def padding_obs_by_fearure(tl_obs: Dict, tl_feature_shape: Dict) -> Dict:
         if len(tl_obs[feature]) < tl_feature_shape[feature]:
             tl_obs[feature] += [0] * (tl_feature_shape[feature] - len(tl_obs[feature]))
     return tl_obs
-
-
-def squeeze_obs(obs: Dict) -> List:
-    assert obs is not None
-    if isinstance(obs, dict):
-        return [value for key in sorted(obs) for value in squeeze_obs(obs[key])]
-    elif isinstance(obs, (tuple, list, set)):
-        return [value for item in obs for value in squeeze_obs(item)]
-    elif isinstance(obs, (int, float, str)):
-        return (obs, )
-    else:
-        raise ValueError('Cannot process type: {}, {}'.format(type(obs), obs))

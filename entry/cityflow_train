@@ -10,21 +10,24 @@ from ding.policy import create_policy, PolicyFactory
 from ding.envs import get_vec_env_setting, create_env_manager
 from ding.worker import BaseLearner, InteractionSerialEvaluator, create_serial_collector, create_buffer
 from ding.utils.default_helper import set_pkg_seed
+from ding.utils import deep_merge_dicts
 from ding.rl_utils import get_epsilon_greedy_fn
-from smartcross.utils.config_utils import get_sumo_config
+from smartcross.utils.config_utils import read_ding_config
 from smartcross.policy.default_policy import get_random_sample_func
 
 
 def main(args, seed=None):
-    main_config, create_config = get_sumo_config(args)
+    ding_cfg = args.ding_cfg
+    main_config, create_config = read_ding_config(ding_cfg)
+    cityflow_env_config = {'config_path': args.env_cfg}
+    main_config.env = deep_merge_dicts(main_config.env, cityflow_env_config)
     if args.collect_env_num > 0:
         main_config.env.collector_env_num = args.collect_env_num
     if args.evaluate_env_num > 0:
         main_config.env.evaluator_env_num = args.evaluate_env_num
     if args.exp_name is not None:
         main_config.exp_name = args.exp_name
-    if args.dynamic_flow:
-        main_config.env.dynamic_flow = True
+
     cfg = compile_config(main_config, create_cfg=create_config, seed=seed, auto=True)
     env_fn, collecotr_env_cfg, evaluator_env_cfg = get_vec_env_setting(cfg.env)
     collector_env = create_env_manager(cfg.env.manager, [partial(env_fn, cfg=c) for c in collecotr_env_cfg])
@@ -112,11 +115,10 @@ def main(args, seed=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='DI-smartcross training script')
     parser.add_argument('-d', '--ding-cfg', required=True, help='DI-engine configuration path')
-    parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
-    parser.add_argument('-s', '--seed', default=None, type=int, help='random seed for sumo')
-    parser.add_argument('--dynamic-flow', action='store_true', help="use dynamic route flow")
-    parser.add_argument('-cn', '--collect-env-num', type=int, default=1, help='collector sumo env num for training')
-    parser.add_argument('-en', '--evaluate-env-num', type=int, default=1, help='evaluator sumo env num for training')
+    parser.add_argument('-e', '--env-cfg', required=True, help='cityflow json configuration path')
+    parser.add_argument('-s', '--seed', default=None, type=int, help='random seed')
+    parser.add_argument('-cn', '--collect-env-num', type=int, default=1, help='collector env num for training')
+    parser.add_argument('-en', '--evaluate-env-num', type=int, default=1, help='evaluator env num for training')
     parser.add_argument('--exp-name', type=str, default=None, help='experiment name to save log and ckpt')
 
     args = parser.parse_args()

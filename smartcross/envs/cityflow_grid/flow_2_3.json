@@ -1,0 +1,1602 @@
+[
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_1_0",
+      "road_3_1_0"
+    ],
+    "interval": 25.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_1_0",
+      "road_3_1_0"
+    ],
+    "interval": 6.25,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_1_2",
+      "road_1_1_2"
+    ],
+    "interval": 25.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_1_2",
+      "road_1_1_2"
+    ],
+    "interval": 6.25,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_1_0",
+      "road_3_2_0"
+    ],
+    "interval": 38.762817436337976,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_1_0",
+      "road_3_2_0"
+    ],
+    "interval": 9.690704359084494,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_1_2",
+      "road_3_2_0"
+    ],
+    "interval": 44.82664675535357,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_1_2",
+      "road_3_2_0"
+    ],
+    "interval": 11.206661688838393,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_1_0",
+      "road_2_2_1"
+    ],
+    "interval": 42.5592527129307,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_1_0",
+      "road_2_2_1"
+    ],
+    "interval": 10.639813178232675,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_1_2",
+      "road_2_1_3"
+    ],
+    "interval": 44.73760272426931,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_1_2",
+      "road_2_1_3"
+    ],
+    "interval": 11.184400681067327,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_1_0",
+      "road_1_2_1"
+    ],
+    "interval": 35.43323961869715,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_1_0",
+      "road_1_2_1"
+    ],
+    "interval": 8.858309904674288,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_1_2",
+      "road_1_2_1"
+    ],
+    "interval": 43.403324879153594,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_1_2",
+      "road_1_2_1"
+    ],
+    "interval": 10.850831219788398,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_2_0",
+      "road_3_2_0"
+    ],
+    "interval": 25.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_2_0",
+      "road_3_2_0"
+    ],
+    "interval": 6.25,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_2_2",
+      "road_1_2_2"
+    ],
+    "interval": 25.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_2_2",
+      "road_1_2_2"
+    ],
+    "interval": 6.25,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_2_0",
+      "road_3_1_3"
+    ],
+    "interval": 40.29666141734653,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_2_0",
+      "road_3_1_3"
+    ],
+    "interval": 10.074165354336632,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_2_2",
+      "road_3_1_3"
+    ],
+    "interval": 38.790742642916186,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_2_2",
+      "road_3_1_3"
+    ],
+    "interval": 9.697685660729046,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_2_0",
+      "road_3_1_3"
+    ],
+    "interval": 39.67741336828556,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_2_0",
+      "road_3_1_3"
+    ],
+    "interval": 9.91935334207139,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_2_2",
+      "road_1_1_3"
+    ],
+    "interval": 40.41956043713023,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_2_2",
+      "road_1_1_3"
+    ],
+    "interval": 10.104890109282557,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_0_2_0",
+      "road_2_1_3"
+    ],
+    "interval": 49.502574412666156,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_0_2_0",
+      "road_2_1_3"
+    ],
+    "interval": 12.375643603166539,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_4_2_2",
+      "road_1_1_3"
+    ],
+    "interval": 30.026781075159725,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_4_2_2",
+      "road_1_1_3"
+    ],
+    "interval": 7.506695268789931,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_0_1",
+      "road_1_2_1"
+    ],
+    "interval": 50.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_0_1",
+      "road_1_2_1"
+    ],
+    "interval": 12.5,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_3_3",
+      "road_1_1_3"
+    ],
+    "interval": 50.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_3_3",
+      "road_1_1_3"
+    ],
+    "interval": 12.5,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_0_1",
+      "road_3_2_0"
+    ],
+    "interval": 72.23674669577058,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_0_1",
+      "road_3_2_0"
+    ],
+    "interval": 18.059186673942644,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_3_3",
+      "road_3_1_0"
+    ],
+    "interval": 61.50638160341691,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_3_3",
+      "road_3_1_0"
+    ],
+    "interval": 15.376595400854228,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_0_1",
+      "road_3_1_0"
+    ],
+    "interval": 67.02781317902827,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_0_1",
+      "road_3_1_0"
+    ],
+    "interval": 16.756953294757068,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_3_3",
+      "road_3_2_1"
+    ],
+    "interval": 58.96226522254158,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_3_3",
+      "road_3_2_1"
+    ],
+    "interval": 14.740566305635395,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_0_1",
+      "road_3_2_1"
+    ],
+    "interval": 44.65871402610205,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_0_1",
+      "road_3_2_1"
+    ],
+    "interval": 11.164678506525512,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_1_3_3",
+      "road_2_1_3"
+    ],
+    "interval": 51.41425494173674,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_1_3_3",
+      "road_2_1_3"
+    ],
+    "interval": 12.853563735434186,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_0_1",
+      "road_2_2_1"
+    ],
+    "interval": 50.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_0_1",
+      "road_2_2_1"
+    ],
+    "interval": 12.5,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_3_3",
+      "road_2_1_3"
+    ],
+    "interval": 50.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_3_3",
+      "road_2_1_3"
+    ],
+    "interval": 12.5,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_0_1",
+      "road_3_1_0"
+    ],
+    "interval": 58.73907992759081,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_0_1",
+      "road_3_1_0"
+    ],
+    "interval": 14.684769981897702,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_3_3",
+      "road_3_2_1"
+    ],
+    "interval": 71.15428468863556,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_3_3",
+      "road_3_2_1"
+    ],
+    "interval": 17.78857117215889,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_0_1",
+      "road_3_1_3"
+    ],
+    "interval": 49.40483911199813,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_0_1",
+      "road_3_1_3"
+    ],
+    "interval": 12.351209777999532,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_3_3",
+      "road_1_1_2"
+    ],
+    "interval": 53.43871377790503,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_3_3",
+      "road_1_1_2"
+    ],
+    "interval": 13.359678444476257,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_0_1",
+      "road_3_1_3"
+    ],
+    "interval": 57.73252317460592,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_0_1",
+      "road_3_1_3"
+    ],
+    "interval": 14.43313079365148,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_2_3_3",
+      "road_1_1_2"
+    ],
+    "interval": 67.70050930967362,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_2_3_3",
+      "road_1_1_2"
+    ],
+    "interval": 16.925127327418405,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_0_1",
+      "road_3_2_1"
+    ],
+    "interval": 50.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_0_1",
+      "road_3_2_1"
+    ],
+    "interval": 12.5,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_3_3",
+      "road_3_1_3"
+    ],
+    "interval": 50.0,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_3_3",
+      "road_3_1_3"
+    ],
+    "interval": 12.5,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_0_1",
+      "road_1_1_2"
+    ],
+    "interval": 41.30156693913602,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_0_1",
+      "road_1_1_2"
+    ],
+    "interval": 10.325391734784006,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_3_3",
+      "road_1_1_3"
+    ],
+    "interval": 66.55489809238179,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_3_3",
+      "road_1_1_3"
+    ],
+    "interval": 16.638724523095448,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_0_1",
+      "road_1_2_2"
+    ],
+    "interval": 44.433384602845486,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_0_1",
+      "road_1_2_2"
+    ],
+    "interval": 11.108346150711371,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_3_3",
+      "road_2_2_1"
+    ],
+    "interval": 72.57901855477017,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_3_3",
+      "road_2_2_1"
+    ],
+    "interval": 18.144754638692543,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_0_1",
+      "road_3_1_0"
+    ],
+    "interval": 53.58951809372816,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_0_1",
+      "road_3_1_0"
+    ],
+    "interval": 13.39737952343204,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 10,
+      "width": 3,
+      "maxPosAcc": 1.5,
+      "maxNegAcc": 3.5,
+      "usualPosAcc": 1.0,
+      "usualNegAcc": 3.5,
+      "minGap": 3,
+      "maxSpeed": 12,
+      "headwayTime": 2
+    },
+    "route": [
+      "road_3_3_3",
+      "road_3_1_0"
+    ],
+    "interval": 67.69007419446481,
+    "startTime": 0,
+    "endTime": -1
+  },
+  {
+    "vehicle": {
+      "length": 5,
+      "width": 2,
+      "maxPosAcc": 2.0,
+      "maxNegAcc": 4.5,
+      "usualPosAcc": 2.0,
+      "usualNegAcc": 4.5,
+      "minGap": 2.5,
+      "maxSpeed": 16.67,
+      "headwayTime": 1.5
+    },
+    "route": [
+      "road_3_3_3",
+      "road_3_1_0"
+    ],
+    "interval": 16.922518548616203,
+    "startTime": 0,
+    "endTime": -1
+  }
+]

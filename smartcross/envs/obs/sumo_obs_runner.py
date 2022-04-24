@@ -20,7 +20,7 @@ class SumoObsRunner(EnvElementRunner):
         Overview:
             init the sumo observation helper with the given config file
         Arguments:
-            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo/sumo_env_default_config.yaml`
+            - cfg(:obj:`EasyDict`): config, you can refer to `envs/sumo_wj3_default_config.yaml`
         """
         # set self._core and other state variable
         self._engine = engine
@@ -45,3 +45,7 @@ class SumoObsRunner(EnvElementRunner):
             reset obs runner, and return the initial obs
         """
         return to_ndarray(self._obs, dtype=np.float32)
+
+    @property
+    def space(self):
+        return self._core.space

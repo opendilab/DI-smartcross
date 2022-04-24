@@ -1,4 +1,4 @@
-.. DI-drive documentation master file, created by
+.. DI-smartcross documentation master file, created by
    sphinx-quickstart on Mon Jan 25 13:49:15 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -14,15 +14,14 @@ DI-smartcross Documentation
    installation
    quick_start
    rl_environments
+   faq
 
-
-.. figure:: ../figs/di-smartcross_logo.png
+.. figure:: ../figs/di-smartcross_banner.png
    :alt: DI-smartcross
-   :width: 500px
 
 Decision Intelligence Platform for Traffic Crossing Signal Control.
 
-Last updated on 
+Last updated on 2022.04.16
 
 -----
 
@@ -50,10 +49,13 @@ Content
 ==============
 
 `Installation <installation.html>`_
---------------------------------------
+------------------------------------------
 
-`Quick Start <quickstart>`_
------------------------------
+`Quick Start <quickstart.html>`_
+-------------------------------------
 
-`RL Environments <rl_environments>`_
-----------------------------------------
+`RL Environments <rl_environments.html>`_
+-------------------------------------------------
+
+`FAQ <faq.html>`_
+--------------------

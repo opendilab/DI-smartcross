@@ -134,5 +134,8 @@ dmypy.json
 *_case_info.json
 *_flow*.sumocfg
 
+.vscode
 debug
-exp
+exp*
+replay*.json
+replay*.txt

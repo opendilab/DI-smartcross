@@ -1,8 +1,8 @@
 env:
-  sumocfg_path: 'rl_arterial_7roads/standard.sumocfg'
+  sumocfg_path: 'sumo_arterial_7roads/standard.sumocfg'
   gui: False
   inference: False
-  dynamic_flow: False
+  dynamic_flow: True
   flow_range: [900, 1900, 100]
   max_episode_steps: 1600
   green_duration: 10
@@ -11,8 +11,8 @@ env:
   obs:
     obs_type: [phase, traffic_volumn, queue_len]
     queue_len_ratio: 7.5
-    use_centralized_obs: True
-    padding: False
+    use_centralized_obs: False
+    padding: True
   action:
     action_type: change
     use_multi_discrete: True

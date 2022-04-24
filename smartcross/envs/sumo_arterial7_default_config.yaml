@@ -1,0 +1,22 @@
+env:
+  sumocfg_path: 'sumo_arterial_7roads/standard.sumocfg'
+  gui: False
+  inference: False
+  dynamic_flow: False
+  flow_range: [900, 1900, 100]
+  max_episode_steps: 1600
+  green_duration: 10
+  yellow_duration: 3
+  tls: ['1', '3', '4', '5', '7', '6', '2']
+  obs:
+    obs_type: [phase, traffic_volumn, queue_len]
+    queue_len_ratio: 7.5
+    use_centralized_obs: True
+    padding: False
+  action:
+    action_type: change
+    use_multi_discrete: True
+  reward:
+    use_centralized_reward: True
+    reward_type: 
+      pressure: 1.0
