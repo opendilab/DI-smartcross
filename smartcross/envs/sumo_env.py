@@ -115,6 +115,8 @@ class SumoEnv(BaseEnv):
         self._action_runner.reset()
         self._obs_runner.reset()
         self._reward_runner.reset()
+        if self._launch_env_flag:
+            self.close()
         self._launch_env(self._gui)
         for tl in self._cfg.tls:
             self._crosses[tl] = Crossing(tl, self)

@@ -14,7 +14,7 @@ from smartcross.utils.config_utils import read_ding_config
 from smartcross.policy import FixedPolicy
 
 
-def main(args, seed=0):
+def main(args, seed=None):
     ding_cfg = args.ding_cfg
     main_config, create_config = read_ding_config(ding_cfg)
     cityflow_env_config = {'config_path': args.env_cfg}
@@ -47,6 +47,7 @@ def main(args, seed=0):
         policy,
     )
     _, eval_reward = evaluator.eval(None, -1, -1, cfg.env.n_evaluator_episode)
+    eval_reward = [r['final_eval_reward'].item() for r in eval_reward]
     print('Eval is over! The performance is {}'.format(eval_reward))
     evaluator.close()
     return eval_reward
@@ -56,7 +57,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='DI-smartcross training script')
     parser.add_argument('-d', '--ding-cfg', default=None, help='DI-engine configuration path')
     parser.add_argument('-e', '--env-cfg', required=True, help='sumo environment configuration path')
-    parser.add_argument('-s', '--seed', default=0, type=int, help='random seed for sumo')
+    parser.add_argument('-s', '--seed', default=None, type=int, help='random seed for sumo')
     parser.add_argument(
         '-p', '--policy-type', default='dqn', choices=['fix', 'dqn', 'ppo'], help='RL policy type'
     )
