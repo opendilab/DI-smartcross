@@ -2,9 +2,9 @@
 
 <img src="./docs/figs/di-smartcross_banner.png" alt="icon"/>
 
-**DI-smartcross** is an open-source Decision Intelligence platform for Traffic Crossing Signal Control task. DI-smartcross applies several Reinforcement Learning policies training & evaluation for traffic signal control system in provided road nets. DI-smartcross is application platform under [OpenDILab](http://opendilab.org/).
+**DI-smartcross** is an open-source Decision Intelligence platform for Traffic Crossing Signal Control task. DI-smartcross applies several Reinforcement Learning policies training & evaluation for the traffic signal control system in provided road nets. DI-smartcross is application platform under [OpenDILab](http://opendilab.org/).
 
-DI-smartcross uses [**DI-engine**](https://github.com/opendilab/DI-engine), a Reinforcement Learning platform to build RL experiments. DI-smartcross uses [SUMO](https://www.eclipse.org/sumo/) (Simulation of Urban MObility) and [CityFlow](https://cityflow-project.github.io) traffic simulator packages to run signal control simulation.
+DI-smartcross uses [**DI-engine**](https://github.com/opendilab/DI-engine), a Reinforcement Learning platform, to build RL experiments. DI-smartcross uses [SUMO](https://www.eclipse.org/sumo/) (Simulation of Urban MObility) and [CityFlow](https://cityflow-project.github.io) traffic simulator packages to run signal control simulation.
 
 DI-smartcross supports:
 
@@ -29,9 +29,9 @@ DI-smartcross supports SUMO version >= 1.6.0. You can refer to
 [documents](https://opendilab.github.io/DI-smartcross/installation.html).
 CityFlow can be installed and compiled from source code. You can clone their repo and run `pip install .`
 
-Then, DI-smartcross is able to be installed from source code.
+Then, DI-smartcross is able to be installed from the source code.
 Simply run `pip install .` in the root folder of this repository.
-This will automatically insall [DI-engine](https://github.com/opendilab/DI-engine) as well.
+This will automatically install [DI-engine](https://github.com/opendilab/DI-engine) as well.
 
 ```bash
 pip install -e . --user
@@ -42,7 +42,7 @@ pip install -e . --user
 DI-smartcross provides simple entry for RL training and evaluation. DI-smartcross supports DQN, Off-policy PPO
 and Rainbow DQN RL methods with multi-discrete actions for each crossing, as well as multi-agent RL policies
 in which each crossing is handled by a individual agent. A set of default DI-engine configs is provided for 
-each policy. You can check the document of DI-engine to get detail instructions of these configs.
+each policy. You can check the document of DI-engine to get detailed instructions on these configs.
 
 Here we show RL training sript for sumo envs, same with cityflow env.
 
@@ -76,7 +76,7 @@ cityflow_eval -e smartcross/envs/cityflow_grid/cityflow_auto_grid_config.json -d
 ```
 
 It is rerecommended to refer to [documation](https://opendilab.github.io/DI-smartcross/index.html)
-for detail information.
+for detailed information.
 
 ## File Structure
 
