@@ -2,13 +2,7 @@
 
 <img src="./docs/figs/di-smartcross_banner.png" alt="icon"/>
 
-DI-smartcross - Decision Intelligence Platform for Traffic Crossing Signal Control.
-
-DI-smartcross is application platform under [OpenDILab](http://opendilab.org/)
-
-## Instruction
-
-**DI-smartcross** is an open-source traffic crossing signal control platform. DI-smartcross applies several Reinforcement Learning policies training & evaluation for traffic signal control system in provided road nets.
+**DI-smartcross** is an open-source Decision Intelligence platform for Traffic Crossing Signal Control task. DI-smartcross applies several Reinforcement Learning policies training & evaluation for traffic signal control system in provided road nets. DI-smartcross is application platform under [OpenDILab](http://opendilab.org/).
 
 DI-smartcross uses [**DI-engine**](https://github.com/opendilab/DI-engine), a Reinforcement Learning platform to build RL experiments. DI-smartcross uses [SUMO](https://www.eclipse.org/sumo/) (Simulation of Urban MObility) and [CityFlow](https://cityflow-project.github.io) traffic simulator packages to run signal control simulation.
 
@@ -18,6 +12,15 @@ DI-smartcross supports:
 - **Synthetic** and **Real** roadnet, **Arterial** and **Grid** network shape
 - **Customizable** observation, action and reward types
 - Easily achieve **Multi-Environment Parallel**, **Actor-Learner Asynchronous Parallel** when training with DI-engine
+
+## Outline
+
+  - [Installation](#installation)
+  - [Quick Start](#quick-start)
+  - [File Structure](#file-structure)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Citation](#citation)
 
 ## Installation
 
@@ -75,9 +78,67 @@ cityflow_eval -e smartcross/envs/cityflow_grid/cityflow_auto_grid_config.json -d
 It is rerecommended to refer to [documation](https://opendilab.github.io/DI-smartcross/index.html)
 for detail information.
 
-## Contributing
+## File Structure
 
-We appreciate all contributions to improve DI-smartcross, both algorithms and system designs.
+```
+DI-smartcross
+|-- .flake8
+|-- .gitignore
+|-- .style.yapf
+|-- LICENSE
+|-- README.md
+|-- format.sh
+|-- modify_traci_connect_timeout.sh
+|-- setup.py
+|-- docs
+|   |-- .gitignore
+|   |-- Makefile
+|   |-- figs
+|   |-- source
+|-- entry
+|   |-- cityflow_eval
+|   |-- cityflow_train
+|   |-- sumo_eval
+|   |-- sumo_train
+|   |-- cityflow_config
+|   |-- sumo_config
+|-- smartcross
+    |-- __init__.py
+    |-- envs
+    |   |-- __init__.py
+    |   |-- cityflow_env.py
+    |   |-- crossing.py
+    |   |-- sumo_arterial7_default_config.yaml
+    |   |-- sumo_arterial7_multi_agent_config.yaml
+    |   |-- sumo_env.py
+    |   |-- sumo_wj3_default_config.yaml
+    |   |-- sumo_wj3_multi_agent_config.yaml
+    |   |-- action
+    |   |-- cityflow_grid
+    |   |-- obs
+    |   |-- reward
+    |   |-- sumo_arterial_7roads
+    |   |-- sumo_wj3
+    |   |-- tests
+    |       |-- test_cityflow_env.py
+    |       |-- test_sumo_env.py
+    |-- policy
+    |   |-- __init__.py
+    |   |-- default_policy.py
+    |   |-- tests
+    |       |-- test_policy.py
+    |-- utils
+        |-- config_utils.py
+        |-- env_utils.py
+```
+
+## Join and Contribute
+
+We appreciate all contributions to improve DI-drive, both algorithms and system designs. Welcome to OpenDILab community! Scan the QR code and add us on Wechat:
+
+<div align=center><img width="250" height="250" src="./docs/figs/qr.png" alt="qr"/></div>
+
+Or you can contact us with [slack](https://opendilab.slack.com/join/shared_invite/zt-v9tmv4fp-nUBAQEH1_Kuyu_q4plBssQ#/shared-invite/email) or email (opendilab.contact@gmail.com).
 
 ## License
 
