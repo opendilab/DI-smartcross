@@ -132,9 +132,13 @@ DI-smartcross
         |-- env_utils.py
 ```
 
-## Contributing
+## Join and Contribute
 
-We appreciate all contributions to improve DI-smartcross, both algorithms and system designs.
+We appreciate all contributions to improve DI-drive, both algorithms and system designs. Welcome to OpenDILab community! Scan the QR code and add us on Wechat:
+
+<div align=center><img width="250" height="250" src="./docs/figs/qr.png" alt="qr"/></div>
+
+Or you can contact us with [slack](https://opendilab.slack.com/join/shared_invite/zt-v9tmv4fp-nUBAQEH1_Kuyu_q4plBssQ#/shared-invite/email) or email (opendilab.contact@gmail.com).
 
 ## License
 
