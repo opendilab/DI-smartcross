@@ -66,6 +66,7 @@ setup(
             'pytest-rerunfailures~=9.1.1',
             'pytest-timeouts~=1.2.1',
             'opencv-python-headless',
+            'protobuf<=3.20.1',
         ],
         'style': [
             'yapf==0.29.0',
