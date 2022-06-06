@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Reinforcement Learning Environments &mdash; DI-smartcross 0.1.0 documentation</title>
@@ -182,11 +183,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="reinforcement-learning-environments">
+  <section id="reinforcement-learning-environments">
 <h1>Reinforcement Learning Environments<a class="headerlink" href="#reinforcement-learning-environments" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="sumo-environments">
+<section id="sumo-environments">
 <h2>SUMO environments<a class="headerlink" href="#sumo-environments" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="configuration">
+<section id="configuration">
 <h3>configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
 <p>The configuration of sumo env is stored in a config <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> file. You can take a look at the default config file to see how to modify env settings.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
@@ -213,8 +214,8 @@
 <span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="observation">
+</section>
+<section id="observation">
 <h3>Observation<a class="headerlink" href="#observation" title="Permalink to this headline">¶</a></h3>
 <p>We provide several types of observations of a traffic cross. If <cite>use_centrolized_obs</cite> is set <cite>True</cite>, the observation of each cross will be concatenated into one vector. The contents of observation can me modified by setting <cite>obs_type</cite>. The following observation is supported now.</p>
 <ul class="simple">
@@ -223,12 +224,12 @@
 <li><p>traffic_volumn: Traffic volumn of each lane. Vehicle num / lane length * volumn ratio</p></li>
 <li><p>queue_len: Vehicle waiting queue length of each lane. Waiting num / lane length * volumn ratio</p></li>
 </ul>
-</div>
-<div class="section" id="action">
+</section>
+<section id="action">
 <h3>Action<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
 <p>Sumo environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.</p>
-</div>
-<div class="section" id="reward">
+</section>
+<section id="reward">
 <h3>Reward<a class="headerlink" href="#reward" title="Permalink to this headline">¶</a></h3>
 <p>Reward can be set with <cite>reward_type</cite>. Reward is calculated cross by cross. If <cite>use_centrolized_obs</cite> is set True, the reward of each cross will be summed up.</p>
 <ul class="simple">
@@ -237,15 +238,15 @@
 <li><p>delay_time: Delay time of all vahicles in incomming and outgoing lanes</p></li>
 <li><p>pressure: Pressure of a cross</p></li>
 </ul>
-</div>
-<div class="section" id="multi-agent">
+</section>
+<section id="multi-agent">
 <h3>Multi-agent<a class="headerlink" href="#multi-agent" title="Permalink to this headline">¶</a></h3>
 <p><strong>DI-smartcross</strong> supports a one-step configurable multi-agent RL training.
 It is only necessary to add <code class="docutils literal notranslate"><span class="pre">multi_agent</span></code> in <strong>DI-engine</strong> config file to convert common PPO into MAPPO,
 and change the <code class="docutils literal notranslate"><span class="pre">use_centrolized_obs</span></code> in environment config into <code class="docutils literal notranslate"><span class="pre">True</span></code>. The policy and observations can
 be automatically changed to run individual agent for each cross.</p>
-</div>
-<div class="section" id="roadnets">
+</section>
+<section id="roadnets">
 <h3>Roadnets<a class="headerlink" href="#roadnets" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
@@ -253,11 +254,11 @@ be automatically changed to run individual agent for each cross.</p>
 <li class="toctree-l1"><a class="reference internal" href="envs/rl_arterial7_env.html">SUMO RL Arterial 7 Crossings Env</a></li>
 </ul>
 </div>
-</div>
-</div>
-<div class="section" id="cityflow-environments">
+</section>
+</section>
+<section id="cityflow-environments">
 <h2>CityFlow environments<a class="headerlink" href="#cityflow-environments" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
+<section id="id1">
 <h3>configuration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>CityFlow simulator has its own config <cite>json</cite> file, with roadnet file, flow file and replay file defined in it.
 DI-smartcross adds some extra configs together with CityFlow’s config file path in DI-engine’s env config.</p>
@@ -274,8 +275,8 @@ DI-smartcross adds some extra configs together with CityFlow’s config file pat
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h3>Observation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>We provide several types of observations of each cross.</p>
 <ul class="simple">
@@ -283,25 +284,25 @@ DI-smartcross adds some extra configs together with CityFlow’s config file pat
 <li><p>lane_vehicle_num: vehicle nums of each incoming lane</p></li>
 <li><p>lane_waiting_vehicle_num: waiting vehicle nums of each incoming lane</p></li>
 </ul>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h3>Action<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>CityFlow environment supports changing cross signal to target phase. The action space is set to multi-discrete for each cross to reduce action num.</p>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>Reward<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>CityFlow environment uses pressure of each cross as reward</p>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>Roadnets<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="envs/cf_grid_env.html">CityFlow Grid Env</a></li>
 </ul>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

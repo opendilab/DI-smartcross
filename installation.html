@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Installation &mdash; DI-smartcross 0.1.0 documentation</title>
@@ -165,7 +166,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
+  <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
@@ -174,11 +175,11 @@
 <p class="admonition-title">Note</p>
 <p>You can choose one of the simulators to run your experiments. Only chosen one needs to be installed.</p>
 </div>
-<div class="section" id="sumo-installation">
+<section id="sumo-installation">
 <h2>SUMO installation<a class="headerlink" href="#sumo-installation" title="Permalink to this headline">¶</a></h2>
 <p><strong>DI-smartcross</strong> supports SUMO version &gt;= 1.6.0. Here we show two easy guides
 of SUMO installation on Linux.</p>
-<div class="section" id="install-sumo-via-apt-get-or-homebrew">
+<section id="install-sumo-via-apt-get-or-homebrew">
 <h3>Install SUMO via apt-get or homebrew<a class="headerlink" href="#install-sumo-via-apt-get-or-homebrew" title="Permalink to this headline">¶</a></h3>
 <p>On Debian or Ubuntu, SUMO can be directly installed using <code class="docutils literal notranslate"><span class="pre">apt</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo add-apt-repository ppa:sumo/stable
@@ -200,8 +201,8 @@ of your SUMO installation. Just insert the following line at the end of <code cl
 </div>
 <p>There might be some trouble arosen when installing with the method above. It is recommended
 to build and install SUMO from source code as follows.</p>
-</div>
-<div class="section" id="install-sumo-from-source-code">
+</section>
+<section id="install-sumo-from-source-code">
 <h3>Install SUMO from source code<a class="headerlink" href="#install-sumo-from-source-code" title="Permalink to this headline">¶</a></h3>
 <p>Here we show step-by-step guidance of installation with SUMO 1.8.0 on Linux.</p>
 <ol class="arabic simple">
@@ -249,9 +250,9 @@ make -j <span class="k">$(</span>nproc<span class="k">)</span>
 <span class="n">Use</span> <span class="o">--</span><span class="n">help</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">options</span><span class="o">.</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="cityflow-installation">
+</section>
+</section>
+<section id="cityflow-installation">
 <h2>CityFlow Installation<a class="headerlink" href="#cityflow-installation" title="Permalink to this headline">¶</a></h2>
 <p>CityFlow simulator can be installed from source code via <a class="reference external" href="https://cmake.org">CMake</a>.
 Please make sure it is correctly worked in your system.</p>
@@ -262,8 +263,8 @@ pip install .
 </pre></div>
 </div>
 <p>You can check installation by running <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cityflow</span></code> in python.</p>
-</div>
-<div class="section" id="install-di-smartcross">
+</section>
+<section id="install-di-smartcross">
 <h2>Install DI-smartcross<a class="headerlink" href="#install-di-smartcross" title="Permalink to this headline">¶</a></h2>
 <p>Simply run <cite>pip install</cite> in the root folder of this repository. This will automatically
 install <a class="reference external" href="https://github.com/opendilab/DI-engine">DI-engine</a> as well.</p>
@@ -274,8 +275,8 @@ install <a class="reference external" href="https://github.com/opendilab/DI-engi
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -c <span class="s1">&#39;import ding; import smartcross&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
