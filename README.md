@@ -2,6 +2,21 @@
 
 <img src="./docs/figs/di-smartcross_banner.png" alt="icon"/>
 
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fopendilab)](https://twitter.com/opendilab)
+![Style](https://github.com/opendilab/DI-smartcross/actions/workflows/style.yml/badge.svg)
+![Docs](https://github.com/opendilab/DI-smartcross/actions/workflows/doc.yml/badge.svg)
+![Unit test](https://github.com/opendilab/DI-smartcross/actions/workflows/unit_test.yml/badge.svg)
+
+![GitHub Org's stars](https://img.shields.io/github/stars/opendilab)
+[![GitHub stars](https://img.shields.io/github/stars/opendilab/DI-smartcross)](https://github.com/opendilab/DI-smartcross/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/opendilab/DI-smartcross)](https://github.com/opendilab/DI-smartcross/network)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/opendilab/DI-smartcross)
+[![GitHub license](https://img.shields.io/github/license/opendilab/DI-smartcross)](https://github.com/opendilab/DI-smartcross/blob/master/LICENSE)
+
+## Introduction
+
+[DI-smartcross doc](http://open-xlab.pages.gitlab.bj.sensetime.com/cell/di-traffic/index.html)
+
 **DI-smartcross** is an open-source Decision Intelligence platform for Traffic Crossing Signal Control task. DI-smartcross applies several Reinforcement Learning policies training & evaluation for the traffic signal control system in provided road nets. DI-smartcross is application platform under [OpenDILab](http://opendilab.org/).
 
 DI-smartcross uses [**DI-engine**](https://github.com/opendilab/DI-engine), a Reinforcement Learning platform, to build RL experiments. DI-smartcross uses [SUMO](https://www.eclipse.org/sumo/) (Simulation of Urban MObility) and [CityFlow](https://cityflow-project.github.io) traffic simulator packages to run signal control simulation.
@@ -15,6 +30,8 @@ DI-smartcross supports:
 
 ## Outline
 
+  - [Introduction](#introduction)
+  - [Outline](#outline)
   - [Installation](#installation)
   - [Quick Start](#quick-start)
   - [File Structure](#file-structure)
@@ -134,7 +151,7 @@ DI-smartcross
 
 ## Join and Contribute
 
-We appreciate all contributions to improve DI-drive, both algorithms and system designs. Welcome to OpenDILab community! Scan the QR code and add us on Wechat:
+We appreciate all contributions to improve DI-smartcross, both algorithms and system designs. Welcome to OpenDILab community! Scan the QR code and add us on Wechat:
 
 <div align=center><img width="250" height="250" src="./docs/figs/qr.png" alt="qr"/></div>
 
