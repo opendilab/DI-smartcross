@@ -15,7 +15,7 @@
 
 ## Introduction
 
-[DI-smartcross doc](http://open-xlab.pages.gitlab.bj.sensetime.com/cell/di-traffic/index.html)
+[DI-smartcross doc](https://opendilab.github.io/DI-smartcross/index.html)
 
 **DI-smartcross** is an open-source Decision Intelligence platform for Traffic Crossing Signal Control task. DI-smartcross applies several Reinforcement Learning policies training & evaluation for the traffic signal control system in provided road nets. DI-smartcross is application platform under [OpenDILab](http://opendilab.org/).
 
