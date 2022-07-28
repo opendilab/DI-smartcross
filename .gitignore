@@ -131,6 +131,7 @@ dmypy.json
 # sumo env config ignore
 *.out.xml
 *eg.rou.xml
+!smartcross/envs/sumo_arterial_7roads/route/1100/2_eg.rou.xml
 *_case_info.json
 *_flow*.sumocfg
 
