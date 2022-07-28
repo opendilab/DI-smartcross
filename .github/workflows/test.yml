@@ -1,9 +1,9 @@
 # This workflow will check pytest
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: unit_test
+name: Code test
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test_unitest:
@@ -14,12 +14,16 @@ jobs:
         python-version: [3.6, 3.7, 3.8]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 20
+      - name: Set up python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: do_test
+      - name: Install dependencies
+        shell: bash
         run: |
           sudo add-apt-repository ppa:sumo/stable
           sudo apt-get update
@@ -32,6 +36,26 @@ jobs:
           python -m pip install -e .
           python -m pip install -e ".[test]"
           ./modify_traci_connect_timeout.sh
+      - name: Test the basic environment
+        shell: bash
+        run: |
+          python -V
+          pip --version
+          pip list
+          tree .
+          export SUMO_HOME=/usr/share/sumo/tools
+          sumo
+      - name: Run unittest
+        run: |
+          export SUMO_HOME=/usr/share/sumo/tools
           pytest -sv -m envtest
           pytest -sv -m policytest
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
           
