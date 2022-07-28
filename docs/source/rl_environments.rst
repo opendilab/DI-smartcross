@@ -78,7 +78,7 @@ Roadnets
 .. `RL Arterial 7 Crossings <./envs/rl_arterial7_env.html>`_
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     envs/wj3_env
     envs/rl_arterial7_env
@@ -130,6 +130,6 @@ Roadnets
 -------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     envs/cf_grid_env
