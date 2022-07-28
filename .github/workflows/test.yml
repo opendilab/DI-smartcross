@@ -43,9 +43,11 @@ jobs:
           pip --version
           pip list
           tree .
+          export SUMO_HOME=/usr/share/sumo/tools
           sumo
       - name: Run unittest
         run: |
+          export SUMO_HOME=/usr/share/sumo/tools
           pytest -sv -m envtest
           pytest -sv -m policytest
       - name: Upload coverage to Codecov
