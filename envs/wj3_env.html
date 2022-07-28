@@ -177,6 +177,18 @@
             
   <section id="sumo-beijing-wangjing-3-crossings-env">
 <h1>SUMO Beijing Wangjing 3 Crossings Env<a class="headerlink" href="#sumo-beijing-wangjing-3-crossings-env" title="Permalink to this headline">¶</a></h1>
+<p>This is a simple 3 crossings real roadmap extracted from Wangjing area of Beijing in SUMO.
+There are 3 crossing signals arranged in a row. Each crossing has 4 directions and 3-5
+lanes at each diraction, and the lane is flared (widen near crossing) to enable greater
+traffic flow. This is a tiny environment to investigate RL policy performance under real
+roadmap. The shape of the road network is as follows.</p>
+<a class="reference internal image-reference" href="../_images/wj3.png"><img alt="wj3" src="../_images/wj3.png" style="width: 1200px;" /></a>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The roadmap files and SUMO configs are stored in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_wj3</span></code>. We provide
+a standard RL env config in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_wj3_default_config.yaml</span></code>. Users can
+modify RL env according to the instructions of SUMO env configs.</p>
+</section>
 </section>
 
 

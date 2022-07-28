@@ -177,6 +177,25 @@
             
   <section id="sumo-rl-arterial-7-crossings-env">
 <h1>SUMO RL Arterial 7 Crossings Env<a class="headerlink" href="#sumo-rl-arterial-7-crossings-env" title="Permalink to this headline">¶</a></h1>
+<p>This is a synthetic arterial roadmap with 7 crossings in SUMO. The main purpose of this env
+is to deploy RL signal control policy in real <strong>dynamic traffic flows</strong>. Each crossing has 4
+directions and 3-5 lanes at each direction, and the lane is flared (widen near crossing) to
+enable greater traffic flow. The env has different traffic flow density, together with 200
+randomly generated traffic flows for each density value. The shape of the road network is as
+follows.</p>
+<figure class="align-default">
+<img alt="arterial" src="../_images/rl_arterial.png" />
+</figure>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The roadmap files and SUMO configs are stored in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_arterial_7roads</span></code>.
+By defalut, the env uses a fixed density of 1100 and a single flow file. Additional traffic
+flow files are needed if users want to enable <cite>dynamic flow</cite>. Simply put it into
+<code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_arterial_7roads/route</span></code>, and set <code class="docutils literal notranslate"><span class="pre">dynamic_flow</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> to enable
+a randomly dynamic flow range of [900, 2000] for each episode.</p>
+<p>a standard RL env config in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_arterial7_default_config.yaml</span></code>. Users can
+modify RL env according to the instructions of SUMO env configs.</p>
+</section>
 </section>
 
 
