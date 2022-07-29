@@ -5,7 +5,7 @@
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fopendilab)](https://twitter.com/opendilab)
 ![Style](https://github.com/opendilab/DI-smartcross/actions/workflows/style.yml/badge.svg)
 ![Docs](https://github.com/opendilab/DI-smartcross/actions/workflows/doc.yml/badge.svg)
-![Unit test](https://github.com/opendilab/DI-smartcross/actions/workflows/unit_test.yml/badge.svg)
+![Unit test](https://github.com/opendilab/DI-smartcross/actions/workflows/test.yml/badge.svg)
 
 ![GitHub Org's stars](https://img.shields.io/github/stars/opendilab)
 [![GitHub stars](https://img.shields.io/github/stars/opendilab/DI-smartcross)](https://github.com/opendilab/DI-smartcross/stargazers)
