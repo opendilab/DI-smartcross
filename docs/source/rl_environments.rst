@@ -1,14 +1,17 @@
 Reinforcement Learning Environments
 ########################################
 
+.. toctree::
+    :maxdepth: 2
 
-SUMO environments
+
+SUMO Environment
 ====================
 
-configuration
+Configuration
 -----------------
 
-The configuration of sumo env is stored in a config ``.yaml`` file. You can take a look at the default config file to see how to modify env settings.
+The configuration of sumo env is stored in a config ``.yaml`` file. You can look at the default config file to see how to modify env settings.
 
 .. code:: python
 
@@ -21,7 +24,7 @@ The configuration of sumo env is stored in a config ``.yaml`` file. You can take
     cfg = EasyDict(cfg)
     env = SumoEnv(config=cfg.env)
 
-The env configuration consists of basic definition and observation\\action\\reward settings. The basic definition includes the cumo config file, episode length and light duration. The obs\action\reward define the detail setting of each contains.
+The env configuration consists of basic definition and observation\\action\\reward settings. The basic definition includes the cumo config file, episode length and light duration. The obs-action-reward define the detail setting of each contains.
 
 .. code:: yaml
 
@@ -40,12 +43,12 @@ The env configuration consists of basic definition and observation\\action\\rewa
 Observation
 ----------------
 
-We provide several types of observations of a traffic cross. If `use_centrolized_obs` is set `True`, the observation of each cross will be concatenated into one vector. The contents of observation can me modified by setting `obs_type`. The following observation is supported now.
+We provide several types of observations of a traffic cross. If `use_centrolized_obs` is set to `True`, the observation of each cross will be concatenated into one vector. The contents of the observation can be modified by setting `obs_type`. The following observation is supported now.
 
 - phase: One-hot phase vector of current cross signal
 - lane_pos_vec: Lane occupancy in each grid position. The grid num can be set with `lane_grid_num`
-- traffic_volumn: Traffic volumn of each lane. Vehicle num / lane length * volumn ratio
-- queue_len: Vehicle waiting queue length of each lane. Waiting num / lane length * volumn ratio
+- traffic_volume: Traffic volume of each lane. Vehicle num / lane length * volume ratio
+- queue_len: Vehicle waiting queue length of each lane. Waiting num / lane length * volume ratio
 
 Action
 -------------
@@ -55,11 +58,11 @@ Sumo environment supports changing cross signal to target phase. The action spac
 Reward
 -------------
 
-Reward can be set with `reward_type`. Reward is calculated cross by cross. If `use_centrolized_obs` is set True, the reward of each cross will be summed up.
+The reward can be set with `reward_type`. Reward of each cross is calculated separately. If `use_centrolized_obs` is set True, the reward of each cross will be summed up.
 
 - queue_len: Vehicle waiting queue num of each lane
 - wait_time: Wait time increment of vehicles in each lane
-- delay_time: Delay time of all vahicles in incomming and outgoing lanes
+- delay_time: Delay time of all vehicles in incomming and outgoing lanes
 - pressure: Pressure of a cross
 
 Multi-agent
@@ -70,24 +73,11 @@ It is only necessary to add ``multi_agent`` in **DI-engine** config file to conv
 and change the ``use_centrolized_obs`` in environment config into ``True``. The policy and observations can
 be automatically changed to run individual agent for each cross.
 
-Roadnets
--------------
 
-.. `Beijing Wangjing 3 Crossings <./envs/wj3_env.html>`_
-
-.. `RL Arterial 7 Crossings <./envs/rl_arterial7_env.html>`_
-
-.. toctree::
-    :maxdepth: 1
-
-    envs/wj3_env
-    envs/rl_arterial7_env
-
-
-CityFlow environments
+CityFlow Environment
 =============================
 
-configuration
+Configuration
 -----------------
 
 CityFlow simulator has its own config `json` file, with roadnet file, flow file and replay file defined in it.
@@ -126,10 +116,22 @@ Reward
 
 CityFlow environment uses pressure of each cross as reward
 
+
 Roadnets
--------------
+==============
 
 .. toctree::
     :maxdepth: 1
 
+    envs/wj3_env
+    envs/rl_arterial7_env
     envs/cf_grid_env
+
+.. `Beijing Wangjing 3 Crossings <./envs/wj3_env.html>`_
+.. -----------------------------------------------------------------
+
+.. `RL Arterial 7 Crossings <./envs/rl_arterial7_env.html>`_
+.. -----------------------------------------------------------------
+
+.. `CityFlow Grid Env <./envs/cf_grid_env.html>`_
+.. -----------------------------------------------------------------
