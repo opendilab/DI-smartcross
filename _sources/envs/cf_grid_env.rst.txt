@@ -19,9 +19,14 @@ The roadmap files and CityFlow configs are stored in ``smartcross/envs/cityflow_
 provide RL env configs in this path as well, ``smartcross/envs/cityflow_grid/cityflow_grid_config.json``.
 Note that the ``auto`` config is for the default control method (fixed-time) to be compared with.
 
+The roadmap files and CityFlow configs are stored in ``smartcross/envs/cityflow_grid``. We
+provide RL env configs in this path as well, ``smartcross/envs/cityflow_grid/cityflow_grid_config.json``.
+Note that the ``auto`` config is for the default control method (fixed-time) to be compared with.
+
+
 .. note:: 
 
-    The might be ``replay_auto.txt`` and ``replay_auto_roadnet.json`` files arisen in this path.
+    The might be ``replay_auto.txt`` and ``replay_auto_roadnet.json`` files  arose in this path.
     They are used for replay in a web page, and they will not be auto-cleared in a new episode,
     so that they will grow larger and larger. It is recommended to manually delete these files
-    commonly to save storage.
+    regularly to save storage.

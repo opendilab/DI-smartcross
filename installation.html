@@ -25,6 +25,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -92,7 +93,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sumo-installation">SUMO installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#install-sumo-via-apt-get-or-homebrew">Install SUMO via apt-get or homebrew</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#install-sumo-from-source-code">Install SUMO from source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-sumo-from-the-source-code">Install SUMO from the source code</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#cityflow-installation">CityFlow Installation</a></li>
@@ -167,20 +168,20 @@
            <div itemprop="articleBody">
             
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<p>Here we provide easy installation for <strong>DI-smartcross</strong> and all simulators supported.</p>
+<p>Here we provide user-friendly installation for <strong>DI-smartcross</strong> and all simulators we support.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can choose one of the simulators to run your experiments. Only chosen one needs to be installed.</p>
+<p>You can choose the simulators your experiments needed    and install it only to run your experiments.</p>
 </div>
 <section id="sumo-installation">
-<h2>SUMO installation<a class="headerlink" href="#sumo-installation" title="Permalink to this headline">¶</a></h2>
-<p><strong>DI-smartcross</strong> supports SUMO version &gt;= 1.6.0. Here we show two easy guides
-of SUMO installation on Linux.</p>
+<h2>SUMO installation<a class="headerlink" href="#sumo-installation" title="Permalink to this heading">¶</a></h2>
+<p><strong>DI-smartcross</strong> supports SUMO version &gt;= 1.6.0. Here we demonstrate
+two easy ways of SUMO installation on Linux.</p>
 <section id="install-sumo-via-apt-get-or-homebrew">
-<h3>Install SUMO via apt-get or homebrew<a class="headerlink" href="#install-sumo-via-apt-get-or-homebrew" title="Permalink to this headline">¶</a></h3>
+<h3>Install SUMO via apt-get or homebrew<a class="headerlink" href="#install-sumo-via-apt-get-or-homebrew" title="Permalink to this heading">¶</a></h3>
 <p>On Debian or Ubuntu, SUMO can be directly installed using <code class="docutils literal notranslate"><span class="pre">apt</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo add-apt-repository ppa:sumo/stable
 sudo apt-get update
@@ -195,15 +196,15 @@ brew install --cask sumo-gui
 </pre></div>
 </div>
 <p>After that, you need to set the <code class="docutils literal notranslate"><span class="pre">SUMO_HOME</span></code> environment variable pointing to the directory
-of your SUMO installation. Just insert the following line at the end of <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
+of your SUMO installation by inserting the following line at the end of <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SUMO_HOME</span><span class="o">=</span>/your/path/to/sumo
 </pre></div>
 </div>
-<p>There might be some trouble arosen when installing with the method above. It is recommended
-to build and install SUMO from source code as follows.</p>
+<p>There might be some trouble arising when installing with the method above. It is recommended
+to build and install SUMO from the source code as follows.</p>
 </section>
-<section id="install-sumo-from-source-code">
-<h3>Install SUMO from source code<a class="headerlink" href="#install-sumo-from-source-code" title="Permalink to this headline">¶</a></h3>
+<section id="install-sumo-from-the-source-code">
+<h3>Install SUMO from the source code<a class="headerlink" href="#install-sumo-from-the-source-code" title="Permalink to this heading">¶</a></h3>
 <p>Here we show step-by-step guidance of installation with SUMO 1.8.0 on Linux.</p>
 <ol class="arabic simple">
 <li><p>install required libraries and dependencies</p></li>
@@ -253,7 +254,7 @@ make -j <span class="k">$(</span>nproc<span class="k">)</span>
 </section>
 </section>
 <section id="cityflow-installation">
-<h2>CityFlow Installation<a class="headerlink" href="#cityflow-installation" title="Permalink to this headline">¶</a></h2>
+<h2>CityFlow Installation<a class="headerlink" href="#cityflow-installation" title="Permalink to this heading">¶</a></h2>
 <p>CityFlow simulator can be installed from source code via <a class="reference external" href="https://cmake.org">CMake</a>.
 Please make sure it is correctly worked in your system.</p>
 <p>Simply download their source code and run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> in the root folder to install CityFlow.</p>
@@ -265,7 +266,7 @@ pip install .
 <p>You can check installation by running <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cityflow</span></code> in python.</p>
 </section>
 <section id="install-di-smartcross">
-<h2>Install DI-smartcross<a class="headerlink" href="#install-di-smartcross" title="Permalink to this headline">¶</a></h2>
+<h2>Install DI-smartcross<a class="headerlink" href="#install-di-smartcross" title="Permalink to this heading">¶</a></h2>
 <p>Simply run <cite>pip install</cite> in the root folder of this repository. This will automatically
 install <a class="reference external" href="https://github.com/opendilab/DI-engine">DI-engine</a> as well.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -e . --user

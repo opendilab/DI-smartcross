@@ -4,18 +4,18 @@ Installation
 .. toctree::
     :maxdepth: 2
 
-Here we provide easy installation for **DI-smartcross** and all simulators supported.
+Here we provide user-friendly installation for **DI-smartcross** and all simulators we support.
 
 .. note::
 
-    You can choose one of the simulators to run your experiments. Only chosen one needs to be installed.
+    You can choose the simulators your experiments needed    and install it only to run your experiments.
 
 
 SUMO installation
 =====================
 
-**DI-smartcross** supports SUMO version >= 1.6.0. Here we show two easy guides
-of SUMO installation on Linux.
+**DI-smartcross** supports SUMO version >= 1.6.0. Here we demonstrate
+two easy ways of SUMO installation on Linux.
 
 Install SUMO via apt-get or homebrew
 --------------------------------------
@@ -38,16 +38,16 @@ On macOS, SUMO can be installed using ``homebrew``.
     brew install --cask sumo-gui
 
 After that, you need to set the ``SUMO_HOME`` environment variable pointing to the directory 
-of your SUMO installation. Just insert the following line at the end of ``.bashrc``:
+of your SUMO installation by inserting the following line at the end of ``.bashrc``:
 
 .. code:: bash
 
     export SUMO_HOME=/your/path/to/sumo
 
-There might be some trouble arosen when installing with the method above. It is recommended
-to build and install SUMO from source code as follows.
+There might be some trouble arising when installing with the method above. It is recommended
+to build and install SUMO from the source code as follows.
 
-Install SUMO from source code
+Install SUMO from the source code
 ---------------------------------
 
 Here we show step-by-step guidance of installation with SUMO 1.8.0 on Linux.

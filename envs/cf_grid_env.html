@@ -25,6 +25,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -92,14 +93,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick Start</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../rl_environments.html">Reinforcement Learning Environments</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../rl_environments.html#sumo-environments">SUMO environments</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../rl_environments.html#cityflow-environments">CityFlow environments</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#id1">configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#id2">Observation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#id3">Action</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#id4">Reward</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../rl_environments.html#id5">Roadnets</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">CityFlow Grid Env</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rl_environments.html#sumo-environment">SUMO Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rl_environments.html#cityflow-environment">CityFlow Environment</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../rl_environments.html#roadnets">Roadnets</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wj3_env.html">SUMO Beijing Wangjing 3 Crossings Env</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rl_arterial7_env.html">SUMO RL Arterial 7 Crossings Env</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CityFlow Grid Env</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -174,7 +174,7 @@
            <div itemprop="articleBody">
             
   <section id="cityflow-grid-env">
-<h1>CityFlow Grid Env<a class="headerlink" href="#cityflow-grid-env" title="Permalink to this headline">¶</a></h1>
+<h1>CityFlow Grid Env<a class="headerlink" href="#cityflow-grid-env" title="Permalink to this heading">¶</a></h1>
 <p>This is a synthetic roadmap with a shape of 2x3 grid in CityFlow. Unlike the standard grid
 roadmap provided by CityFlow and mainly used in academic works, we made the roadmap with
 different number of lanes in the rows and columns. Also, we add more complicated vehicle
@@ -185,16 +185,19 @@ signal control policies. The shape of the road network is as follows.</p>
 <img alt="grid2x3" src="../_images/grid2x3.gif" />
 </figure>
 <section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h2>
+<p>The roadmap files and CityFlow configs are stored in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/cityflow_grid</span></code>. We
+provide RL env configs in this path as well, <code class="docutils literal notranslate"><span class="pre">smartcross/envs/cityflow_grid/cityflow_grid_config.json</span></code>.
+Note that the <code class="docutils literal notranslate"><span class="pre">auto</span></code> config is for the default control method (fixed-time) to be compared with.</p>
 <p>The roadmap files and CityFlow configs are stored in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/cityflow_grid</span></code>. We
 provide RL env configs in this path as well, <code class="docutils literal notranslate"><span class="pre">smartcross/envs/cityflow_grid/cityflow_grid_config.json</span></code>.
 Note that the <code class="docutils literal notranslate"><span class="pre">auto</span></code> config is for the default control method (fixed-time) to be compared with.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The might be <code class="docutils literal notranslate"><span class="pre">replay_auto.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">replay_auto_roadnet.json</span></code> files arisen in this path.
+<p>The might be <code class="docutils literal notranslate"><span class="pre">replay_auto.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">replay_auto_roadnet.json</span></code> files  arose in this path.
 They are used for replay in a web page, and they will not be auto-cleared in a new episode,
 so that they will grow larger and larger. It is recommended to manually delete these files
-commonly to save storage.</p>
+regularly to save storage.</p>
 </div>
 </section>
 </section>

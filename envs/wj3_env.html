@@ -25,6 +25,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -92,20 +93,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick Start</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../rl_environments.html">Reinforcement Learning Environments</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../rl_environments.html#sumo-environments">SUMO environments</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#configuration">configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#observation">Observation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#action">Action</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#reward">Reward</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../rl_environments.html#multi-agent">Multi-agent</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../rl_environments.html#roadnets">Roadnets</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">SUMO Beijing Wangjing 3 Crossings Env</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rl_arterial7_env.html">SUMO RL Arterial 7 Crossings Env</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rl_environments.html#sumo-environment">SUMO Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rl_environments.html#cityflow-environment">CityFlow Environment</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../rl_environments.html#roadnets">Roadnets</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SUMO Beijing Wangjing 3 Crossings Env</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="rl_arterial7_env.html">SUMO RL Arterial 7 Crossings Env</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cf_grid_env.html">CityFlow Grid Env</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../rl_environments.html#cityflow-environments">CityFlow environments</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
@@ -176,15 +174,20 @@
            <div itemprop="articleBody">
             
   <section id="sumo-beijing-wangjing-3-crossings-env">
-<h1>SUMO Beijing Wangjing 3 Crossings Env<a class="headerlink" href="#sumo-beijing-wangjing-3-crossings-env" title="Permalink to this headline">¶</a></h1>
+<h1>SUMO Beijing Wangjing 3 Crossings Env<a class="headerlink" href="#sumo-beijing-wangjing-3-crossings-env" title="Permalink to this heading">¶</a></h1>
 <p>This is a simple 3 crossings real roadmap extracted from Wangjing area of Beijing in SUMO.
 There are 3 crossing signals arranged in a row. Each crossing has 4 directions and 3-5
 lanes at each diraction, and the lane is flared (widen near crossing) to enable greater
 traffic flow. This is a tiny environment to investigate RL policy performance under real
 roadmap. The shape of the road network is as follows.</p>
+<p>This is a simple 3 crossings real roadmap extracted from the Wangjing area of Beijing in SUMO.
+There are 3 crossing signals arranged in a row. Each crossing has 4 directions and 3-5 lanes
+in each direction. And the lane is flared (widened near crossing) to enable greater traffic
+flow. This is a tiny environment to investigate RL policy performance under a real roadmap.
+The shape of the road network is as follows.</p>
 <a class="reference internal image-reference" href="../_images/wj3.png"><img alt="wj3" src="../_images/wj3.png" style="width: 1200px;" /></a>
 <section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h2>
 <p>The roadmap files and SUMO configs are stored in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_wj3</span></code>. We provide
 a standard RL env config in <code class="docutils literal notranslate"><span class="pre">smartcross/envs/sumo_wj3_default_config.yaml</span></code>. Users can
 modify RL env according to the instructions of SUMO env configs.</p>

@@ -25,6 +25,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -92,13 +93,13 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sumo-entries">SUMO entries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#train-rl-policies">train RL policies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#evaluate-existing-policies">evaluate existing policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#train-rl-policies">Train RL Policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluate-existing-policies">Evaluate Existing Policies</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#cityflow-entries">CityFlow Entries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">train RL policies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">evaluate existing policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Train RL Policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Evaluate Existing Policies</a></li>
 </ul>
 </li>
 </ul>
@@ -170,17 +171,17 @@
            <div itemprop="articleBody">
             
   <section id="quick-start">
-<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 <section id="sumo-entries">
-<h2>SUMO entries<a class="headerlink" href="#sumo-entries" title="Permalink to this headline">¶</a></h2>
+<h2>SUMO entries<a class="headerlink" href="#sumo-entries" title="Permalink to this heading">¶</a></h2>
 <p><strong>DI-smartcross</strong> supports DQN, Off-policy PPO and Rainbow DQN RL methods
 with multi-discrete actions for each crossing. A set of default <strong>DI-engine</strong>
 configs is provided for each policy. You can check the document of DI-engine
-to get detail instructions of these configs.</p>
+to get detailed instructions on these configs.</p>
 <section id="train-rl-policies">
-<h3>train RL policies<a class="headerlink" href="#train-rl-policies" title="Permalink to this headline">¶</a></h3>
+<h3>Train RL Policies<a class="headerlink" href="#train-rl-policies" title="Permalink to this heading">¶</a></h3>
 <p>The type of policy can be automatically parsed from the config file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">sumo_train</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dynamic</span><span class="o">-</span><span class="n">flow</span><span class="p">]</span>
                   <span class="p">[</span><span class="o">-</span><span class="n">cn</span> <span class="n">COLLECT_ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">en</span> <span class="n">EVALUATE_ENV_NUM</span><span class="p">]</span>
@@ -213,7 +214,7 @@ to get detail instructions of these configs.</p>
 </div>
 </section>
 <section id="evaluate-existing-policies">
-<h3>evaluate existing policies<a class="headerlink" href="#evaluate-existing-policies" title="Permalink to this headline">¶</a></h3>
+<h3>Evaluate Existing Policies<a class="headerlink" href="#evaluate-existing-policies" title="Permalink to this heading">¶</a></h3>
 <p>We provide two eval policies: random and fixed-time. You can choose one to evaluate
 as comparison. It is suggested to use the <cite>eval_default_config</cite> for each env.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">sumo_eval</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span><span class="p">]</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span>
@@ -246,12 +247,12 @@ as comparison. It is suggested to use the <cite>eval_default_config</cite> for e
 </section>
 </section>
 <section id="cityflow-entries">
-<h2>CityFlow Entries<a class="headerlink" href="#cityflow-entries" title="Permalink to this headline">¶</a></h2>
+<h2>CityFlow Entries<a class="headerlink" href="#cityflow-entries" title="Permalink to this heading">¶</a></h2>
 <p><strong>DI-smartcross</strong> provides a simple DQN and Off-policy PPO demo for CityFlow env. Each
-policy comes with a default <strong>DI-engine</strong> configs is provided for each policy. You can
-check the document of DI-engine to get detail instructions of these configs.</p>
+policy comes with a default <strong>DI-engine</strong> configs are provided for each policy. You can
+check the document of DI-engine to get detailed instructions on these configs.</p>
 <section id="id1">
-<h3>train RL policies<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Train RL Policies<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">cityflow_train</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span>
                       <span class="p">[</span><span class="o">-</span><span class="n">cn</span> <span class="n">COLLECT_ENV_NUM</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">en</span> <span class="n">EVALUATE_ENV_NUM</span><span class="p">]</span>
                       <span class="p">[</span><span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span> <span class="n">EXP_NAME</span><span class="p">]</span>
@@ -274,7 +275,7 @@ check the document of DI-engine to get detail instructions of these configs.</p>
 </div>
 </section>
 <section id="id2">
-<h3>evaluate existing policies<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>Evaluate Existing Policies<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>Note that CityFlow will run in fixed-time mode by default when not in rl mode.
 So the fix policy runs with an <cite>auto_config.json</cite>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">cityflow_eval</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">DING_CFG</span><span class="p">]</span> <span class="o">-</span><span class="n">e</span> <span class="n">ENV_CFG</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">SEED</span><span class="p">]</span>
