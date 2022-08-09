@@ -7,6 +7,13 @@ lanes at each diraction, and the lane is flared (widen near crossing) to enable 
 traffic flow. This is a tiny environment to investigate RL policy performance under real
 roadmap. The shape of the road network is as follows.
 
+This is a simple 3 crossings real roadmap extracted from the Wangjing area of Beijing in SUMO.
+There are 3 crossing signals arranged in a row. Each crossing has 4 directions and 3-5 lanes
+in each direction. And the lane is flared (widened near crossing) to enable greater traffic
+flow. This is a tiny environment to investigate RL policy performance under a real roadmap.
+The shape of the road network is as follows.
+
+
 .. image:: ../../figs/wj3.png
     :alt: wj3
     :width: 1200px

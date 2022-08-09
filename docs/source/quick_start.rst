@@ -10,9 +10,9 @@ SUMO entries
 **DI-smartcross** supports DQN, Off-policy PPO and Rainbow DQN RL methods
 with multi-discrete actions for each crossing. A set of default **DI-engine**
 configs is provided for each policy. You can check the document of DI-engine
-to get detail instructions of these configs.
+to get detailed instructions on these configs.
 
-train RL policies
+Train RL Policies
 --------------------
 
 The type of policy can be automatically parsed from the config file.
@@ -50,7 +50,7 @@ Example of running DQN in wj3 env with default config.
 
     sumo_train -e smartcross/envs/sumo_wj3_default_config.yaml -d entry/config/sumo_wj3_dqn_default_config.py
 
-evaluate existing policies
+Evaluate Existing Policies
 --------------------------------
 
 We provide two eval policies: random and fixed-time. You can choose one to evaluate
@@ -92,10 +92,10 @@ CityFlow Entries
 =================
 
 **DI-smartcross** provides a simple DQN and Off-policy PPO demo for CityFlow env. Each
-policy comes with a default **DI-engine** configs is provided for each policy. You can
-check the document of DI-engine to get detail instructions of these configs.
+policy comes with a default **DI-engine** configs are provided for each policy. You can
+check the document of DI-engine to get detailed instructions on these configs.
 
-train RL policies
+Train RL Policies
 --------------------
 
 .. code::
@@ -119,7 +119,7 @@ train RL policies
                             evaluator env num for training
     --exp-name EXP_NAME   experiment name to save log and ckpt
 
-evaluate existing policies
+Evaluate Existing Policies
 --------------------------------
 
 Note that CityFlow will run in fixed-time mode by default when not in rl mode.
