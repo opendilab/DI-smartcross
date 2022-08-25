@@ -45,6 +45,7 @@ setup(
     ],
     install_requires=[
         "di-engine>=0.3",
+        "gym<=0.25.1",
         "torch>=1.4,<=1.8",
         "sumolib",
         "traci",
