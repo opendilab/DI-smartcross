@@ -7,6 +7,8 @@
 [![Docs](https://github.com/opendilab/DI-smartcross/actions/workflows/doc.yml/badge.svg)](https://github.com/opendilab/DI-smartcross/actions/workflows/doc.yml?query=workflow%3A%22Docs+Deploy%22)
 [![Code test](https://github.com/opendilab/DI-smartcross/actions/workflows/test.yml/badge.svg)](https://github.com/opendilab/DI-smartcross/actions/workflows/test.yml?query=workflow%3A%22Code+Test%22)
 [![codecov](https://img.shields.io/codecov/c/github/opendilab/di-smartcross)](https://img.shields.io/codecov/c/github/opendilab/di-smartcross)
+![Loc](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RobinC94/f93c499dab8305fc88ab4a40112b0efb/raw/loc.json)
+![Comments](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RobinC94/f93c499dab8305fc88ab4a40112b0efb/raw/comments.json)
 
 ![GitHub Org's stars](https://img.shields.io/github/stars/opendilab)
 [![GitHub stars](https://img.shields.io/github/stars/opendilab/DI-smartcross)](https://github.com/opendilab/DI-smartcross/stargazers)
@@ -169,7 +171,7 @@ DI-smartcross released under the Apache 2.0 license.
     title={{DI-smartcross: OpenDILab} Decision Intelligence platform for Traffic Crossing Signal Control},
     author={DI-smartcross Contributors},
     publisher = {GitHub},
-    howpublished = {\url{`https://github.com/opendilab/DI-smartcross`}},
+    howpublished = {\url{https://github.com/opendilab/DI-smartcross}},
     year={2021},
 }
 ```
