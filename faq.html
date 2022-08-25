@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -167,7 +167,7 @@
 <section id="q1-sumo-environment-always-showing-retrying-in-1-seconds">
 <h2>Q1: SUMO environment always showing <cite>Retrying in 1 seconds</cite><a class="headerlink" href="#q1-sumo-environment-always-showing-retrying-in-1-seconds" title="Permalink to this heading">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">A1</dt>
+<dt class="field-odd">A1<span class="colon">:</span></dt>
 <dd class="field-odd"><p>SUMO environments and <cite>traci</cite> lib is slow to reset when running with large roadnets.
 It only check the collection after reset for 1 sec. DI-smartcross provides an easy way
 to change the retry timeout for <cite>traci</cite>. You can run <cite>modify_traci_connect_timeout.sh</cite>
