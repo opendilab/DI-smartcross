@@ -12,6 +12,24 @@ from ding.torch_utils import to_ndarray
 from smartcross.utils.env_utils import get_suffix_num, squeeze_obs, get_onehot_obs
 
 
+def md2d(md_action):
+    res = 0
+    for i in md_action:
+        res *= 4
+        res += i
+    return res
+
+
+def d2md(d_action):
+    res = []
+    tmp = d_action
+    for _ in range(4):
+        res.append(tmp % 4)
+        tmp = tmp // 4
+    res.reverse()
+    return res
+
+
 @ENV_REGISTRY.register('cityflow_env')
 class CityflowEnv(BaseEnv):
 
@@ -24,6 +42,7 @@ class CityflowEnv(BaseEnv):
         self._yellow_duration = cfg.yellow_duration
         self._red_duration = cfg.red_duration
         self._eng = cityflow.Engine(self._config_path)
+        self._from_discrete = cfg.from_discrete
         self._parse_config_file()
         self._init_info()
 
@@ -196,6 +215,8 @@ class CityflowEnv(BaseEnv):
 
     def step(self, action: Any) -> 'BaseEnvTimestep':
         action = np.squeeze(action)
+        if self._from_discrete:
+            action = np.array(d2md(action))
         self._simulate(action)
         obs = self._get_obs()
         obs = to_ndarray(squeeze_obs(obs), dtype=np.float32)
