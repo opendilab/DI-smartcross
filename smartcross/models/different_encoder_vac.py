@@ -104,13 +104,13 @@ class DEVAC(nn.Module):
             multi_head = not isinstance(action_shape, int)
             self.multi_head = multi_head
             assert multi_head
-            self.actor_head = nn.ModuleList([actor_head_cls(
-                actor_head_hidden_size,
-                i,
-                actor_head_layer_num,
-                activation=activation,
-                norm_type=norm_type
-            ) for i in action_shape])
+            self.actor_head = nn.ModuleList(
+                [
+                    actor_head_cls(
+                        actor_head_hidden_size, i, actor_head_layer_num, activation=activation, norm_type=norm_type
+                    ) for i in action_shape
+                ]
+            )
         else:
             raise NotImplementedError()
 
@@ -138,5 +138,6 @@ class DEVAC(nn.Module):
         critic_embedding = self.critic_encoder(x)
         value = self.critic_head(critic_embedding)['pred']
 
-        logit = lists_to_dicts([self.actor_head[i](self.actor_encoder[i](x)) for i in range(len(self.action_shape))])['logit']
+        logit = lists_to_dicts([self.actor_head[i](self.actor_encoder[i](x))
+                                for i in range(len(self.action_shape))])['logit']
         return {'logit': logit, 'value': value}

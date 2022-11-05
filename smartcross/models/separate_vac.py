@@ -94,9 +94,13 @@ class SPVAC(nn.Module):
             self.critic_encoder = nn.ModuleList([new_encoder(actor_head_hidden_size) for _ in range(len(action_shape))])
 
         # Head Type
-        self.critic_head = nn.ModuleList([RegressionHead(
-            critic_head_hidden_size, 1, critic_head_layer_num, activation=activation, norm_type=norm_type
-        ) for _ in range(len(action_shape))])
+        self.critic_head = nn.ModuleList(
+            [
+                RegressionHead(
+                    critic_head_hidden_size, 1, critic_head_layer_num, activation=activation, norm_type=norm_type
+                ) for _ in range(len(action_shape))
+            ]
+        )
         self.action_space = action_space
 
         if self.action_space == 'discrete':
@@ -104,13 +108,13 @@ class SPVAC(nn.Module):
             multi_head = not isinstance(action_shape, int)
             self.multi_head = multi_head
             assert multi_head
-            self.actor_head = nn.ModuleList([actor_head_cls(
-                actor_head_hidden_size,
-                i,
-                actor_head_layer_num,
-                activation=activation,
-                norm_type=norm_type
-            ) for i in action_shape])
+            self.actor_head = nn.ModuleList(
+                [
+                    actor_head_cls(
+                        actor_head_hidden_size, i, actor_head_layer_num, activation=activation, norm_type=norm_type
+                    ) for i in action_shape
+                ]
+            )
         else:
             raise NotImplementedError()
 
@@ -128,21 +132,28 @@ class SPVAC(nn.Module):
 
     def compute_actor(self, x: torch.Tensor) -> Dict:
         sss = x.shape[1] // 4
-        return lists_to_dicts([self.actor_head[i](self.actor_encoder[i](x[:, sss*i: sss*(i+1)]))
-                               for i in range(len(self.action_shape))])
-
+        return lists_to_dicts(
+            [
+                self.actor_head[i](self.actor_encoder[i](x[:, sss * i:sss * (i + 1)]))
+                for i in range(len(self.action_shape))
+            ]
+        )
 
     def compute_critic(self, x: torch.Tensor) -> Dict:
         sss = x.shape[1] // 4
-        x_preds = [self.critic_head[i](self.critic_encoder[i](x[:, sss*i: sss*(i+1)]))['pred'] for i in range(4)]
+        x_preds = [self.critic_head[i](self.critic_encoder[i](x[:, sss * i:sss * (i + 1)]))['pred'] for i in range(4)]
         x_res = x_preds[0] + x_preds[1] + x_preds[2] + x_preds[3] / 4
         return {'value': x_res}
 
     def compute_actor_critic(self, x: torch.Tensor) -> Dict:
         sss = x.shape[1] // 4
-        res_d = lists_to_dicts([self.actor_head[i](self.actor_encoder[i](x[:, sss*i: sss*(i+1)]))
-                                for i in range(len(self.action_shape))])
-        x_preds = [self.critic_head[i](self.critic_encoder[i](x[:, sss*i: sss*(i+1)]))['pred'] for i in range(4)]
+        res_d = lists_to_dicts(
+            [
+                self.actor_head[i](self.actor_encoder[i](x[:, sss * i:sss * (i + 1)]))
+                for i in range(len(self.action_shape))
+            ]
+        )
+        x_preds = [self.critic_head[i](self.critic_encoder[i](x[:, sss * i:sss * (i + 1)]))['pred'] for i in range(4)]
         x_res = x_preds[0] + x_preds[1] + x_preds[2] + x_preds[3] / 4
         res_d['value'] = x_res
         return res_d
