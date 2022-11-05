@@ -14,7 +14,7 @@ from ding.utils import deep_merge_dicts
 from ding.rl_utils import get_epsilon_greedy_fn
 from smartcross.utils.config_utils import read_ding_config
 from smartcross.policy.default_policy import get_random_sample_func
-from ding.model.templete.vac import VAC
+from ding.model import VAC
 from smartcross.models import SPVAC, DEVAC
 
 
@@ -40,19 +40,19 @@ def main(args, seed=None):
         set_pkg_seed(cfg.seed, use_cuda=cfg.policy.cuda)
 
     if cfg.policy.type == 'md_ppo':
-        model_type = cfg.policy.model_type
+        model_type = cfg.policy.model_name
         if model_type == 'vac':
-            model = VAC(**cfg.model)
+            model = VAC(**cfg.policy.model)
         elif model_type == 'spvac':
-            model = SPVAC(**cfg.model)
+            model = SPVAC(**cfg.policy.model)
         elif model_type == 'devac':
-            model = DEVAC(**cfg.model)
+            model = DEVAC(**cfg.policy.model)
         else:
             raise NotImplementedError()
     else:
         model = None
 
-    policy = create_policy(cfg.policy, enable_field=['learn', 'collect', 'eval'])
+    policy = create_policy(cfg.policy, model=model, enable_field=['learn', 'collect', 'eval'])
 
     tb_logger = SummaryWriter('./{}/tensorboard/'.format(cfg.exp_name))
     learner = BaseLearner(cfg.policy.learn.learner, policy.learn_mode, tb_logger, exp_name=cfg.exp_name)

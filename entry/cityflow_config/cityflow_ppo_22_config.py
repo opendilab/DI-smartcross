@@ -98,4 +98,4 @@ cityflow_mdppo_default_config = EasyDict(cityflow_mdppo_default_config)
 main_config = cityflow_mdppo_default_config
 
 # You can run the following command to execute this config file.
-# cityflow_train -e ./smartcross/envs/cityflow_grid/cityflow_grid_22_config.json -d entry/cityflow_config/cityflow_ppo_22_config -cn 8
+# cityflow_train -e ./smartcross/envs/cityflow_grid/cityflow_grid_22_config.json -d entry/cityflow_config/cityflow_ppo_22_config.py -cn 8
